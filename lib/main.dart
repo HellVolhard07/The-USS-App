@@ -1,8 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -12,8 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'The USS App',
       debugShowCheckedModeBanner: false,
-      initialRoute: societyListScreen,
+      initialRoute: eventsScreen,
       routes: {
+        eventsScreen: (_) => EventsScreen(),
         societyListScreen: (_) => SocietyListScreen(),
       },
     );
