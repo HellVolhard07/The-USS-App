@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "437828201346",
-    "project_id": "the-uss",
-    "storage_bucket": "the-uss.appspot.com"
+    "project_number": "908305251763",
+    "project_id": "the-uss-app-34fa9",
+    "storage_bucket": "the-uss-app-34fa9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:437828201346:android:79093f9fc22a421e49bd9b",
+        "mobilesdk_app_id": "1:908305251763:android:34985e39eb0957fdef9fc6",
         "android_client_info": {
           "package_name": "com.srds.the_uss_project"
         }
       },
       "oauth_client": [
         {
-          "client_id": "437828201346-apts05844prhbse82t4ctrcj6fj9jds2.apps.googleusercontent.com",
+          "client_id": "908305251763-4e68vdm9ftaf7f4hc67c37ka1see37sd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDWjOby0pMWw2TbOGhJwYEm2lXsqR8Iui8"
+          "current_key": "AIzaSyBOueq8GZQ9OYzP5w8AvWxscHjsNth8_As"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "437828201346-apts05844prhbse82t4ctrcj6fj9jds2.apps.googleusercontent.com",
+              "client_id": "908305251763-4e68vdm9ftaf7f4hc67c37ka1see37sd.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
