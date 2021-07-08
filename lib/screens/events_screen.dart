@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:the_uss_project/constants.dart';
 
 class EventsScreen extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
