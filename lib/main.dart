@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'The USS App',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: "Poppins",
+      ),
       initialRoute: homeScreen,
       routes: {
         homeScreen: (_) => HomeScreen(),
