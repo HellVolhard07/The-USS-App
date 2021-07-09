@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -27,11 +28,13 @@ class EventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SharedAxisTransitionType? _transitionType =
+        SharedAxisTransitionType.horizontal;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (ctx) => EventScreen(),
+          PageRouteBuilder(
+            reverseTransitionDuration: Duration(milliseconds: 800),
             settings: RouteSettings(
               arguments: EventItem(
                 boxColor: boxColor,
@@ -44,7 +47,36 @@ class EventItem extends StatelessWidget {
                 eventEndTime: eventEndTime,
               ),
             ),
+            transitionDuration: Duration(milliseconds: 800),
+            pageBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) {
+              return SharedAxisTransition(
+                child: EventScreen(),
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: _transitionType!,
+              );
+            },
           ),
+
+          // MaterialPageRoute(
+          //   builder: (ctx) => EventScreen(),
+          //   settings: RouteSettings(
+          //     arguments: EventItem(
+          //       boxColor: boxColor,
+          //       eventId: eventId,
+          //       aboutEvent: aboutEvent,
+          //       eventDate: eventDate,
+          //       eventStartTime: eventStartTime,
+          //       eventTitle: eventTitle,
+          //       eventVenue: eventVenue,
+          //       eventEndTime: eventEndTime,
+          //     ),
+          //   ),
+          // ),
         );
       },
       child: Container(
