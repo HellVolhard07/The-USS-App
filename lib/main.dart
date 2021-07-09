@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'The USS App',
       debugShowCheckedModeBanner: false,
-      initialRoute: homeScreen,
+      initialRoute: societyListScreen,
       routes: {
         homeScreen: (_) => HomeScreen(),
         eventsScreen: (_) => EventsScreen(),
