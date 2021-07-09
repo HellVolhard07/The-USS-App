@@ -26,9 +26,11 @@ class EventsScreen extends StatelessWidget {
             );
           }
           var eventsData = snapshot.data.docs;
+          // print(eventsData[0].id);
           // print(snapshot.data.docs[0]["title"]);
           return ListView.builder(
             itemBuilder: (ctx, index) => EventItem(
+              eventId: eventsData[index].id,
               aboutEvent: eventsData[index][aboutEvent],
               eventDate: eventsData[index][date],
               eventStartTime: eventsData[index][startTime],
