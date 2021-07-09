@@ -4,11 +4,6 @@ import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
 
 import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
-import '../constants.dart';
 
 class EventsScreen extends StatelessWidget {
   @override
@@ -17,7 +12,7 @@ class EventsScreen extends StatelessWidget {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection(eventsCollection)
-            .orderBy("date", descending: true)
+            .orderBy("date", descending: false)
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
@@ -30,6 +25,8 @@ class EventsScreen extends StatelessWidget {
           // print(snapshot.data.docs[0]["title"]);
           return ListView.builder(
             itemBuilder: (ctx, index) => EventItem(
+              boxColor:
+                  index % 2 == 0 ? Colors.orangeAccent : Colors.pinkAccent,
               eventId: eventsData[index].id,
               aboutEvent: eventsData[index][aboutEvent],
               eventDate: eventsData[index][date],

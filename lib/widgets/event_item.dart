@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import '../screens/event_screen.dart';
 
 class EventItem extends StatelessWidget {
+  final Color boxColor;
   final String eventId;
   final String eventTitle;
   final String eventDate;
@@ -14,6 +15,7 @@ class EventItem extends StatelessWidget {
   final String aboutEvent;
 
   EventItem({
+    required this.boxColor,
     required this.eventId,
     required this.aboutEvent,
     required this.eventDate,
@@ -32,6 +34,7 @@ class EventItem extends StatelessWidget {
             builder: (ctx) => EventScreen(),
             settings: RouteSettings(
               arguments: EventItem(
+                boxColor: boxColor,
                 eventId: eventId,
                 aboutEvent: aboutEvent,
                 eventDate: eventDate,
@@ -49,22 +52,47 @@ class EventItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             width: double.infinity,
             height: 150,
             decoration: BoxDecoration(
-              color: Colors.pinkAccent.withOpacity(0.4),
+              color: boxColor.withOpacity(0.4),
               border: Border(
                 left: BorderSide(
-                  color: Colors.pinkAccent,
+                  color: boxColor,
                   width: 7,
                 ),
               ),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(eventTitle),
+                Text(
+                  eventTitle,
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+                ),
+                Text(
+                  eventDate,
+                  // style: TextStyle(
+                  //   color: Colors.grey,
+                  // ),
+                ),
+                Text(
+                  "$eventStartTime - $eventEndTime",
+                  // style: TextStyle(
+                  //   color: Colors.grey,
+                  // ),
+                ),
+                Text(
+                  eventVenue,
+                  style: TextStyle(
+                    backgroundColor: Colors.black12,
+                  ),
+                  // style: TextStyle(
+                  //   color: Colors.grey,
+                  // ),
+                ),
               ],
             ),
           ),
