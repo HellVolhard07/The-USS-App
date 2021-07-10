@@ -5,8 +5,6 @@ import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
 
-import '../constants.dart';
-
 class EventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
