@@ -39,28 +39,31 @@ class EventsScreen extends StatelessWidget {
                             fontSize: 30, fontWeight: FontWeight.w900),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
-                      child: IconButton(
-                        icon: themeProvider.isDarkTheme
-                            ? Icon(
-                                Icons.brightness_3,
-                                color: Colors.white,
-                              )
-                            : Icon(
-                                Icons.wb_sunny,
-                                color: Colors.yellow,
-                              ),
-                        onPressed: () {
-                          themeProvider.changeTheme(themeProvider.isDarkTheme);
-                        },
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                        child: IconButton(
+                          icon: themeProvider.isDarkTheme
+                              ? Icon(
+                                  Icons.brightness_3,
+                                  color: Colors.white,
+                                )
+                              : Icon(
+                                  Icons.wb_sunny,
+                                  color: Colors.yellow,
+                                ),
+                          onPressed: () {
+                            themeProvider
+                                .changeTheme(themeProvider.isDarkTheme);
+                          },
+                        ),
                       ),
                     ),
                   ],
                 ),
                 Divider(
                   indent: 20,
-                  // endIndent: 20,
+                  endIndent: 20,
                   thickness: 3.0,
                   color: Colors.deepPurpleAccent,
                 ),
