@@ -20,11 +20,19 @@ class HomeScreen extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.event),
         title: 'Events',
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+        ),
         activeColorPrimary: Colors.deepPurpleAccent,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.people),
         title: 'Events',
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+        ),
         activeColorPrimary: Colors.deepPurpleAccent,
       ),
     ];
@@ -37,7 +45,9 @@ class HomeScreen extends StatelessWidget {
       controller: _controller,
       screens: screens(),
       items: navBarItems(),
-      navBarHeight: 65,  //TODO: make it dynamic
+      navBarHeight: 65,
+      //TODO: make it dynamic
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       // decoration: NavBarDecoration(
       //   border: Border(
       //     top: BorderSide(

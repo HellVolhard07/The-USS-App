@@ -57,7 +57,7 @@ class EventItem extends StatelessWidget {
                 child: EventScreen(),
                 animation: animation,
                 secondaryAnimation: secondaryAnimation,
-                transitionType: _transitionType!,
+                transitionType: _transitionType,
               );
             },
           ),

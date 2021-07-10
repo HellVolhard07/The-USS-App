@@ -33,6 +33,7 @@ dependencies:
   cloud_firestore: ^2.3.0
   persistent_bottom_nav_bar: ^4.0.2
   animations: ^2.0.1
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
