@@ -1,9 +1,6 @@
-import 'dart:ui';
 import 'package:animations/animations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:the_uss_project/constants.dart';
-import 'package:the_uss_project/screens/society_list_screen.dart';
 import 'package:the_uss_project/screens/society_screen.dart';
 
 class SocietyItem extends StatelessWidget {
@@ -69,16 +66,18 @@ class SocietyItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(societyLogo),
-                  maxRadius: 30.0,
+                Hero(
+                  tag: societyName,
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(societyLogo),
+                    maxRadius: 40.0,
+                  ),
                 ),
                 SizedBox(
-                  width: 40.0,
+                  width: 30.0,
                 ),
                 Column(
-                  //TODO this is not working
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       societyName,

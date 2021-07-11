@@ -21,12 +21,18 @@ class ThemeBuilder {
       primary: Colors.orangeAccent,
       secondary: Colors.pinkAccent,
     ),
+    iconTheme: IconThemeData(
+      color: Colors.white,
+    ),
   );
   static final lightTheme = ThemeData(
     fontFamily: "Poppins",
     colorScheme: ColorScheme.light(
       primary: Colors.orangeAccent,
       secondary: Colors.pinkAccent,
+    ),
+    iconTheme: IconThemeData(
+      color: Color(0xFF222831),
     ),
   );
 }
