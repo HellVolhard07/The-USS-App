@@ -71,6 +71,7 @@ class EventsScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemBuilder: (ctx, index) => EventItem(
+                    eventPosterUrl: eventsData[index][posterURL],
                     boxColor: index % 2 == 0
                         ? Theme.of(context).colorScheme.primary
                         : Theme.of(context).colorScheme.secondary,
