@@ -22,16 +22,16 @@ class HomeScreen extends StatelessWidget {
         title: 'Events',
         textStyle: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 15,
+          fontSize: 12,
         ),
         activeColorPrimary: Colors.deepPurpleAccent,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.people),
-        title: 'Events',
+        title: 'Societies',
         textStyle: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 15,
+          fontSize: 20,
         ),
         activeColorPrimary: Colors.deepPurpleAccent,
       ),
