@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:the_uss_project/constants.dart';
 
 SliverAppBar sliverHeader(
   String title,
@@ -17,23 +16,35 @@ SliverAppBar sliverHeader(
     expandedHeight: 200.0,
     flexibleSpace: FlexibleSpaceBar(
       background: Hero(
-        tag: title,
-        child: Image.network(
-          url,
-          fit: BoxFit.fitHeight,
+        tag: url,
+        transitionOnUserGestures: true,
+        child: Material(
+          type: MaterialType.transparency,
+          child: Image.network(
+            url,
+            fit: BoxFit.fitHeight,
+          ),
         ),
       ),
-      title: Container(
-        padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: Colors.blueGrey.withOpacity(0.7),
-        ),
-        child: Text(
-          title,
-          textAlign: TextAlign.justify,
-          style: TextStyle(
-            color: Colors.black,
+      title: Hero(
+        tag: title,
+        // transitionOnUserGestures: true,
+        child: Material(
+          type: MaterialType.transparency,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.blueGrey.withOpacity(0.7),
+            ),
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: title.length >= 15 ? 15 : 20,
+              ),
+            ),
           ),
         ),
       ),
