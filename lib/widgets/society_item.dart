@@ -47,7 +47,7 @@ class SocietyItem extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.all(8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Container(
@@ -68,9 +68,13 @@ class SocietyItem extends StatelessWidget {
               children: [
                 Hero(
                   tag: societyName,
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(societyLogo),
-                    maxRadius: 40.0,
+                  // transitionOnUserGestures: true,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(societyLogo),
+                      maxRadius: 40.0,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -79,10 +83,18 @@ class SocietyItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      societyName,
-                      style: TextStyle(
-                        fontSize: 20.0,
+                    Hero(
+                      tag: societyName,
+                      // transitionOnUserGestures: true,
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: Text(
+                          societyName,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ),
                     Expanded(
