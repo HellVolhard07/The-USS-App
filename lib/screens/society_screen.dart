@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
 
 class SocietyScreen extends StatelessWidget {
@@ -8,6 +9,19 @@ class SocietyScreen extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
 
     return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            sliverHeader(societyArgs.societyName, societyArgs.societyLogo),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/*
+Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,5 +54,4 @@ class SocietyScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
+*/
