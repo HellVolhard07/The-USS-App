@@ -83,16 +83,18 @@ class SocietyItem extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Hero(
-                      tag: societyName,
-                      // transitionOnUserGestures: true,
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: Text(
-                          societyName,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600,
+                    Expanded(
+                      child: Hero(
+                        tag: societyName,
+                        // transitionOnUserGestures: true,
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: Text(
+                            societyName,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),

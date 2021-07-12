@@ -107,19 +107,16 @@ class EventItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Hero(
-                        tag: eventTitle,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Expanded(
-                            child: Text(
-                              eventTitle,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        child: Hero(
+                          tag: eventTitle,
+                          child: Text(
+                            eventTitle,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
