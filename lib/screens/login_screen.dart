@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:the_uss_project/widgets/auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -13,6 +15,9 @@ class _LoginScreenState extends State<LoginScreen> {
   FocusNode _passwordNode = FocusNode();
   FocusNode _loginNode = FocusNode();
 
+  String email = "";
+  String password = "";
+
   // @override
   // void initState() {
   //   super.initState();
@@ -23,6 +28,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context);
+    void loginFunction() async {
+      final form = _loginFormKey.currentState;
+
+      if (!form!.validate()) {
+        return;
+      }
+      form.save();
+      await loginProvider.loginUser(email, password);
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -70,8 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         boxShadow: [
                           BoxShadow(
                             color: Colors.deepPurpleAccent,
-                            blurRadius: 10,
-                            offset: Offset(9, 5.5),
+                            blurRadius: 3,
+                            offset: Offset(5, 3),
                           ),
                         ],
                       ),
@@ -89,6 +105,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               child: TextFormField(
+                                onSaved: (fieldEmail) {
+                                  setState(() {
+                                    email = fieldEmail.toString();
+                                  });
+                                },
                                 focusNode: _emailNode,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -111,6 +132,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               child: TextFormField(
+                                onSaved: (fieldPassword) {
+                                  setState(() {
+                                    password = fieldPassword.toString();
+                                  });
+                                },
                                 focusNode: _passwordNode,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -138,7 +164,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     Center(
                       child: ElevatedButton(
                         focusNode: _loginNode,
-                        onPressed: () {},
+                        onPressed: () {
+                          loginFunction();
+                        },
                         child: Text(
                           "Login",
                           style: TextStyle(
