@@ -6,6 +6,7 @@ import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/home_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
+import 'package:the_uss_project/widgets/auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +18,11 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => LoginProvider())
+      ],
       builder: (context, _) {
         final themeProvider = Provider.of<ThemeProvider>(context);
         return MaterialApp(
