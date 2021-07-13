@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
 import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
+import '../theme_provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  bool isDarkTheme = true;
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
@@ -26,7 +29,8 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 12,
         ),
-        activeColorPrimary: Colors.deepPurpleAccent,
+        activeColorPrimary:
+            isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.people),
@@ -35,7 +39,8 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
-        activeColorPrimary: Colors.deepPurpleAccent,
+        activeColorPrimary:
+            isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.account_circle_outlined),
@@ -44,13 +49,17 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 12,
         ),
-        activeColorPrimary: Colors.deepPurpleAccent,
+        activeColorPrimary:
+            isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
       ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    themeProvider.isDarkTheme ? isDarkTheme = true : isDarkTheme = false;
     return PersistentTabView(
       context,
       controller: _controller,
