@@ -32,11 +32,12 @@ class MyApp extends StatelessWidget {
           themeMode: themeProvider.themeMode,
           darkTheme: ThemeBuilder.darkTheme,
           theme: ThemeBuilder.lightTheme,
-          initialRoute: homeScreen,
+          initialRoute: profileScreen,
           routes: {
             homeScreen: (_) => HomeScreen(),
             eventsScreen: (_) => EventsScreen(),
             societyListScreen: (_) => SocietyListScreen(),
+            profileScreen: (_) => ProfileScreen(),
           },
         );
       },
