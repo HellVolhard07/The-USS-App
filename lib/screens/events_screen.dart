@@ -5,6 +5,7 @@ import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
 
+
 class EventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,12 +46,12 @@ class EventsScreen extends StatelessWidget {
                         child: IconButton(
                           icon: themeProvider.isDarkTheme
                               ? Icon(
-                                  Icons.brightness_3,
-                                  color: Colors.white,
+                                  Icons.light_mode,
+                                  color: Colors.yellow,
                                 )
                               : Icon(
-                                  Icons.wb_sunny,
-                                  color: Colors.yellow,
+                                  Icons.dark_mode,
+                                  color: Colors.black,
                                 ),
                           onPressed: () {
                             themeProvider
