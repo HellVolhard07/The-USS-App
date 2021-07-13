@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/home_screen.dart';
+import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
