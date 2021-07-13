@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
 
+String loggedInUserId = '';
+
 class LoginProvider with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
-
   FirebaseAuth get getAuth => _auth;
 
   Future loginUser(String email, String password) async {
