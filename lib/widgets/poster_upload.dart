@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 class PosterUpload extends StatefulWidget {
   final void Function(File pickedImage)? imagePicker;
 
-  PosterUpload({this.imagePicker});
+  PosterUpload(this.imagePicker);
 
   @override
   _PosterUploadState createState() => _PosterUploadState();
