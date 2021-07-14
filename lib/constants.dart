@@ -1,6 +1,7 @@
 String societyListScreen = "/societyListScreen";
 String eventsScreen = "/eventsScreen";
 String homeScreen = "/homeScreen";
+String profileScreen = "/profileScreen";
 
 String eventsCollection = "Events";
 String societiesCollection = "Societies";
