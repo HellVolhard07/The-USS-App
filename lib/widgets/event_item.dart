@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,8 +14,10 @@ class EventItem extends StatelessWidget {
   final String eventStartTime;
   final String eventVenue;
   final String aboutEvent;
+  final String eventPosterUrl;
 
   EventItem({
+    required this.eventPosterUrl,
     required this.boxColor,
     required this.eventId,
     required this.aboutEvent,
@@ -27,13 +30,16 @@ class EventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SharedAxisTransitionType? _transitionType =
+        SharedAxisTransitionType.horizontal;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (ctx) => EventScreen(),
+          PageRouteBuilder(
+            reverseTransitionDuration: Duration(milliseconds: 800),
             settings: RouteSettings(
               arguments: EventItem(
+                eventPosterUrl: eventPosterUrl,
                 boxColor: boxColor,
                 eventId: eventId,
                 aboutEvent: aboutEvent,
@@ -44,15 +50,44 @@ class EventItem extends StatelessWidget {
                 eventEndTime: eventEndTime,
               ),
             ),
+            transitionDuration: Duration(milliseconds: 800),
+            pageBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) {
+              return SharedAxisTransition(
+                child: EventScreen(),
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: _transitionType,
+              );
+            },
           ),
+
+          // MaterialPageRoute(
+          //   builder: (ctx) => EventScreen(),
+          //   settings: RouteSettings(
+          //     arguments: EventItem(
+          //       boxColor: boxColor,
+          //       eventId: eventId,
+          //       aboutEvent: aboutEvent,
+          //       eventDate: eventDate,
+          //       eventStartTime: eventStartTime,
+          //       eventTitle: eventTitle,
+          //       eventVenue: eventVenue,
+          //       eventEndTime: eventEndTime,
+          //     ),
+          //   ),
+          // ),
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             width: double.infinity,
             height: 150,
             decoration: BoxDecoration(
@@ -64,34 +99,70 @@ class EventItem extends StatelessWidget {
                 ),
               ),
             ),
-            child: Column(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  eventTitle,
-                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
-                ),
-                Text(
-                  eventDate,
-                  // style: TextStyle(
-                  //   color: Colors.grey,
-                  // ),
-                ),
-                Text(
-                  "$eventStartTime - $eventEndTime",
-                  // style: TextStyle(
-                  //   color: Colors.grey,
-                  // ),
-                ),
-                Text(
-                  eventVenue,
-                  style: TextStyle(
-                    backgroundColor: Colors.black12,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Hero(
+                          tag: eventTitle,
+                          child: Text(
+                            eventTitle,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        eventDate,
+                        // style: TextStyle(
+                        //   color: Colors.grey,
+                        // ),
+                      ),
+                      Text(
+                        "$eventStartTime - $eventEndTime",
+                        // style: TextStyle(
+                        //   color: Colors.grey,
+                        // ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          eventVenue,
+                          style: TextStyle(
+                            backgroundColor: Colors.black12,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          // style: TextStyle(
+                          //   color: Colors.grey,
+                          // ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // style: TextStyle(
-                  //   color: Colors.grey,
-                  // ),
+                ),
+                Container(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Hero(
+                      tag: eventPosterUrl,
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: Image.network(
+                          eventPosterUrl,
+                          fit: BoxFit.cover,
+                          height: double.infinity,
+                          width: 100,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
