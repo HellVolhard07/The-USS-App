@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
@@ -12,16 +14,24 @@ class AddEventScreen extends StatefulWidget {
 class _AddEventScreenState extends State<AddEventScreen> {
   final _addEventFormKey = GlobalKey<FormState>();
 
+  File? _imagePick;
+
+  void _imagePicked(File image) {
+    _imagePick = image;
+  }
+
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
   TextEditingController _venueController = TextEditingController();
+
+  TextEditingController _miscController = TextEditingController();
 
   TextEditingController _dateEditingController = TextEditingController();
   TextEditingController _startTimeEditingController = TextEditingController();
   TextEditingController _endTimeEditingController = TextEditingController();
 
   int currentStep = 0;
-  int numberOfSteps = 2; //3-1
+  int numberOfSteps = 3; //4-1
 
   FocusNode _eventTitleNode = FocusNode();
   FocusNode _eventDescriptionNode = FocusNode();
@@ -29,7 +39,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   FocusNode _eventDate = FocusNode();
   FocusNode _eventStartTime = FocusNode();
   FocusNode _eventEndTime = FocusNode();
-  FocusNode _eventPoster = FocusNode();
+  FocusNode _misc = FocusNode();
 
   String eventTitle = "";
   String eventDesc = "";
@@ -129,6 +139,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ],
                     ),
                     child: Form(
+                      key: _addEventFormKey,
                       child: Column(
                         children: [
                           Container(
@@ -279,6 +290,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ],
                     ),
                     child: Form(
+                      key: _addEventFormKey,
                       child: Column(
                         children: [
                           Container(
@@ -464,7 +476,83 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   ),
                   Divider(thickness: 3),
                   SizedBox(height: 20),
-                  PosterUpload(),
+                  PosterUpload(_imagePicked),
+                ],
+              ),
+            ),
+          ],
+        );
+        break;
+      case 3:
+        content = Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 40,
+                vertical: 15,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Miscellaneous",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Divider(thickness: 3),
+                  SizedBox(height: 20),
+                  Container(
+                    height: 250,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.deepPurpleAccent,
+                          blurRadius: 3,
+                          offset: Offset(5, 3),
+                        ),
+                      ],
+                    ),
+                    child: Form(
+                      key: _addEventFormKey,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.grey.shade200,
+                                ),
+                              ),
+                            ),
+                            child: TextFormField(
+                              controller: _miscController,
+                              focusNode: _misc,
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText:
+                                    "Any Additional Information / Guidelines / Links etc.",
+                                hintStyle:
+                                    TextStyle(color: Colors.grey, fontSize: 12),
+                              ),
+                              onFieldSubmitted: (date) {
+                                _misc.unfocus();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
