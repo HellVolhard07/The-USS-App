@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/main.dart';
+
+import '../theme_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -39,8 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
       form.save();
-      await loginProvider.loginUser(email, password);
-      MaterialPageRoute(builder: (context) => ProfileScreen());
+      await loginProvider.loginUser(email, password, context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileScreen()));
     }
 
     return GestureDetector(
@@ -170,8 +174,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         focusNode: _loginNode,
                         onPressed: () {
                           loginFunction();
-                          MaterialPageRoute(
-                              builder: (context) => ProfileScreen());
                         },
                         child: Text(
                           "Login",
