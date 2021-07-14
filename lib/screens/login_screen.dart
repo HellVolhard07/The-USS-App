@@ -1,8 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';
+import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/widgets/auth.dart';
+
 //import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
+import 'package:the_uss_project/main.dart';
+
+import '../theme_provider.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -40,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       form.save();
 
+
       setState(() {
         isLogin = true;
       });
@@ -53,6 +62,10 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isLogin = false;
       });
+
+      
+     
+
     }
 
     return GestureDetector(
