@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:intl/intl.dart';
+import 'package:the_uss_project/widgets/poster_upload.dart';
 
 class AddEventScreen extends StatefulWidget {
   @override
@@ -10,6 +11,10 @@ class AddEventScreen extends StatefulWidget {
 
 class _AddEventScreenState extends State<AddEventScreen> {
   final _addEventFormKey = GlobalKey<FormState>();
+
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descController = TextEditingController();
+  TextEditingController _venueController = TextEditingController();
 
   TextEditingController _dateEditingController = TextEditingController();
   TextEditingController _startTimeEditingController = TextEditingController();
@@ -136,6 +141,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               ),
                             ),
                             child: TextFormField(
+                              controller: _titleController,
                               onSaved: (title) {
                                 setState(() {
                                   eventTitle = title.toString();
@@ -162,6 +168,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             child: TextFormField(
+                              controller: _descController,
                               onSaved: (desc) {
                                 setState(() {
                                   eventDesc = desc.toString();
@@ -191,6 +198,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             child: TextFormField(
+                              controller: _venueController,
                               onSaved: (venue) {
                                 setState(() {
                                   eventVenue = venue.toString();
@@ -334,8 +342,18 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                   context: context,
                                   initialTime: TimeOfDay.now(),
                                 ))!;
-                                eventStartTime = selectedStartTime.toString();
-                                _startTimeEditingController.text = eventStartTime;
+                                // eventStartTime = selectedStartTime.toString();
+                                var dt = DateTime(
+                                  DateTime.now().year,
+                                  DateTime.now().month,
+                                  DateTime.now().day,
+                                  selectedStartTime.hour,
+                                  selectedStartTime.minute,
+                                );
+                                _startTimeEditingController.text =
+                                    DateFormat.Hm().format(dt);
+                                eventStartTime =
+                                    _startTimeEditingController.text;
                               },
                               focusNode: _eventStartTime,
                               style: TextStyle(
@@ -359,24 +377,44 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             child: TextFormField(
-                              onSaved: (venue) {
-                                setState(() {
-                                  eventVenue = venue.toString();
-                                });
+                              controller: _endTimeEditingController,
+                              // onSaved: (desc) {
+                              //   setState(() {
+                              //     eventDesc = desc.toString();
+                              //   });
+                              // },
+                              onTap: () async {
+                                TimeOfDay selectedEndTime =
+                                    (await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                ))!;
+                                // eventStartTime = selectedStartTime.toString();
+                                var dt = DateTime(
+                                  DateTime.now().year,
+                                  DateTime.now().month,
+                                  DateTime.now().day,
+                                  selectedEndTime.hour,
+                                  selectedEndTime.minute,
+                                );
+                                _endTimeEditingController.text =
+                                    DateFormat.Hm().format(dt);
+                                eventEndTime = _startTimeEditingController.text;
                               },
-                              focusNode: _eventVenue,
+                              focusNode: _eventEndTime,
                               style: TextStyle(
                                 color: Colors.black,
                               ),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Venue/Link (if online)",
+                                hintText: "End Time",
                                 hintStyle: TextStyle(
                                   color: Colors.grey,
                                 ),
                               ),
                               onFieldSubmitted: (_) {
-                                _eventVenue.unfocus();
+                                print(eventEndTime);
+                                _eventStartTime.unfocus();
                               },
                             ),
                           ),
@@ -391,7 +429,47 @@ class _AddEventScreenState extends State<AddEventScreen> {
         );
         break;
       case 2:
-        content = Text("Photo Upload");
+        content = Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+                image: DecorationImage(
+                  image: AssetImage(
+                    "assets/images/file_upload.png",
+                  ),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 40,
+                vertical: 15,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Upload Poster",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Divider(thickness: 3),
+                  SizedBox(height: 20),
+                  PosterUpload(),
+                ],
+              ),
+            ),
+          ],
+        );
         break;
       default:
         content = Text("Invalid");
