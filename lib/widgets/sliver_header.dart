@@ -15,6 +15,10 @@ SliverAppBar sliverHeader(
     ),
     expandedHeight: 200.0,
     flexibleSpace: FlexibleSpaceBar(
+      stretchModes: <StretchMode>[
+        StretchMode.zoomBackground,
+        StretchMode.fadeTitle,
+      ],
       background: Hero(
         tag: url,
         transitionOnUserGestures: true,
