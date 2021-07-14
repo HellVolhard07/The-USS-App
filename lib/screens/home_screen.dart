@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:the_uss_project/screens/addEvent.dart';
 import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
       EventsScreen(),
       SocietyListScreen(),
       LoginScreen(),
+      AddEventScreen(),
     ];
   }
 
@@ -40,6 +42,15 @@ class HomeScreen extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.account_circle_outlined),
         title: 'Account',
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+        ),
+        activeColorPrimary: Colors.deepPurpleAccent,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.add),
+        title: 'Add Event',
         textStyle: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 12,
