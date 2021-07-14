@@ -1,24 +1,20 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
+import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
+import 'package:the_uss_project/widgets/auth.dart';
 import '../theme_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   bool isDarkTheme = true;
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
-
-  List<Widget> screens() {
-    return [
-      EventsScreen(),
-      SocietyListScreen(),
-      LoginScreen(),
-    ];
-  }
 
   List<PersistentBottomNavBarItem> navBarItems() {
     return [
@@ -58,6 +54,17 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final loginProvider = Provider.of<LoginProvider>(context);
+
+    List<Widget> screens() {
+      return [
+        EventsScreen(),
+        SocietyListScreen(),
+        loginProvider.getAuth.currentUser == null
+            ? LoginScreen()
+            : ProfileScreen(),
+      ];
+    }
 
     themeProvider.isDarkTheme ? isDarkTheme = true : isDarkTheme = false;
     return PersistentTabView(
