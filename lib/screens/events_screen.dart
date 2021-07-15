@@ -8,7 +8,6 @@ import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
 
 class EventsScreen extends StatefulWidget {
-  
   @override
   State<EventsScreen> createState() => _EventsScreenState();
 }
@@ -16,6 +15,7 @@ class EventsScreen extends StatefulWidget {
 class _EventsScreenState extends State<EventsScreen> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+
   @override
   void initState() {
     getCurrentUserData();
@@ -76,11 +76,11 @@ class _EventsScreenState extends State<EventsScreen> {
                         child: IconButton(
                           icon: themeProvider.isDarkTheme
                               ? Icon(
-                                  Icons.light_mode,
+                                  Icons.wb_twighlight,
                                   color: Colors.yellow,
                                 )
                               : Icon(
-                                  Icons.dark_mode,
+                                  Icons.nights_stay_rounded,
                                   color: Colors.black,
                                 ),
                           onPressed: () {
