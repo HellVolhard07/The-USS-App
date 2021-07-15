@@ -30,6 +30,7 @@ class _EventsScreenState extends State<EventsScreen> {
           .get();
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
+      loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
 
       print(loggedInSocietyName);
     } on FirebaseAuthException catch (e) {
@@ -56,67 +57,69 @@ class _EventsScreenState extends State<EventsScreen> {
           // print(eventsData[0].id);
           // print(snapshot.data.docs[0]["title"]);
           return SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
-                      child: Text(
-                        'Upcoming Events',
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.w900),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
                         padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
-                        child: IconButton(
-                          icon: themeProvider.isDarkTheme
-                              ? Icon(
-                                  Icons.wb_twighlight,
-                                  color: Colors.yellow,
-                                )
-                              : Icon(
-                                  Icons.nights_stay_rounded,
-                                  color: Colors.black,
-                                ),
-                          onPressed: () {
-                            themeProvider
-                                .changeTheme(themeProvider.isDarkTheme);
-                          },
+                        child: Text(
+                          'Upcoming Events',
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.w900),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Divider(
-                  indent: 20,
-                  endIndent: 20,
-                  thickness: 3.0,
-                  color: Colors.deepPurpleAccent,
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemBuilder: (ctx, index) => EventItem(
-                    eventPosterUrl: eventsData[index][posterURL],
-                    boxColor: index % 2 == 0
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.secondary,
-                    eventId: eventsData[index].id,
-                    aboutEvent: eventsData[index][aboutEvent],
-                    eventDate: eventsData[index][date],
-                    eventStartTime: eventsData[index][startTime],
-                    eventTitle: eventsData[index][title],
-                    eventVenue: eventsData[index][venue],
-                    eventEndTime: eventsData[index][endTime],
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                          child: IconButton(
+                            icon: themeProvider.isDarkTheme
+                                ? Icon(
+                                    Icons.wb_twighlight,
+                                    color: Colors.yellow,
+                                  )
+                                : Icon(
+                                    Icons.nights_stay_rounded,
+                                    color: Colors.black,
+                                  ),
+                            onPressed: () {
+                              themeProvider
+                                  .changeTheme(themeProvider.isDarkTheme);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  itemCount: eventsData.length,
-                ),
-              ],
+                  Divider(
+                    indent: 20,
+                    endIndent: 20,
+                    thickness: 3.0,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemBuilder: (ctx, index) => EventItem(
+                      eventPosterUrl: eventsData[index][posterURL],
+                      boxColor: index % 2 == 0
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
+                      eventId: eventsData[index].id,
+                      aboutEvent: eventsData[index][aboutEvent],
+                      eventDate: eventsData[index][date],
+                      eventStartTime: eventsData[index][startTime],
+                      eventTitle: eventsData[index][title],
+                      eventVenue: eventsData[index][venue],
+                      eventEndTime: eventsData[index][endTime],
+                    ),
+                    itemCount: eventsData.length,
+                  ),
+                ],
+              ),
             ),
           );
         },
