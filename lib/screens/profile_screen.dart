@@ -17,7 +17,7 @@ List<Widget> ProfileWidgets = [
   EventWidget(),
 ];
 
-Widget finalWidget = EventWidget();
+Widget finalWidget = AboutWidget(themeProvider: ThemeProvider());
 
 class ProfileScreen extends StatefulWidget {
   @override
