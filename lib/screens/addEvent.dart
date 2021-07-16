@@ -368,6 +368,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                           ),
                                           child: TextFormField(
                                             controller: _dateEditingController,
+                                            readOnly: true,
                                             onTap: () async {
                                               DateTime selectedDate =
                                                   (await showDatePicker(
@@ -418,6 +419,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                           child: TextFormField(
                                             controller:
                                                 _startTimeEditingController,
+                                            readOnly: true,
                                             onSaved: (startTime) {
                                               setState(() {
                                                 eventStartTime =
@@ -474,6 +476,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                           child: TextFormField(
                                             controller:
                                                 _endTimeEditingController,
+                                            readOnly: true,
                                             onSaved: (endTime) {
                                               setState(() {
                                                 eventEndTime =
