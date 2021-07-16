@@ -7,9 +7,19 @@ import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
+import 'package:the_uss_project/widgets/about_profile_widget.dart';
 import 'package:the_uss_project/widgets/auth.dart';
+import 'package:the_uss_project/widgets/event_item.dart';
+import 'package:the_uss_project/widgets/event_profile_widget.dart';
 import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
+
+List<Widget> profileWidgets = [
+  AboutWidget(themeProvider: ThemeProvider()),
+  EventWidget(),
+];
+
+Widget finalWidget = AboutWidget(themeProvider: ThemeProvider());
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -20,8 +30,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _auth = FirebaseAuth.instance;
 
   final _firestore = FirebaseFirestore.instance;
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +83,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       labels: ['About', 'Events'],
                       initialIndex: 0,
                       selectedLabelIndex: (index) {
-                        print('selectedIndex : $index');
+                        setState(() {
+                          finalWidget = profileWidgets[index];
+                        });
                       },
                       selectedTextStyle: TextStyle(
                         color: Colors.white,
@@ -85,14 +95,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.black,
                         fontWeight: FontWeight.w700,
                       ),
-                      selectedBackgroundColors: [
-                        Colors.deepPurpleAccent,
-                        Colors.blueAccent
-                      ],
-                      unSelectedBackgroundColors: [
-                        Colors.lightBlueAccent,
-                        Colors.greenAccent
-                      ],
+                      selectedBackgroundColors: themeProvider.isDarkTheme
+                          ? kDarkThemeSelectedToggleColors
+                          : kLightThemeSelectedToggleColors,
+                      unSelectedBackgroundColors: themeProvider.isDarkTheme
+                          ? kDarkThemeUnselectedToggleColors
+                          : kLightThemeUnselectedToggleColors,
                     ),
                   ),
                   SizedBox(
@@ -104,36 +112,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       decoration: BoxDecoration(
                         color: themeProvider.isDarkTheme
                             ? Colors.deepPurpleAccent.withOpacity(0.1)
-                            : Colors.deepPurpleAccent.withOpacity(0.7),
+                            : Colors.greenAccent.withOpacity(0.4),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'About',
-                            style: TextStyle(
-                                color: Colors.white,
-                                // color: themeProvider.isDarkTheme
-                                //     ? Colors.white
-                                //     : Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 43),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'This society is the best society of whole of USS',
-                            style: TextStyle(
-                                color: Colors.white,
-                                // color: themeProvider.isDarkTheme
-                                //     ? Colors.white
-                                //     : Colors.black,
-                                fontSize: 18),
-                          ),
-                        ],
-                      ),
+                      child: finalWidget,
                     ),
                   )
                 ],

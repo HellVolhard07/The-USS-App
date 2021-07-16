@@ -30,9 +30,16 @@ class _EventsScreenState extends State<EventsScreen> {
           .get();
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
+
+      loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
+      societyEvents = await loggedInUserDetail.get('myEvents');
+
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
 
+
       print(loggedInSocietyName);
+      print(loggedInSoceityAbout);
+      print('society events are : $societyEvents');
     } on FirebaseAuthException catch (e) {
       print(e);
     }
