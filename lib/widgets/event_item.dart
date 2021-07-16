@@ -91,7 +91,7 @@ class EventItem extends StatelessWidget {
             width: double.infinity,
             height: 150,
             decoration: BoxDecoration(
-              color: boxColor.withOpacity(0.4),
+              color: boxColor,
               border: Border(
                 left: BorderSide(
                   color: boxColor,
