@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           themeMode: themeProvider.themeMode,
           darkTheme: ThemeBuilder.darkTheme,
           theme: ThemeBuilder.lightTheme,
-          initialRoute: profileScreen,
+          initialRoute: homeScreen,
           routes: {
             homeScreen: (_) => HomeScreen(),
             eventsScreen: (_) => EventsScreen(),
