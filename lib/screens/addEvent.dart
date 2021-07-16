@@ -373,149 +373,166 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                         ),
                                       ),
                                     ),
-                                    child: TextFormField(
-                                      controller: _dateEditingController,
-                                      onTap: () async {
-                                        DateTime selectedDate =
-                                            (await showDatePicker(
-                                          context: context,
-                                          initialDate: DateTime.now(),
-                                          firstDate: DateTime(2000),
-                                          lastDate: DateTime(2100),
-                                        ))!;
-                                        eventDate = DateFormat.yMMMd()
-                                            .format(selectedDate);
-                                        _dateEditingController.text =
-                                            DateFormat.yMMMd()
-                                                .format(selectedDate);
-                                      },
-                                      onSaved: (date) {
-                                        setState(() {
-                                          eventDate =
-                                              _dateEditingController.text;
-                                        });
-                                      },
-                                      focusNode: _eventDate,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Required";
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Date",
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
+
+                                          child: TextFormField(
+                                            controller: _dateEditingController,
+                                            readOnly: true,
+                                            onTap: () async {
+                                              DateTime selectedDate =
+                                                  (await showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(2000),
+                                                lastDate: DateTime(2100),
+                                              ))!;
+                                              eventDate = DateFormat.yMMMd()
+                                                  .format(selectedDate);
+                                              _dateEditingController.text =
+                                                  DateFormat.yMMMd()
+                                                      .format(selectedDate);
+                                            },
+                                            onSaved: (date) {
+                                              setState(() {
+                                                eventDate =
+                                                    _dateEditingController.text;
+                                              });
+                                            },
+                                            focusNode: _eventDate,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Required";
+                                              }
+                                              return null;
+                                            },
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: "Date",
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            onFieldSubmitted: (date) {
+                                              _eventDate.unfocus();
+                                              FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _eventStartTime);
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      onFieldSubmitted: (date) {
-                                        _eventDate.unfocus();
-                                        FocusScope.of(context)
-                                            .requestFocus(_eventStartTime);
-                                      },
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    child: TextFormField(
-                                      controller: _startTimeEditingController,
-                                      onSaved: (startTime) {
-                                        setState(() {
-                                          eventStartTime =
-                                              _startTimeEditingController.text;
-                                        });
-                                      },
-                                      onTap: () async {
-                                        TimeOfDay selectedStartTime =
-                                            (await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now(),
-                                        ))!;
-                                        // eventStartTime = selectedStartTime.toString();
-                                        var dt = DateTime(
-                                          DateTime.now().year,
-                                          DateTime.now().month,
-                                          DateTime.now().day,
-                                          selectedStartTime.hour,
-                                          selectedStartTime.minute,
-                                        );
-                                        _startTimeEditingController.text =
-                                            DateFormat.Hm().format(dt);
-                                        eventStartTime =
-                                            _startTimeEditingController.text;
-                                      },
-                                      focusNode: _eventStartTime,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Required";
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Start Time",
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          child: TextFormField(
+                                            controller:
+                                                _startTimeEditingController,
+                                            readOnly: true,
+                                            onSaved: (startTime) {
+                                              setState(() {
+                                                eventStartTime =
+                                                    _startTimeEditingController
+                                                        .text;
+                                              });
+                                            },
+                                            onTap: () async {
+                                              TimeOfDay selectedStartTime =
+                                                  (await showTimePicker(
+                                                context: context,
+                                                initialTime: TimeOfDay.now(),
+                                              ))!;
+                                              // eventStartTime = selectedStartTime.toString();
+                                              var dt = DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day,
+                                                selectedStartTime.hour,
+                                                selectedStartTime.minute,
+                                              );
+                                              _startTimeEditingController.text =
+                                                  DateFormat.Hm().format(dt);
+                                              eventStartTime =
+                                                  _startTimeEditingController
+                                                      .text;
+                                            },
+                                            focusNode: _eventStartTime,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Required";
+                                              }
+                                              return null;
+                                            },
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: "Start Time",
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            onFieldSubmitted: (_) {
+                                              _eventStartTime.unfocus();
+                                              FocusScope.of(context)
+                                                  .requestFocus(_eventEndTime);
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      onFieldSubmitted: (_) {
-                                        _eventStartTime.unfocus();
-                                        FocusScope.of(context)
-                                            .requestFocus(_eventEndTime);
-                                      },
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    child: TextFormField(
-                                      controller: _endTimeEditingController,
-                                      onSaved: (endTime) {
-                                        setState(() {
-                                          eventEndTime =
-                                              _endTimeEditingController.text;
-                                        });
-                                      },
-                                      onTap: () async {
-                                        TimeOfDay selectedEndTime =
-                                            (await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.now(),
-                                        ))!;
-                                        // eventStartTime = selectedStartTime.toString();
-                                        var dt = DateTime(
-                                          DateTime.now().year,
-                                          DateTime.now().month,
-                                          DateTime.now().day,
-                                          selectedEndTime.hour,
-                                          selectedEndTime.minute,
-                                        );
-                                        _endTimeEditingController.text =
-                                            DateFormat.Hm().format(dt);
-                                        eventEndTime =
-                                            _startTimeEditingController.text;
-                                      },
-                                      focusNode: _eventEndTime,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Required";
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "End Time",
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          child: TextFormField(
+                                            controller:
+                                                _endTimeEditingController,
+                                            readOnly: true,
+                                            onSaved: (endTime) {
+                                              setState(() {
+                                                eventEndTime =
+                                                    _endTimeEditingController
+                                                        .text;
+                                              });
+                                            },
+                                            onTap: () async {
+                                              TimeOfDay selectedEndTime =
+                                                  (await showTimePicker(
+                                                context: context,
+                                                initialTime: TimeOfDay.now(),
+                                              ))!;
+                                              // eventStartTime = selectedStartTime.toString();
+                                              var dt = DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day,
+                                                selectedEndTime.hour,
+                                                selectedEndTime.minute,
+                                              );
+                                              _endTimeEditingController.text =
+                                                  DateFormat.Hm().format(dt);
+                                              eventEndTime =
+                                                  _startTimeEditingController
+                                                      .text;
+                                            },
+                                            focusNode: _eventEndTime,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Required";
+                                              }
+                                              return null;
+                                            },
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: "End Time",
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                            onFieldSubmitted: (_) {
+                                              _eventEndTime.unfocus();
+                                            },
+                                          ),
                                         ),
                                       ),
                                       onFieldSubmitted: (_) {
