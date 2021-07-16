@@ -1,14 +1,14 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:the_uss_project/screens/addEvent.dart';
 import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
 import 'package:the_uss_project/widgets/auth.dart';
+
 import '../theme_provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,6 +48,16 @@ class HomeScreen extends StatelessWidget {
         activeColorPrimary:
             isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
       ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.add),
+        title: 'Add Event',
+        textStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+        ),
+        activeColorPrimary:
+            isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
+      ),
     ];
   }
 
@@ -63,6 +73,7 @@ class HomeScreen extends StatelessWidget {
         loginProvider.getAuth.currentUser == null
             ? LoginScreen()
             : ProfileScreen(),
+        AddEventScreen(),
       ];
     }
 

@@ -5,9 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/widgets/auth.dart';
+
+//import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:the_uss_project/main.dart';
 
 import '../theme_provider.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -23,6 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String email = "";
   String password = "";
+
+  bool isLogin = false;
 
   // @override
   // void initState() {
@@ -42,9 +47,25 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
       form.save();
+
+
+      setState(() {
+        isLogin = true;
+      });
+
       await loginProvider.loginUser(email, password, context);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+
+      //String error = loginProvider.getError;
+
+      //showMyDialog(context, error);
+
+      setState(() {
+        isLogin = false;
+      });
+
+      
+     
+
     }
 
     return GestureDetector(
@@ -169,37 +190,42 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(height: 35),
-                    Center(
-                      child: ElevatedButton(
-                        focusNode: _loginNode,
-                        onPressed: () {
-                          loginFunction();
-                        },
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.white,
-                          ),
-                        ),
-                        style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                    !isLogin
+                        ? Center(
+                            child: ElevatedButton(
+                              focusNode: _loginNode,
+                              onPressed: () {
+                                loginFunction();
+                              },
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Colors.deepPurpleAccent,
+                                ),
+                                alignment: Alignment.center,
+                                padding: MaterialStateProperty.all<
+                                    EdgeInsetsGeometry>(
+                                  EdgeInsets.symmetric(horizontal: 40),
+                                ),
+                              ),
                             ),
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(),
                           ),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.deepPurpleAccent,
-                          ),
-                          alignment: Alignment.center,
-                          padding:
-                              MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.symmetric(horizontal: 40),
-                          ),
-                        ),
-                      ),
-                    ),
                     Center(
                       child: TextButton(
                         onPressed: () {},
