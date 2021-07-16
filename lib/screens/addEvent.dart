@@ -146,18 +146,23 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: SafeArea(
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Form(
-              key: _addEventFormKey,
-              child: Column(
-                children: [
-                  Column(
+
+    return _isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Scaffold(
+              body: SafeArea(
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _addEventFormKey,
+                    child: Column(
+                      children: [
+                        Column(
                     children: [
                       // Container(
                       //   width: double.infinity,
@@ -182,6 +187,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+
                           children: [
                             Text(
                               "About*",

@@ -6,10 +6,18 @@ Future<void> showMyDialog(context, text, {bool showAction = false}) async {
     barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Error"),
-        content: Text(text),
+        title: Text(
+          "Error",
+          style: TextStyle(color: Colors.black),
+        ),
+        content: Text(
+          text,
+          style: TextStyle(color: Colors.black),
+        ),
         elevation: 24.0,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
+        shape: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+
         actions: <Widget>[
           showAction
               ? TextButton(
