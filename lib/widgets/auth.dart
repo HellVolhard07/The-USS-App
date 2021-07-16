@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
+
 import 'package:the_uss_project/screens/home_screen.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
@@ -10,10 +13,15 @@ import '../constants.dart';
 User? loggedInUser;
 String loggedInSocietyName = '';
 
+
 class LoginProvider with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseAuth get getAuth => _auth;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  late String error;
+
+  String get getError => error;
 
   Future loginUser(String email, String password, BuildContext context) async {
     try {
@@ -32,11 +40,14 @@ class LoginProvider with ChangeNotifier {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        error = "User not found";
+        showMyDialog(context, error);
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        error = "Incorrect password";
+        showMyDialog(context, error);
       }
     }
+    notifyListeners();
   }
 
   Future logOutUser(BuildContext context) async {

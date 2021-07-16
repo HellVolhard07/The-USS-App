@@ -43,11 +43,11 @@ class SocietyListScreen extends StatelessWidget {
                         child: IconButton(
                           icon: themeProvider.isDarkTheme
                               ? Icon(
-                                  Icons.light_mode,
+                                  Icons.wb_twighlight,
                                   color: Colors.yellow,
                                 )
                               : Icon(
-                                  Icons.dark_mode,
+                                  Icons.nights_stay_rounded,
                                   color: Colors.black,
                                 ),
                           onPressed: () {
