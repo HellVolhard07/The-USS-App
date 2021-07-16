@@ -33,48 +33,32 @@ class _PosterUploadState extends State<PosterUpload> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _pickedImage != null
-            ? Container(
-                height: 200,
-                width: 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: FileImage(_pickedImage!),
-                    fit: BoxFit.cover,
+
+    // TODO: Image going when changing pages
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _pickedImage != null
+              ? Container(
+                  height: 225,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: FileImage(_pickedImage!),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-              )
-            : Container(),
-        ElevatedButton.icon(
-          icon: Icon(Icons.cloud_upload),
-          onPressed: _getFromGallery,
-          label: Text("Upload Poster"),
-        ),
-      ],
+                )
+              : Container(),
+          ElevatedButton.icon(
+            icon: Icon(Icons.cloud_upload),
+            onPressed: _getFromGallery,
+            label: Text("Upload Poster"),
+          ),
+        ],
+      ),
     );
-    // return Column(
-    //   children: [
-    //     InkWell(
-    //       onTap: _getFromCamera,
-    //       child: CircleAvatar(
-    //         radius: 37,
-    //         backgroundColor: Colors.black12,
-    //         backgroundImage:
-    //             _pickedImage != null ? FileImage(_pickedImage) : null,
-    //         child: Icon(
-    //           Icons.camera_alt_outlined,
-    //           color: _pickedImage != null ? Colors.white : Colors.black,
-    //         ),
-    //       ),
-    //     ),
-    //     TextButton.icon(
-    //       onPressed: _getFromGallery,
-    //       icon: Icon(Icons.image),
-    //       label: Text("Upload Image"),
-    //     ),
-    //   ],
-    // );
   }
 }
