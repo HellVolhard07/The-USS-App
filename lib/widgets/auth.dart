@@ -12,7 +12,8 @@ import '../constants.dart';
 
 User? loggedInUser;
 String loggedInSocietyName = '';
-
+String loggedInSoceityAbout = '';
+List societyEvents = [];
 
 class LoginProvider with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -68,6 +69,8 @@ class LoginProvider with ChangeNotifier {
           .get();
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
+      loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
+      societyEvents = await loggedInUserDetail.get('myEvents');
 
       print(loggedInSocietyName);
     } on FirebaseAuthException catch (e) {
