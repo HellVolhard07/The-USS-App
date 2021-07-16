@@ -1,12 +1,42 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
+import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
 
+class EventsScreen extends StatefulWidget {
+  @override
+  State<EventsScreen> createState() => _EventsScreenState();
+}
 
-class EventsScreen extends StatelessWidget {
+class _EventsScreenState extends State<EventsScreen> {
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    getCurrentUserData();
+    super.initState();
+  }
+
+  Future getCurrentUserData() async {
+    try {
+      final loggedInUserDetail = await _firestore
+          .collection(societiesCollection)
+          .doc(_auth.currentUser!.uid)
+          .get();
+
+      loggedInSocietyName = await loggedInUserDetail.get('societyName');
+
+      print(loggedInSocietyName);
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -46,11 +76,11 @@ class EventsScreen extends StatelessWidget {
                         child: IconButton(
                           icon: themeProvider.isDarkTheme
                               ? Icon(
-                                  Icons.light_mode,
+                                  Icons.wb_twighlight,
                                   color: Colors.yellow,
                                 )
                               : Icon(
-                                  Icons.dark_mode,
+                                  Icons.nights_stay_rounded,
                                   color: Colors.black,
                                 ),
                           onPressed: () {

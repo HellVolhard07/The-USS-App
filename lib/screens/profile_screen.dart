@@ -5,27 +5,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
+import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
-String loggedInSocietyName = '';
+class ProfileScreen extends StatefulWidget {
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
 
-class ProfileScreen extends StatelessWidget {
+class _ProfileScreenState extends State<ProfileScreen> {
   final _auth = FirebaseAuth.instance;
+
   final _firestore = FirebaseFirestore.instance;
-  // void getLoggedInSocietyDetails() async{
-  //   try{
-  //   loggedInSocietyName = await _firestore.collection(societiesCollection).doc(_auth.currentUser.uid).
-  //   }
-  //   on FirebaseException catch (e) {
-  //     print(e);
-  //   }
-// }
+
+  
 
   @override
   Widget build(BuildContext context) {
+    print(loggedInSocietyName);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final loginProvider = Provider.of<LoginProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -50,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'SocietyName',
+                    loggedInSocietyName,
                     style: TextStyle(
                       color: themeProvider.isDarkTheme
                           ? Colors.white
@@ -102,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: themeProvider.isDarkTheme
                             ? Colors.deepPurpleAccent.withOpacity(0.1)
-                            : Colors.lightBlue.withOpacity(0.5),
+                            : Colors.deepPurpleAccent.withOpacity(0.7),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       child: Column(
@@ -112,6 +114,9 @@ class ProfileScreen extends StatelessWidget {
                             'About',
                             style: TextStyle(
                                 color: Colors.white,
+                                // color: themeProvider.isDarkTheme
+                                //     ? Colors.white
+                                //     : Colors.black,
                                 fontWeight: FontWeight.w900,
                                 fontSize: 43),
                           ),
@@ -120,7 +125,12 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           Text(
                             'This society is the best society of whole of USS',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            style: TextStyle(
+                                color: Colors.white,
+                                // color: themeProvider.isDarkTheme
+                                //     ? Colors.white
+                                //     : Colors.black,
+                                fontSize: 18),
                           ),
                         ],
                       ),
@@ -130,12 +140,21 @@ class ProfileScreen extends StatelessWidget {
               ),
               Positioned(
                 left: 260,
-                bottom: 630,
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.white,
-                  backgroundImage: NetworkImage(
-                    'https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg',
+                bottom: 570,
+                child: GestureDetector(
+                  onTap: () async {
+                    loginProvider.logOutUser(context);
+                  },
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundColor:
+                        themeProvider.isDarkTheme ? Colors.white : Colors.black,
+                    child: CircleAvatar(
+                      radius: 38,
+                      backgroundImage: NetworkImage(
+                        'https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg',
+                      ),
+                    ),
                   ),
                 ),
               ),
