@@ -7,12 +7,14 @@ import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
+import 'package:the_uss_project/widgets/about_profile_widget.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
+import 'package:the_uss_project/widgets/event_profile_widget.dart';
 import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
-List<Widget> ProfileWidgets = [
+List<Widget> profileWidgets = [
   AboutWidget(themeProvider: ThemeProvider()),
   EventWidget(),
 ];
@@ -82,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       initialIndex: 0,
                       selectedLabelIndex: (index) {
                         setState(() {
-                          finalWidget = ProfileWidgets[index];
+                          finalWidget = profileWidgets[index];
                         });
                       },
                       selectedTextStyle: TextStyle(
@@ -142,64 +144,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class AboutWidget extends StatelessWidget {
-  const AboutWidget({
-    Key? key,
-    required this.themeProvider,
-  }) : super(key: key);
-
-  final ThemeProvider themeProvider;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'About',
-            style: TextStyle(
-                // color: Colors.white,
-                color: themeProvider.isDarkTheme ? Colors.white : Colors.black,
-                fontWeight: FontWeight.w900,
-                fontSize: 43),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            loggedInSoceityAbout,
-            style: TextStyle(
-                // color: Colors.white,
-                color: themeProvider.isDarkTheme ? Colors.white : Colors.black,
-                fontSize: 18),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class EventWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: societyEvents.length,
-      itemBuilder: (context, index) {
-        return EventItem(
-            eventPosterUrl: societyEvents[index]['poster'],
-            boxColor: Colors.pinkAccent,
-            eventId: societyEvents[index]['eventId'],
-            aboutEvent: societyEvents[index]['aboutEvent'],
-            eventDate: societyEvents[index]['date'],
-            eventStartTime: societyEvents[index]['startTime'],
-            eventTitle: societyEvents[index]['title'],
-            eventVenue: societyEvents[index]['venue']);
-      },
     );
   }
 }
