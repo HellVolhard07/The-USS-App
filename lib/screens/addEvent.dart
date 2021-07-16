@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
+import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
 
 class AddEventScreen extends StatefulWidget {
@@ -65,9 +66,16 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   Future verifyAndSchedule() async {
     if (!_addEventFormKey.currentState!.validate()) {
+      showMyDialog(context, "Some fields are missing", showAction: true);
       return;
     }
     _addEventFormKey.currentState!.save();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Event added successfully"),
+      ),
+    );
 
     setState(() {
       _isLoading = true;
@@ -92,7 +100,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         date: eventDate,
         startTime: eventStartTime,
         endTime: eventEndTime,
-        posterURL: url,
+        posterURL: _imagePick == null ? loggedInSocietyLogo : url,
         societyName: loggedInSocietyName,
       });
 
@@ -138,6 +146,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return _isLoading
         ? Center(
             child: CircularProgressIndicator(),
@@ -146,177 +155,172 @@ class _AddEventScreenState extends State<AddEventScreen> {
             onTap: () {
               FocusScope.of(context).unfocus();
             },
-            child: SafeArea(
-              child: Scaffold(
-                body: SingleChildScrollView(
+            child: Scaffold(
+              body: SafeArea(
+                child: SingleChildScrollView(
                   child: Form(
                     key: _addEventFormKey,
                     child: Column(
                       children: [
                         Column(
+                    children: [
+                      // Container(
+                      //   width: double.infinity,
+                      //   height: 200,
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.only(
+                      //       bottomLeft: Radius.circular(10),
+                      //       bottomRight: Radius.circular(10),
+                      //     ),
+                      //     image: DecorationImage(
+                      //       image: AssetImage(
+                      //         "assets/images/aboutevent.png",
+                      //       ),
+                      //       fit: BoxFit.fill,
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 15,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
                           children: [
-                            // Container(
-                            //   width: double.infinity,
-                            //   height: 200,
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.only(
-                            //       bottomLeft: Radius.circular(10),
-                            //       bottomRight: Radius.circular(10),
-                            //     ),
-                            //     image: DecorationImage(
-                            //       image: AssetImage(
-                            //         "assets/images/aboutevent.png",
-                            //       ),
-                            //       fit: BoxFit.fill,
-                            //     ),
-                            //   ),
-                            // ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 15,
+                            Text(
+                              "About*",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Divider(thickness: 3),
+                            SizedBox(height: 20),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.deepPurpleAccent,
+                                    blurRadius: 3,
+                                    offset: Offset(5, 3),
+                                  ),
+                                ],
                               ),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "About*",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.grey.shade200,
+                                        ),
+                                      ),
+                                    ),
+                                    child: TextFormField(
+                                      controller: _titleController,
+                                      onSaved: (title) {
+                                        setState(() {
+                                          eventTitle = title.toString();
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Required";
+                                        }
+                                        return null;
+                                      },
+                                      focusNode: _eventTitleNode,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Event Title",
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      onFieldSubmitted: (_) {
+                                        _eventTitleNode.unfocus();
+                                        FocusScope.of(context).requestFocus(
+                                            _eventDescriptionNode);
+                                      },
                                     ),
                                   ),
-                                  Divider(thickness: 3),
-                                  SizedBox(height: 20),
                                   Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.deepPurpleAccent,
-                                          blurRadius: 3,
-                                          offset: Offset(5, 3),
+                                    padding: const EdgeInsets.all(10),
+                                    child: TextFormField(
+                                      controller: _descController,
+                                      onSaved: (desc) {
+                                        setState(() {
+                                          eventDesc = desc.toString();
+                                        });
+                                      },
+                                      focusNode: _eventDescriptionNode,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Required";
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Description",
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
                                         ),
-                                      ],
+                                      ),
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
+                                      onFieldSubmitted: (_) {
+                                        _eventDescriptionNode.unfocus();
+                                        FocusScope.of(context)
+                                            .requestFocus(_eventVenue);
+                                      },
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                color: Colors.grey.shade200,
-                                              ),
-                                            ),
-                                          ),
-                                          child: TextFormField(
-                                            controller: _titleController,
-                                            onSaved: (title) {
-                                              setState(() {
-                                                eventTitle = title.toString();
-                                              });
-                                            },
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return "Required";
-                                              }
-                                              return null;
-                                            },
-                                            focusNode: _eventTitleNode,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "Event Title",
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            onFieldSubmitted: (_) {
-                                              _eventTitleNode.unfocus();
-                                              FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _eventDescriptionNode);
-                                            },
-                                          ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    child: TextFormField(
+                                      controller: _venueController,
+                                      onSaved: (venue) {
+                                        setState(() {
+                                          eventVenue = venue.toString();
+                                        });
+                                      },
+                                      focusNode: _eventVenue,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Required";
+                                        }
+                                        if (!value.contains("https://")) {
+                                          return "Invalid";
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Venue/Link (if online)",
+                                        hintStyle: TextStyle(
+                                          color: Colors.grey,
                                         ),
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            controller: _descController,
-                                            onSaved: (desc) {
-                                              setState(() {
-                                                eventDesc = desc.toString();
-                                              });
-                                            },
-                                            focusNode: _eventDescriptionNode,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return "Required";
-                                              }
-                                              return null;
-                                            },
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "Description",
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            keyboardType:
-                                                TextInputType.multiline,
-                                            maxLines: null,
-                                            textCapitalization:
-                                                TextCapitalization.sentences,
-                                            onFieldSubmitted: (_) {
-                                              _eventDescriptionNode.unfocus();
-                                              FocusScope.of(context)
-                                                  .requestFocus(_eventVenue);
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            controller: _venueController,
-                                            onSaved: (venue) {
-                                              setState(() {
-                                                eventVenue = venue.toString();
-                                              });
-                                            },
-                                            focusNode: _eventVenue,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return "Required";
-                                              }
-                                              if (!value.contains("https://")) {
-                                                return "Invalid";
-                                              }
-                                              return null;
-                                            },
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText:
-                                                  "Venue/Link (if online)",
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            onFieldSubmitted: (_) {
-                                              _eventVenue.unfocus();
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                      ),
+                                      onFieldSubmitted: (_) {
+                                        _eventVenue.unfocus();
+                                      },
                                     ),
                                   ),
                                 ],
@@ -324,50 +328,55 @@ class _AddEventScreenState extends State<AddEventScreen> {
                             ),
                           ],
                         ),
-                        Column(
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 15,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 15,
+                            Text(
+                              "Date and Time*",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Divider(thickness: 3),
+                            SizedBox(height: 20),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.deepPurpleAccent,
+                                    blurRadius: 3,
+                                    offset: Offset(5, 3),
+                                  ),
+                                ],
                               ),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Date and Time*",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Divider(thickness: 3),
-                                  SizedBox(height: 20),
                                   Container(
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.deepPurpleAccent,
-                                          blurRadius: 3,
-                                          offset: Offset(5, 3),
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.grey.shade200,
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                color: Colors.grey.shade200,
-                                              ),
-                                            ),
-                                          ),
+
                                           child: TextFormField(
                                             controller: _dateEditingController,
+                                            readOnly: true,
                                             onTap: () async {
                                               DateTime selectedDate =
                                                   (await showDatePicker(
@@ -418,6 +427,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                           child: TextFormField(
                                             controller:
                                                 _startTimeEditingController,
+                                            readOnly: true,
                                             onSaved: (startTime) {
                                               setState(() {
                                                 eventStartTime =
@@ -474,6 +484,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                           child: TextFormField(
                                             controller:
                                                 _endTimeEditingController,
+                                            readOnly: true,
                                             onSaved: (endTime) {
                                               setState(() {
                                                 eventEndTime =
@@ -523,7 +534,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                             },
                                           ),
                                         ),
-                                      ],
+                                      ),
+                                      onFieldSubmitted: (_) {
+                                        _eventEndTime.unfocus();
+                                      },
                                     ),
                                   ),
                                 ],
@@ -531,102 +545,100 @@ class _AddEventScreenState extends State<AddEventScreen> {
                             ),
                           ],
                         ),
-                        Column(
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 15,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 15,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Upload Poster",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Divider(thickness: 3),
-                                  SizedBox(height: 20),
-                                  PosterUpload(_imagePicked),
-                                ],
+                            Text(
+                              "Upload Poster",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            Divider(thickness: 3),
+                            SizedBox(height: 20),
+                            PosterUpload(_imagePicked),
                           ],
                         ),
-                        Column(
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 15,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 15,
+                            Text(
+                              "Miscellaneous",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Divider(thickness: 3),
+                            SizedBox(height: 20),
+                            Container(
+                              height: 250,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.deepPurpleAccent,
+                                    blurRadius: 3,
+                                    offset: Offset(5, 3),
+                                  ),
+                                ],
                               ),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Miscellaneous",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Divider(thickness: 3),
-                                  SizedBox(height: 20),
                                   Container(
-                                    height: 250,
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.deepPurpleAccent,
-                                          blurRadius: 3,
-                                          offset: Offset(5, 3),
+                                      border: Border(
+                                        bottom: BorderSide(
+                                          color: Colors.grey.shade200,
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                color: Colors.grey.shade200,
-                                              ),
-                                            ),
-                                          ),
-                                          child: TextFormField(
-                                            controller: _miscController,
-                                            focusNode: _misc,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            onSaved: (misc) {
-                                              setState(() {
-                                                miscellaneous = misc!;
-                                              });
-                                            },
-                                            keyboardType:
-                                                TextInputType.multiline,
-                                            maxLines: null,
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText:
-                                                  "Any Additional Information / Guidelines / Links etc.",
-                                              hintStyle: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 12),
-                                            ),
-                                            onFieldSubmitted: (misc) {
-                                              _misc.unfocus();
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                    child: TextFormField(
+                                      controller: _miscController,
+                                      focusNode: _misc,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      onSaved: (misc) {
+                                        setState(() {
+                                          miscellaneous = misc!;
+                                        });
+                                      },
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText:
+                                            "Any Additional Information / Guidelines / Links etc.",
+                                        hintStyle: TextStyle(
+                                            color: Colors.grey, fontSize: 12),
+                                      ),
+                                      onFieldSubmitted: (misc) {
+                                        _misc.unfocus();
+                                      },
                                     ),
                                   ),
                                 ],
@@ -634,16 +646,25 @@ class _AddEventScreenState extends State<AddEventScreen> {
                             ),
                           ],
                         ),
-                        ElevatedButton(
-                          onPressed: verifyAndSchedule,
+                      ),
+                    ],
+                  ),
+                  _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            verifyAndSchedule();
+                          },
                           child: Text("Schedule"),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
+                ],
               ),
             ),
-          );
+          ),
+        ),
+      ),
+    );
   }
 }
