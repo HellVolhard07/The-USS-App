@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -9,7 +10,7 @@ class EventItem extends StatelessWidget {
   final Color boxColor;
   final String? eventId;
   final String eventTitle;
-  final String eventDate;
+  final Timestamp eventDate;
   final String? eventEndTime;
   final String eventStartTime;
   final String eventVenue;
@@ -119,7 +120,7 @@ class EventItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        eventDate,
+                        "${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
                         // style: TextStyle(
                         //   color: Colors.grey,
                         // ),
