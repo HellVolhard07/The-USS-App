@@ -86,7 +86,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   String eventTitle = "";
   String eventDesc = "";
   String eventVenue = "";
-  String eventDate = "";
+  late DateTime eventDate;
+  late DateTime selectedDate;
   String eventStartTime = "";
   String eventEndTime = "";
   String eventPoster = "";
@@ -399,23 +400,22 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                       controller: _dateEditingController,
                                       readOnly: true,
                                       onTap: () async {
-                                        DateTime selectedDate =
-                                            (await showDatePicker(
+                                        selectedDate = (await showDatePicker(
                                           context: context,
                                           initialDate: DateTime.now(),
-                                          firstDate: DateTime(2000),
+                                          firstDate: DateTime.now(),
                                           lastDate: DateTime(2100),
                                         ))!;
-                                        eventDate = DateFormat.yMMMd()
-                                            .format(selectedDate);
+                                        var date = DateTime.parse("$selectedDate");
+                                        selectedDate =
+                                        eventDate = selectedDate;
                                         _dateEditingController.text =
                                             DateFormat.yMMMd()
                                                 .format(selectedDate);
                                       },
                                       onSaved: (date) {
                                         setState(() {
-                                          eventDate =
-                                              _dateEditingController.text;
+                                          eventDate = selectedDate;
                                         });
                                       },
                                       focusNode: _eventDate,
