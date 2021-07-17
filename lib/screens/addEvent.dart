@@ -363,8 +363,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),
                             ))!;
-                            var date = DateTime.parse("$selectedDate");
-                            selectedDate = eventDate = selectedDate;
+                            // var date = DateTime.parse("$selectedDate");
+                            eventDate = selectedDate;
                             _dateEditingController.text =
                                 DateFormat.yMMMd().format(selectedDate);
                           },
@@ -567,12 +567,22 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        Text(
-                          "Upload poster",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16.0,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Upload poster",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                            //TODO: implement delete poster
+                            IconButton(
+                              icon: Icon(Icons.delete_outline_rounded),
+                              onPressed: () {},
+                            ),
+                          ],
                         ),
                         PosterUpload(_imagePicked),
                         Divider(
