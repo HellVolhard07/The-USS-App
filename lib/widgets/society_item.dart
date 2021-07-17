@@ -66,16 +66,9 @@ class SocietyItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Hero(
-                  tag: societyName,
-                  // transitionOnUserGestures: true,
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(societyLogo),
-                      maxRadius: 40.0,
-                    ),
-                  ),
+                CircleAvatar(
+                  backgroundImage: NetworkImage(societyLogo),
+                  maxRadius: 40.0,
                 ),
                 SizedBox(
                   width: 30.0,
@@ -84,18 +77,11 @@ class SocietyItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Hero(
-                        tag: societyName,
-                        // transitionOnUserGestures: true,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            societyName,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                      child: Text(
+                        societyName,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
