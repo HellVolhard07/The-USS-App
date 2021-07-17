@@ -28,6 +28,34 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   File? _imagePick;
 
+  @override
+  void initState() {
+    getCurrentUserData();
+    super.initState();
+  }
+
+  Future getCurrentUserData() async {
+    try {
+      final loggedInUserDetail = await firestore
+          .collection(societiesCollection)
+          .doc(_auth.currentUser!.uid)
+          .get();
+
+      loggedInSocietyName = await loggedInUserDetail.get('societyName');
+
+      loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
+      societyEvents = await loggedInUserDetail.get('myEvents');
+
+      loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
+
+      print(loggedInSocietyName);
+      print(loggedInSocietyLogo);
+      print('society events are : $societyEvents');
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   void _imagePicked(File image) {
     _imagePick = image;
   }
@@ -71,12 +99,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
     }
     _addEventFormKey.currentState!.save();
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Event added successfully"),
-      ),
-    );
-
     setState(() {
       _isLoading = true;
     });
@@ -116,13 +138,18 @@ class _AddEventScreenState extends State<AddEventScreen> {
             date: eventDate,
             startTime: eventStartTime,
             endTime: eventEndTime,
-            posterURL: url,
+            posterURL: _imagePick == null ? loggedInSocietyLogo : url,
           }
         ]),
       });
       setState(() {
         _isLoading = false;
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Event added successfully"),
+        ),
+      );
       _titleController.clear();
       _descController.clear();
       _venueController.clear();
@@ -146,6 +173,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(loggedInSocietyLogo);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -440,7 +468,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                           selectedStartTime.minute,
                                         );
                                         _startTimeEditingController.text =
-                                            DateFormat.Hm().format(dt);
+                                            DateFormat("jm").format(dt);
                                         eventStartTime =
                                             _startTimeEditingController.text;
                                       },
@@ -494,7 +522,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                           selectedEndTime.minute,
                                         );
                                         _endTimeEditingController.text =
-                                            DateFormat.Hm().format(dt);
+                                            DateFormat("jm").format(dt);
                                         eventEndTime =
                                             _startTimeEditingController.text;
                                       },

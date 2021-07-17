@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:the_uss_project/theme_provider.dart';
 
 import 'auth.dart';
 import 'event_item.dart';
 
 class EventWidget extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -21,6 +19,7 @@ class EventWidget extends StatelessWidget {
             aboutEvent: societyEvents[index]['aboutEvent'],
             eventDate: societyEvents[index]['date'],
             eventStartTime: societyEvents[index]['startTime'],
+            eventEndTime: societyEvents[index]['endTime'],
             eventTitle: societyEvents[index]['title'],
             eventVenue: societyEvents[index]['venue']);
       },
