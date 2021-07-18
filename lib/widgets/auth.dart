@@ -15,9 +15,9 @@ String loggedInSocietyName = '';
 
 String loggedInSoceityAbout = '';
 List societyEvents = [];
+List teamMembers = [];
 
 String loggedInSocietyLogo = '';
-
 
 class LoginProvider with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -76,8 +76,9 @@ class LoginProvider with ChangeNotifier {
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       societyEvents = await loggedInUserDetail.get('myEvents');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
-
+      teamMembers = await loggedInUserDetail.get('teamMembers');
       print(loggedInSocietyName);
+      print('team : $teamMembers');
     } on FirebaseAuthException catch (e) {
       print(e);
     }

@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,9 +8,9 @@ import '../screens/event_screen.dart';
 
 class EventItem extends StatelessWidget {
   final Color boxColor;
-  final String eventId;
+  final String? eventId;
   final String eventTitle;
-  final String eventDate;
+  final Timestamp eventDate;
   final String? eventEndTime;
   final String eventStartTime;
   final String eventVenue;
@@ -19,7 +20,7 @@ class EventItem extends StatelessWidget {
   EventItem({
     required this.eventPosterUrl,
     required this.boxColor,
-    required this.eventId,
+    this.eventId,
     required this.aboutEvent,
     required this.eventDate,
     this.eventEndTime,
@@ -35,8 +36,38 @@ class EventItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
-          PageRouteBuilder(
-            reverseTransitionDuration: Duration(milliseconds: 800),
+          // PageRouteBuilder(
+          //   reverseTransitionDuration: Duration(milliseconds: 800),
+          //   settings: RouteSettings(
+          //     arguments: EventItem(
+          //       eventPosterUrl: eventPosterUrl,
+          //       boxColor: boxColor,
+          //       eventId: eventId,
+          //       aboutEvent: aboutEvent,
+          //       eventDate: eventDate,
+          //       eventStartTime: eventStartTime,
+          //       eventTitle: eventTitle,
+          //       eventVenue: eventVenue,
+          //       eventEndTime: eventEndTime,
+          //     ),
+          //   ),
+          //   transitionDuration: Duration(milliseconds: 800),
+          //   pageBuilder: (
+          //     BuildContext context,
+          //     Animation<double> animation,
+          //     Animation<double> secondaryAnimation,
+          //   ) {
+          //     return SharedAxisTransition(
+          //       child: EventScreen(),
+          //       animation: animation,
+          //       secondaryAnimation: secondaryAnimation,
+          //       transitionType: _transitionType,
+          //     );
+          //   },
+          // ),
+
+          MaterialPageRoute(
+            builder: (ctx) => EventScreen(),
             settings: RouteSettings(
               arguments: EventItem(
                 eventPosterUrl: eventPosterUrl,
@@ -50,36 +81,7 @@ class EventItem extends StatelessWidget {
                 eventEndTime: eventEndTime,
               ),
             ),
-            transitionDuration: Duration(milliseconds: 800),
-            pageBuilder: (
-              BuildContext context,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-            ) {
-              return SharedAxisTransition(
-                child: EventScreen(),
-                animation: animation,
-                secondaryAnimation: secondaryAnimation,
-                transitionType: _transitionType,
-              );
-            },
           ),
-
-          // MaterialPageRoute(
-          //   builder: (ctx) => EventScreen(),
-          //   settings: RouteSettings(
-          //     arguments: EventItem(
-          //       boxColor: boxColor,
-          //       eventId: eventId,
-          //       aboutEvent: aboutEvent,
-          //       eventDate: eventDate,
-          //       eventStartTime: eventStartTime,
-          //       eventTitle: eventTitle,
-          //       eventVenue: eventVenue,
-          //       eventEndTime: eventEndTime,
-          //     ),
-          //   ),
-          // ),
         );
       },
       child: Container(
@@ -91,7 +93,7 @@ class EventItem extends StatelessWidget {
             width: double.infinity,
             height: 150,
             decoration: BoxDecoration(
-              color: boxColor.withOpacity(0.4),
+              color: boxColor,
               border: Border(
                 left: BorderSide(
                   color: boxColor,
@@ -108,20 +110,17 @@ class EventItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: Hero(
-                          tag: eventTitle,
-                          child: Text(
-                            eventTitle,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16,
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                        child: Text(
+                          eventTitle,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 16,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Text(
-                        eventDate,
+                        "${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
                         // style: TextStyle(
                         //   color: Colors.grey,
                         // ),
@@ -150,16 +149,13 @@ class EventItem extends StatelessWidget {
                 Container(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Hero(
-                      tag: eventPosterUrl,
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: Image.network(
-                          eventPosterUrl,
-                          fit: BoxFit.cover,
-                          height: double.infinity,
-                          width: 100,
-                        ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: Image.network(
+                        eventPosterUrl,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: 100,
                       ),
                     ),
                   ),
