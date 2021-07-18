@@ -15,11 +15,11 @@ import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
 List<Widget> profileWidgets = [
-  AboutWidget(themeProvider: ThemeProvider()),
+  AboutWidget(),
   EventWidget(),
 ];
 
-Widget finalWidget = AboutWidget(themeProvider: ThemeProvider());
+Widget finalWidget = AboutWidget();
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(loggedInSocietyName);
+    // print(loggedInSocietyName);
     final themeProvider = Provider.of<ThemeProvider>(context);
     final loginProvider = Provider.of<LoginProvider>(context);
     return Scaffold(
@@ -107,16 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 30,
                   ),
                   Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: themeProvider.isDarkTheme
-                            ? Colors.deepPurpleAccent.withOpacity(0.1)
-                            : Colors.greenAccent.withOpacity(0.4),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: finalWidget,
-                    ),
+                    child: finalWidget,
                   )
                 ],
               ),
