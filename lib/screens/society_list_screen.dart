@@ -5,22 +5,23 @@ import 'package:the_uss_project/widgets/society_item.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/theme_provider.dart';
 
+var societiesData;
+
 class SocietyListScreen extends StatelessWidget {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection(societiesCollection)
-            .snapshots(),
+        stream: _firestore.collection(societiesCollection).snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-          var societiesData = snapshot.data.docs;
+          societiesData = snapshot.data.docs;
 
           return SafeArea(
             child: Column(
@@ -69,6 +70,7 @@ class SocietyListScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemBuilder: (ctx, index) => SocietyItem(
+                    societyData: societiesData,
                     myColor:
                         index % 2 == 0 ? Colors.blueAccent : Colors.redAccent,
                     societyName: societiesData[index][societyName],

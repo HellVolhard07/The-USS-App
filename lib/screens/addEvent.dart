@@ -28,6 +28,34 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   File? _imagePick;
 
+  @override
+  void initState() {
+    getCurrentUserData();
+    super.initState();
+  }
+
+  Future getCurrentUserData() async {
+    try {
+      final loggedInUserDetail = await firestore
+          .collection(societiesCollection)
+          .doc(_auth.currentUser!.uid)
+          .get();
+
+      loggedInSocietyName = await loggedInUserDetail.get('societyName');
+
+      loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
+      societyEvents = await loggedInUserDetail.get('myEvents');
+
+      loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
+
+      print(loggedInSocietyName);
+      print(loggedInSocietyLogo);
+      print('society events are : $societyEvents');
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   void _imagePicked(File image) {
     _imagePick = image;
   }
@@ -58,7 +86,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   String eventTitle = "";
   String eventDesc = "";
   String eventVenue = "";
-  String eventDate = "";
+  late DateTime eventDate;
+  late DateTime selectedDate;
   String eventStartTime = "";
   String eventEndTime = "";
   String eventPoster = "";
@@ -70,12 +99,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
       return;
     }
     _addEventFormKey.currentState!.save();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Event added successfully"),
-      ),
-    );
 
     setState(() {
       _isLoading = true;
@@ -116,13 +139,18 @@ class _AddEventScreenState extends State<AddEventScreen> {
             date: eventDate,
             startTime: eventStartTime,
             endTime: eventEndTime,
-            posterURL: url,
+            posterURL: _imagePick == null ? loggedInSocietyLogo : url,
           }
         ]),
       });
       setState(() {
         _isLoading = false;
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Event added successfully"),
+        ),
+      );
       _titleController.clear();
       _descController.clear();
       _venueController.clear();
@@ -146,518 +174,475 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    return _isLoading
-        ? Center(
-            child: CircularProgressIndicator(),
-          )
-        : GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Scaffold(
-              body: SafeArea(
-                child: SingleChildScrollView(
-                  child: Form(
-                    key: _addEventFormKey,
+    print(loggedInSocietyLogo);
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _addEventFormKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 23.0, vertical: 25.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                    children: [
-                      // Container(
-                      //   width: double.infinity,
-                      //   height: 200,
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.only(
-                      //       bottomLeft: Radius.circular(10),
-                      //       bottomRight: Radius.circular(10),
-                      //     ),
-                      //     image: DecorationImage(
-                      //       image: AssetImage(
-                      //         "assets/images/aboutevent.png",
-                      //       ),
-                      //       fit: BoxFit.fill,
-                      //     ),
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 15,
+                        Text(
+                          "Event Details",
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-
+                        Text(
+                          "This section contains the basic details of your event",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        TextFormField(
+                          controller: _titleController,
+                          onSaved: (title) {
+                            setState(() {
+                              eventTitle = title.toString();
+                            });
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Required";
+                            }
+                            return null;
+                          },
+                          focusNode: _eventTitleNode,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            labelText: "Event Title",
+                            labelStyle: TextStyle(fontSize: 18.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            hintText: "Event Title",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onFieldSubmitted: (_) {
+                            _eventTitleNode.unfocus();
+                            FocusScope.of(context)
+                                .requestFocus(_eventDescriptionNode);
+                          },
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          controller: _descController,
+                          onSaved: (desc) {
+                            setState(() {
+                              eventDesc = desc.toString();
+                            });
+                          },
+                          focusNode: _eventDescriptionNode,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Required";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            labelText: "Event description",
+                            labelStyle:
+                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            hintText: "Event description",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          textCapitalization: TextCapitalization.sentences,
+                          onFieldSubmitted: (_) {
+                            _eventDescriptionNode.unfocus();
+                            FocusScope.of(context).requestFocus(_eventVenue);
+                          },
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          controller: _venueController,
+                          onSaved: (venue) {
+                            setState(() {
+                              eventVenue = venue.toString();
+                            });
+                          },
+                          focusNode: _eventVenue,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Required";
+                            }
+                            if (!value.contains("https://")) {
+                              return "Invalid";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            labelText: "Venue",
+                            labelStyle:
+                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            hintText: "Venue(Link if online)",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onFieldSubmitted: (_) {
+                            _eventVenue.unfocus();
+                          },
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        TextFormField(
+                          controller: _dateEditingController,
+                          readOnly: true,
+                          onTap: () async {
+                            selectedDate = (await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2100),
+                            ))!;
+                            // var date = DateTime.parse("$selectedDate");
+                            eventDate = selectedDate;
+                            _dateEditingController.text =
+                                DateFormat.yMMMd().format(selectedDate);
+                          },
+                          onSaved: (date) {
+                            setState(() {
+                              eventDate = selectedDate;
+                            });
+                          },
+                          focusNode: _eventDate,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Required";
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            labelText: "Date",
+                            labelStyle:
+                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
+                            ),
+                            hintText: "Event Date",
+                            suffixIcon: Icon(Icons.calendar_today_outlined),
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onFieldSubmitted: (date) {
+                            _eventDate.unfocus();
+                            FocusScope.of(context)
+                                .requestFocus(_eventStartTime);
+                          },
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "About*",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: TextFormField(
+                                controller: _startTimeEditingController,
+                                readOnly: true,
+                                onSaved: (startTime) {
+                                  setState(() {
+                                    eventStartTime =
+                                        _startTimeEditingController.text;
+                                  });
+                                },
+                                onTap: () async {
+                                  TimeOfDay selectedStartTime =
+                                      (await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  ))!;
+                                  // eventStartTime = selectedStartTime.toString();
+                                  var dt = DateTime(
+                                    DateTime.now().year,
+                                    DateTime.now().month,
+                                    DateTime.now().day,
+                                    selectedStartTime.hour,
+                                    selectedStartTime.minute,
+                                  );
+                                  _startTimeEditingController.text =
+                                      DateFormat("jm").format(dt);
+                                  eventStartTime =
+                                      _startTimeEditingController.text;
+                                },
+                                focusNode: _eventStartTime,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Required";
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.deepPurpleAccent),
+                                  ),
+                                  labelText: "Start Time",
+                                  labelStyle: TextStyle(
+                                      fontSize: 18.0, color: Colors.green),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.deepPurpleAccent),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.deepPurpleAccent),
+                                  ),
+                                  hintText: "Event start time",
+                                  contentPadding: EdgeInsets.all(15.0),
+                                  suffixIcon: Icon(Icons.more_time),
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                onFieldSubmitted: (_) {
+                                  _eventStartTime.unfocus();
+                                  FocusScope.of(context)
+                                      .requestFocus(_eventEndTime);
+                                },
                               ),
                             ),
-                            Divider(thickness: 3),
-                            SizedBox(height: 20),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.deepPurpleAccent,
-                                    blurRadius: 3,
-                                    offset: Offset(5, 3),
+                            SizedBox(
+                              width: 7.0,
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _endTimeEditingController,
+                                readOnly: true,
+                                onSaved: (endTime) {
+                                  setState(() {
+                                    eventEndTime =
+                                        _endTimeEditingController.text;
+                                  });
+                                },
+                                onTap: () async {
+                                  TimeOfDay selectedEndTime =
+                                      (await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  ))!;
+                                  // eventStartTime = selectedStartTime.toString();
+                                  var dt = DateTime(
+                                    DateTime.now().year,
+                                    DateTime.now().month,
+                                    DateTime.now().day,
+                                    selectedEndTime.hour,
+                                    selectedEndTime.minute,
+                                  );
+                                  _endTimeEditingController.text =
+                                      DateFormat("jm").format(dt);
+                                  eventEndTime =
+                                      _startTimeEditingController.text;
+                                },
+                                focusNode: _eventEndTime,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Required";
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(15.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.deepPurpleAccent),
                                   ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey.shade200,
-                                        ),
-                                      ),
-                                    ),
-                                    child: TextFormField(
-                                      controller: _titleController,
-                                      onSaved: (title) {
-                                        setState(() {
-                                          eventTitle = title.toString();
-                                        });
-                                      },
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Required";
-                                        }
-                                        return null;
-                                      },
-                                      focusNode: _eventTitleNode,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Event Title",
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      onFieldSubmitted: (_) {
-                                        _eventTitleNode.unfocus();
-                                        FocusScope.of(context).requestFocus(
-                                            _eventDescriptionNode);
-                                      },
-                                    ),
+                                  labelText: "End time",
+                                  labelStyle: TextStyle(
+                                      fontSize: 18.0, color: Colors.green),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.deepPurpleAccent),
                                   ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    child: TextFormField(
-                                      controller: _descController,
-                                      onSaved: (desc) {
-                                        setState(() {
-                                          eventDesc = desc.toString();
-                                        });
-                                      },
-                                      focusNode: _eventDescriptionNode,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Required";
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Description",
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      keyboardType: TextInputType.multiline,
-                                      maxLines: null,
-                                      textCapitalization:
-                                          TextCapitalization.sentences,
-                                      onFieldSubmitted: (_) {
-                                        _eventDescriptionNode.unfocus();
-                                        FocusScope.of(context)
-                                            .requestFocus(_eventVenue);
-                                      },
-                                    ),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.deepPurpleAccent),
                                   ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    child: TextFormField(
-                                      controller: _venueController,
-                                      onSaved: (venue) {
-                                        setState(() {
-                                          eventVenue = venue.toString();
-                                        });
-                                      },
-                                      focusNode: _eventVenue,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return "Required";
-                                        }
-                                        if (!value.contains("https://")) {
-                                          return "Invalid";
-                                        }
-                                        return null;
-                                      },
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Venue/Link (if online)",
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      onFieldSubmitted: (_) {
-                                        _eventVenue.unfocus();
-                                      },
-                                    ),
+                                  hintText: "Event end time",
+                                  suffixIcon: Icon(Icons.more_time),
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey,
                                   ),
-                                ],
+                                ),
+                                onFieldSubmitted: (_) {
+                                  _eventEndTime.unfocus();
+                                },
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 15,
+                        SizedBox(
+                          height: 20.0,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Divider(
+                          thickness: 2.0,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Date and Time*",
+                              "Upload poster",
                               style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                                fontSize: 16.0,
                               ),
                             ),
-                            Divider(thickness: 3),
-                            SizedBox(height: 20),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.deepPurpleAccent,
-                                    blurRadius: 3,
-                                    offset: Offset(5, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey.shade200,
-                                        ),
-                                      ),
-                                    ),
-
-                                          child: TextFormField(
-                                            controller: _dateEditingController,
-                                            readOnly: true,
-                                            onTap: () async {
-                                              DateTime selectedDate =
-                                                  (await showDatePicker(
-                                                context: context,
-                                                initialDate: DateTime.now(),
-                                                firstDate: DateTime(2000),
-                                                lastDate: DateTime(2100),
-                                              ))!;
-                                              eventDate = DateFormat.yMMMd()
-                                                  .format(selectedDate);
-                                              _dateEditingController.text =
-                                                  DateFormat.yMMMd()
-                                                      .format(selectedDate);
-                                            },
-                                            onSaved: (date) {
-                                              setState(() {
-                                                eventDate =
-                                                    _dateEditingController.text;
-                                              });
-                                            },
-                                            focusNode: _eventDate,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return "Required";
-                                              }
-                                              return null;
-                                            },
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "Date",
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            onFieldSubmitted: (date) {
-                                              _eventDate.unfocus();
-                                              FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _eventStartTime);
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            controller:
-                                                _startTimeEditingController,
-                                            readOnly: true,
-                                            onSaved: (startTime) {
-                                              setState(() {
-                                                eventStartTime =
-                                                    _startTimeEditingController
-                                                        .text;
-                                              });
-                                            },
-                                            onTap: () async {
-                                              TimeOfDay selectedStartTime =
-                                                  (await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.now(),
-                                              ))!;
-                                              // eventStartTime = selectedStartTime.toString();
-                                              var dt = DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month,
-                                                DateTime.now().day,
-                                                selectedStartTime.hour,
-                                                selectedStartTime.minute,
-                                              );
-                                              _startTimeEditingController.text =
-                                                  DateFormat.Hm().format(dt);
-                                              eventStartTime =
-                                                  _startTimeEditingController
-                                                      .text;
-                                            },
-                                            focusNode: _eventStartTime,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return "Required";
-                                              }
-                                              return null;
-                                            },
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "Start Time",
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            onFieldSubmitted: (_) {
-                                              _eventStartTime.unfocus();
-                                              FocusScope.of(context)
-                                                  .requestFocus(_eventEndTime);
-                                            },
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          child: TextFormField(
-                                            controller:
-                                                _endTimeEditingController,
-                                            readOnly: true,
-                                            onSaved: (endTime) {
-                                              setState(() {
-                                                eventEndTime =
-                                                    _endTimeEditingController
-                                                        .text;
-                                              });
-                                            },
-                                            onTap: () async {
-                                              TimeOfDay selectedEndTime =
-                                                  (await showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay.now(),
-                                              ))!;
-                                              // eventStartTime = selectedStartTime.toString();
-                                              var dt = DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month,
-                                                DateTime.now().day,
-                                                selectedEndTime.hour,
-                                                selectedEndTime.minute,
-                                              );
-                                              _endTimeEditingController.text =
-                                                  DateFormat.Hm().format(dt);
-                                              eventEndTime =
-                                                  _startTimeEditingController
-                                                      .text;
-                                            },
-                                            focusNode: _eventEndTime,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return "Required";
-                                              }
-                                              return null;
-                                            },
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "End Time",
-                                              hintStyle: TextStyle(
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            onFieldSubmitted: (_) {
-                                              _eventEndTime.unfocus();
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      onFieldSubmitted: (_) {
-                                        _eventEndTime.unfocus();
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            //TODO: implement delete poster
+                            IconButton(
+                              icon: Icon(Icons.delete_outline_rounded),
+                              onPressed: () {},
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 15,
+                        PosterUpload(_imagePicked),
+                        Divider(
+                          thickness: 2.0,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Upload Poster",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        TextFormField(
+                          controller: _miscController,
+                          focusNode: _misc,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          onSaved: (misc) {
+                            setState(() {
+                              miscellaneous = misc!;
+                            });
+                          },
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
                             ),
-                            Divider(thickness: 3),
-                            SizedBox(height: 20),
-                            PosterUpload(_imagePicked),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 15,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Miscellaneous",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            labelText: "Miscellaneous",
+                            labelStyle: TextStyle(fontSize: 18.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
                             ),
-                            Divider(thickness: 3),
-                            SizedBox(height: 20),
-                            Container(
-                              height: 250,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.deepPurpleAccent,
-                                    blurRadius: 3,
-                                    offset: Offset(5, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colors.grey.shade200,
-                                        ),
-                                      ),
-                                    ),
-                                    child: TextFormField(
-                                      controller: _miscController,
-                                      focusNode: _misc,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                      onSaved: (misc) {
-                                        setState(() {
-                                          miscellaneous = misc!;
-                                        });
-                                      },
-                                      keyboardType: TextInputType.multiline,
-                                      maxLines: null,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText:
-                                            "Any Additional Information / Guidelines / Links etc.",
-                                        hintStyle: TextStyle(
-                                            color: Colors.grey, fontSize: 12),
-                                      ),
-                                      onFieldSubmitted: (misc) {
-                                        _misc.unfocus();
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurpleAccent),
                             ),
-                          ],
+                            hintText:
+                                "Any additional information/guidelines/links",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onFieldSubmitted: (misc) {
+                            _misc.unfocus();
+                          },
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   _isLoading
                       ? Center(
                           child: CircularProgressIndicator(),
                         )
-                      : ElevatedButton(
-                          onPressed: () {
-                            verifyAndSchedule();
-                          },
-                          child: Text("Schedule"),
+                      : Center(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              verifyAndSchedule();
+                            },
+                            child: Text("Schedule"),
+                          ),
                         ),
                 ],
               ),

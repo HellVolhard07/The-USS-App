@@ -1,14 +1,17 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/screens/society_list_screen.dart';
 import 'package:the_uss_project/screens/society_screen.dart';
 
 class SocietyItem extends StatelessWidget {
   final String societyName;
   final String societyLogo;
+  final societyData;
   final Color myColor;
 
   SocietyItem({
+    required this.societyData,
     required this.societyName,
     required this.societyLogo,
     required this.myColor,
@@ -25,6 +28,7 @@ class SocietyItem extends StatelessWidget {
             reverseTransitionDuration: Duration(milliseconds: 800),
             settings: RouteSettings(
               arguments: SocietyItem(
+                societyData: societiesData,
                 myColor: myColor,
                 societyLogo: societyLogo,
                 societyName: societyName,
@@ -66,16 +70,9 @@ class SocietyItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Hero(
-                  tag: societyName,
-                  // transitionOnUserGestures: true,
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(societyLogo),
-                      maxRadius: 40.0,
-                    ),
-                  ),
+                CircleAvatar(
+                  backgroundImage: NetworkImage(societyLogo),
+                  maxRadius: 40.0,
                 ),
                 SizedBox(
                   width: 30.0,
@@ -84,18 +81,11 @@ class SocietyItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Hero(
-                        tag: societyName,
-                        // transitionOnUserGestures: true,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Text(
-                            societyName,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                      child: Text(
+                        societyName,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
