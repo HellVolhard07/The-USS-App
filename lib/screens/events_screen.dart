@@ -33,13 +33,13 @@ class _EventsScreenState extends State<EventsScreen> {
 
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       societyEvents = await loggedInUserDetail.get('myEvents');
-
+      teamMembers = await loggedInUserDetail.get('teamMembers');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
 
-
       print(loggedInSocietyName);
-      print(loggedInSoceityAbout);
-      print('society events are : $societyEvents');
+      print(teamMembers);
+      // print(loggedInSoceityAbout);
+      // print('society events are : $societyEvents');
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -111,6 +111,8 @@ class _EventsScreenState extends State<EventsScreen> {
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
                     itemBuilder: (ctx, index) => EventItem(
+                      orgLogo: eventsData[index][societyLogo],
+                      orgSocietyName: eventsData[index][societyName],
                       eventPosterUrl: eventsData[index][posterURL],
                       boxColor: index % 2 == 0
                           ? Theme.of(context).colorScheme.primary
