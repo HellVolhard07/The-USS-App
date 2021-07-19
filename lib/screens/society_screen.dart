@@ -5,6 +5,7 @@ import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/widgets/about_profile_widget.dart';
+import 'package:the_uss_project/widgets/about_society_widget.dart';
 import 'package:the_uss_project/widgets/event_profile_widget.dart';
 import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
@@ -14,12 +15,12 @@ import '../theme_provider.dart';
 import 'society_list_screen.dart';
 
 List societyWidgets = [
-  AboutWidget(),
+  AboutSocietyWidget(),
   EventWidget(),
   TeamMembers(),
 ];
 
-Widget finalWidget = AboutWidget();
+Widget finalWidget = AboutSocietyWidget();
 
 class SocietyScreen extends StatefulWidget {
   @override
@@ -27,6 +28,12 @@ class SocietyScreen extends StatefulWidget {
 }
 
 class _SocietyScreenState extends State<SocietyScreen> {
+  @override
+  void initState() {
+    finalWidget = AboutSocietyWidget();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
