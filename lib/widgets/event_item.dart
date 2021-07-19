@@ -87,7 +87,7 @@ class EventItem extends StatelessWidget {
                       ),
                     ),
                     decoration: BoxDecoration(
-                      color: Color(0xfffbf9f7),
+                      color: Colors.white70,
                       borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(20.0),
                       ),
@@ -102,7 +102,7 @@ class EventItem extends StatelessWidget {
                   child: Container(
                     width: 360,
                     height: 90,
-                    color: Color(0xfffbf9f7),
+                    color: Colors.white70,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 25.0,
