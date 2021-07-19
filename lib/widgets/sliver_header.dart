@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 SliverAppBar sliverHeader(
   String title,
@@ -39,13 +41,15 @@ SliverAppBar sliverHeader(
             padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
-              color: Colors.blueGrey.withOpacity(0.7),
+              color: Color(0xFFFFEEDB),
             ),
             child: Text(
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.25,
                 fontSize: title.length >= 15 ? 15 : 20,
               ),
             ),
