@@ -27,34 +27,27 @@ class _EventWidgetState extends State<EventWidget> {
         //     : Colors.greenAccent.withOpacity(0.4),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      child: StreamBuilder<Object>(
-          stream: _firestore.collection(societiesCollection).snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return ListView.builder(
-              itemCount: societyEvents.length,
-              itemBuilder: (context, index) {
-                return EventItem(
-                    orgLogo: societyEvents[index][societyLogo],
-                    orgSocietyName: societyEvents[index][societyName],
-                    eventPosterUrl: societyEvents[index]['poster'],
-                    boxColor: index % 2 == 0
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.secondary,
-                    eventId: societyEvents[index]['eventId'],
-                    aboutEvent: societyEvents[index]['aboutEvent'],
-                    eventDate: societyEvents[index]['date'],
-                    eventStartTime: societyEvents[index]['startTime'],
-                    eventEndTime: societyEvents[index]['endTime'],
-                    eventTitle: societyEvents[index]['title'],
-                    eventVenue: societyEvents[index]['venue']);
-              },
-            );
-          }),
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        itemCount: loggedInSocietyEvents.length,
+        itemBuilder: (context, index) {
+          return EventItem(
+              orgLogo: loggedInSocietyEvents[index][societyLogo],
+              orgSocietyName: loggedInSocietyEvents[index][societyName],
+              eventPosterUrl: loggedInSocietyEvents[index]['poster'],
+              boxColor: index % 2 == 0
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.secondary,
+              eventId: loggedInSocietyEvents[index]['eventId'],
+              aboutEvent: loggedInSocietyEvents[index]['aboutEvent'],
+              eventDate: loggedInSocietyEvents[index]['date'],
+              eventStartTime: loggedInSocietyEvents[index]['startTime'],
+              eventEndTime: loggedInSocietyEvents[index]['endTime'],
+              eventTitle: loggedInSocietyEvents[index]['title'],
+              eventVenue: loggedInSocietyEvents[index]['venue']);
+        },
+      ),
     );
   }
 }

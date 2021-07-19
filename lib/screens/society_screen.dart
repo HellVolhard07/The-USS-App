@@ -7,6 +7,7 @@ import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/widgets/about_profile_widget.dart';
 import 'package:the_uss_project/widgets/about_society_widget.dart';
 import 'package:the_uss_project/widgets/event_profile_widget.dart';
+import 'package:the_uss_project/widgets/event_society_widget.dart';
 import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
 import 'package:the_uss_project/widgets/team_members_widget.dart';
@@ -16,7 +17,7 @@ import 'society_list_screen.dart';
 
 List societyWidgets = [
   AboutSocietyWidget(),
-  EventWidget(),
+  EventSocietyWidget(),
   TeamMembers(),
 ];
 
