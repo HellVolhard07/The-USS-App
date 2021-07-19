@@ -8,12 +8,12 @@ import 'package:the_uss_project/theme_provider.dart';
 import 'auth.dart';
 import 'event_item.dart';
 
-class EventWidget extends StatefulWidget {
+class EventSocietyWidget extends StatefulWidget {
   @override
-  State<EventWidget> createState() => _EventWidgetState();
+  State<EventSocietyWidget> createState() => _EventSocietyWidgetState();
 }
 
-class _EventWidgetState extends State<EventWidget> {
+class _EventSocietyWidgetState extends State<EventSocietyWidget> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
