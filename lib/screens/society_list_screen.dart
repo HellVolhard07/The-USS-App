@@ -70,11 +70,12 @@ class SocietyListScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemBuilder: (ctx, index) => SocietyItem(
-                    societyData: societiesData,
                     myColor:
                         index % 2 == 0 ? Colors.blueAccent : Colors.redAccent,
                     societyName: societiesData[index][societyName],
                     societyLogo: societiesData[index][societyLogo],
+                    societyAbout: societiesData[index][societyAbout],
+                    societyTeam: societiesData[index][societyTeam],
                   ),
                   itemCount: societiesData.length,
                 ),
