@@ -9,6 +9,7 @@ import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
 import 'auth.dart';
+import 'package:the_uss_project/utils.dart';
 
 class TeamMembers extends StatelessWidget {
   @override
@@ -89,16 +90,23 @@ class MemberCircle extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            print(societyArgs.societyTeam.length);
-            print(societyArgs.societyTeam);
+            // print(societyArgs.societyTeam.length);
+            // print(societyArgs.societyTeam);
+            Utils.openEmail(
+                toEmail: societyArgs.societyTeam[index]['contact'],
+                subject: 'Query regarding ${societyArgs.societyName}',
+                body: 'Sent using the USS app');
           },
           child: CircleAvatar(
             radius: 32,
             backgroundColor: Colors.greenAccent,
-            child: Icon(
-              Icons.person,
-              size: 35,
-              color: Colors.black,
+            child: Text(
+              societyArgs.societyTeam[index]['name'][0],
+              style: TextStyle(
+                fontSize: 32,
+                color: Colors.black,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
         ),

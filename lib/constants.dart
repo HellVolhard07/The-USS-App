@@ -17,6 +17,7 @@ String societyName = "societyName";
 String societyLogo = "societyLogo";
 String societyAbout = "societyAbout";
 String societyTeam = "teamMembers";
+String societyKeEvents = "myEvents";
 String aboutEvent = "aboutEvent";
 String posterURL = "poster";
 

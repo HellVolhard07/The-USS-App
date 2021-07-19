@@ -76,6 +76,7 @@ class SocietyListScreen extends StatelessWidget {
                     societyLogo: societiesData[index][societyLogo],
                     societyAbout: societiesData[index][societyAbout],
                     societyTeam: societiesData[index][societyTeam],
+                    societyKeEvents: societiesData[index][societyKeEvents],
                   ),
                   itemCount: societiesData.length,
                 ),

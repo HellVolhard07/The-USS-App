@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/screens/addEvent.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/about_profile_widget.dart';
@@ -133,6 +134,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //TODO: Add animation here, if needed.
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddEventScreen()));
+        },
+        elevation: 20,
+        backgroundColor: Colors.greenAccent,
+        focusColor: Colors.greenAccent,
+        splashColor: Colors.blueAccent,
+        child: Icon(
+          Icons.add,
+          color: Colors.black,
+          size: 38,
         ),
       ),
     );
