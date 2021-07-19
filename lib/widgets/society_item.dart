@@ -1,17 +1,32 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/screens/society_list_screen.dart';
 import 'package:the_uss_project/screens/society_screen.dart';
 
 class SocietyItem extends StatelessWidget {
   final String societyName;
   final String societyLogo;
   final Color myColor;
+  final String societyAbout;
+  final societyTeam;
+  // final String societyEventName;
+  // final String societyEventDate;
+  // final String societyEventStartTime;
+  // final String societyEventEndTime;
+  // final String societyEventVenue;
 
   SocietyItem({
     required this.societyName,
     required this.societyLogo,
     required this.myColor,
+    required this.societyAbout,
+    required this.societyTeam,
+    // required this.societyEventDate,
+    // required this.societyEventName,
+    // required this.societyEventStartTime,
+    // required this.societyEventEndTime,
+    // required this.societyEventVenue,
   });
 
   @override
@@ -28,6 +43,13 @@ class SocietyItem extends StatelessWidget {
                 myColor: myColor,
                 societyLogo: societyLogo,
                 societyName: societyName,
+                societyAbout: societyAbout,
+                societyTeam: societyTeam,
+                // societyEventDate: societyEventDate,
+                // societyEventName: societyEventName,
+                // societyEventStartTime: societyEventStartTime,
+                // societyEventEndTime: societyEventEndTime,
+                // societyEventVenue: societyEventVenue,
               ),
             ),
             transitionDuration: Duration(milliseconds: 800),
