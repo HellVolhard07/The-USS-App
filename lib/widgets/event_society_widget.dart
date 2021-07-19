@@ -15,6 +15,7 @@ class EventSocietyWidget extends StatefulWidget {
 
 class _EventSocietyWidgetState extends State<EventSocietyWidget> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -31,9 +32,7 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(
-                child: CircularProgressIndicator(
-                  color: Colors.lightBlue,
-                ),
+                child: CircularProgressIndicator(),
               );
             }
             return ListView.builder(
@@ -42,6 +41,8 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
               itemCount: societyEvents.length,
               itemBuilder: (context, index) {
                 return EventItem(
+                    orgLogo: societyEvents[index][societyLogo],
+                    orgSocietyName: societyEvents[index][societyName],
                     eventPosterUrl: societyEvents[index]['poster'],
                     boxColor: index % 2 == 0
                         ? Theme.of(context).colorScheme.primary
