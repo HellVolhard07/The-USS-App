@@ -34,54 +34,82 @@ class _PosterUploadState extends State<PosterUpload> {
   @override
   Widget build(BuildContext context) {
     // TODO: Image going when changing pages
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        _pickedImage != null
-            ? GestureDetector(
-                onTap: _getFromGallery,
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 15),
-                  height: 225,
-                  width: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: FileImage(_pickedImage!),
-                      fit: BoxFit.cover,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Upload poster",
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 16.0,
+              ),
+            ),
+            //TODO: implement delete poster
+            _pickedImage != null
+                ? IconButton(
+                    icon: Icon(Icons.delete_outline_rounded),
+                    onPressed: () {
+                      setState(() {
+                        _pickedImage = null;
+                      });
+                    },
+                  )
+                : Container(),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _pickedImage != null
+                ? GestureDetector(
+                    onTap: _getFromGallery,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 15),
+                      height: 225,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: FileImage(_pickedImage!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )
-            : Container(),
-        _pickedImage == null
-            ? GestureDetector(
-                onTap: _getFromGallery,
-                child: Container(
-                  margin: EdgeInsets.only(top: 15, bottom: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Column(
-                    children: [
-                      Icon(Icons.cloud_upload_outlined),
-                      Text("Upload Poster"),
-                    ],
-                  ),
-                ),
-              )
-            : Container(),
-        // ElevatedButton.icon(
-        //   style: ButtonStyle(
-        //     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-        //       EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-        //     ),
-        //   ),
-        //   icon: Icon(Icons.cloud_upload),
-        //   onPressed: _getFromGallery,
-        //   label: Text("Upload Poster"),
-        // ),
+                  )
+                : Container(),
+            _pickedImage == null
+                ? GestureDetector(
+                    onTap: _getFromGallery,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 15, bottom: 20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        children: [
+                          Icon(Icons.cloud_upload_outlined),
+                          Text("Upload Poster"),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(),
+            // ElevatedButton.icon(
+            //   style: ButtonStyle(
+            //     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            //       EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+            //     ),
+            //   ),
+            //   icon: Icon(Icons.cloud_upload),
+            //   onPressed: _getFromGallery,
+            //   label: Text("Upload Poster"),
+            // ),
+          ],
+        ),
       ],
     );
   }
