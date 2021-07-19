@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/widgets/society_item.dart';
 
 import '../theme_provider.dart';
 import 'auth.dart';
 
-class AboutWidget extends StatelessWidget {
-  const AboutWidget({
-    Key? key,
-  }) : super(key: key);
-
+class AboutSocietyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final societyArgs =
+        ModalRoute.of(context)!.settings.arguments as SocietyItem;
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(20),
@@ -40,7 +40,7 @@ class AboutWidget extends StatelessWidget {
             ),
             SingleChildScrollView(
               child: Text(
-                loggedInSoceityAbout,
+                societyArgs.societyAbout,
                 style: TextStyle(
                     // color: Colors.white,
                     color:

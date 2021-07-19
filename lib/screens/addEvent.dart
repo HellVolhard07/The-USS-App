@@ -182,9 +182,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: SingleChildScrollView(
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
             child: Form(
               key: _addEventFormKey,
               child: Column(
