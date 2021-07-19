@@ -125,6 +125,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         endTime: eventEndTime,
         posterURL: _imagePick == null ? loggedInSocietyLogo : url,
         societyName: loggedInSocietyName,
+        societyLogo: loggedInSocietyLogo,
       });
 
       await firestore
