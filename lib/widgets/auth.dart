@@ -14,7 +14,7 @@ User? loggedInUser;
 String loggedInSocietyName = '';
 
 String loggedInSoceityAbout = '';
-List societyEvents = [];
+List loggedInSocietyEvents = [];
 List teamMembers = [];
 
 String loggedInSocietyLogo = '';
@@ -74,7 +74,7 @@ class LoginProvider with ChangeNotifier {
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
-      societyEvents = await loggedInUserDetail.get('myEvents');
+      loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
       teamMembers = await loggedInUserDetail.get('teamMembers');
       print(loggedInSocietyName);
