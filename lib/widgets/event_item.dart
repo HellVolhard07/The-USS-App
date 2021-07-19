@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -36,36 +35,6 @@ class EventItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
-          // PageRouteBuilder(
-          //   reverseTransitionDuration: Duration(milliseconds: 800),
-          //   settings: RouteSettings(
-          //     arguments: EventItem(
-          //       eventPosterUrl: eventPosterUrl,
-          //       boxColor: boxColor,
-          //       eventId: eventId,
-          //       aboutEvent: aboutEvent,
-          //       eventDate: eventDate,
-          //       eventStartTime: eventStartTime,
-          //       eventTitle: eventTitle,
-          //       eventVenue: eventVenue,
-          //       eventEndTime: eventEndTime,
-          //     ),
-          //   ),
-          //   transitionDuration: Duration(milliseconds: 800),
-          //   pageBuilder: (
-          //     BuildContext context,
-          //     Animation<double> animation,
-          //     Animation<double> secondaryAnimation,
-          //   ) {
-          //     return SharedAxisTransition(
-          //       child: EventScreen(),
-          //       animation: animation,
-          //       secondaryAnimation: secondaryAnimation,
-          //       transitionType: _transitionType,
-          //     );
-          //   },
-          // ),
-
           MaterialPageRoute(
             builder: (ctx) => EventScreen(),
             settings: RouteSettings(
@@ -85,82 +54,79 @@ class EventItem extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             width: double.infinity,
-            height: 150,
+            height: 300,
             decoration: BoxDecoration(
-              color: boxColor,
-              border: Border(
-                left: BorderSide(
-                  color: boxColor,
-                  width: 7,
-                ),
+              image: DecorationImage(
+                image: NetworkImage(eventPosterUrl),
+                fit: BoxFit.cover,
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          eventTitle,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 16,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Text(
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  left: -20,
+                  top: -20,
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 27.0, top: 16.0),
+                      child: Text(
                         "${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
-                        // style: TextStyle(
-                        //   color: Colors.grey,
-                        // ),
+                        style: TextStyle(color: Colors.black),
                       ),
-                      Text(
-                        "$eventStartTime - $eventEndTime",
-                        // style: TextStyle(
-                        //   color: Colors.grey,
-                        // ),
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color(0xfffbf9f7),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20.0),
                       ),
-                      Expanded(
-                        child: Text(
-                          eventVenue,
-                          style: TextStyle(
-                            backgroundColor: Colors.black12,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          // style: TextStyle(
-                          //   color: Colors.grey,
-                          // ),
-                        ),
-                      ),
-                    ],
+                    ),
+                    width: 110,
+                    height: 50,
                   ),
                 ),
-                Container(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Material(
-                      type: MaterialType.transparency,
-                      child: Image.network(
-                        eventPosterUrl,
-                        fit: BoxFit.cover,
-                        height: double.infinity,
-                        width: 100,
+                Positioned(
+                  top: 220,
+                  left: -20,
+                  child: Container(
+                    width: 360,
+                    height: 90,
+                    color: Color(0xfffbf9f7),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 25.0,
+                        vertical: 10.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            eventTitle,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            eventVenue,
+                            style: TextStyle(
+                              fontSize: 11.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
               ],
+              clipBehavior: Clip.none,
             ),
           ),
         ),
@@ -168,3 +134,64 @@ class EventItem extends StatelessWidget {
     );
   }
 }
+/*Row(
+mainAxisAlignment: MainAxisAlignment.spaceAround,
+children: [
+Expanded(
+child: Column(
+mainAxisAlignment: MainAxisAlignment.spaceAround,
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+Expanded(
+child: Text(
+eventTitle,
+style: TextStyle(
+fontWeight: FontWeight.w900,
+fontSize: 16,
+),
+overflow: TextOverflow.ellipsis,
+),
+),
+Text(
+"${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
+// style: TextStyle(
+//   color: Colors.grey,
+// ),
+),
+Text(
+"$eventStartTime - $eventEndTime",
+// style: TextStyle(
+//   color: Colors.grey,
+// ),
+),
+Expanded(
+child: Text(
+eventVenue,
+style: TextStyle(
+backgroundColor: Colors.black12,
+),
+overflow: TextOverflow.ellipsis,
+// style: TextStyle(
+//   color: Colors.grey,
+// ),
+),
+),
+],
+),
+),
+Container(
+child: ClipRRect(
+borderRadius: BorderRadius.circular(12),
+child: Material(
+type: MaterialType.transparency,
+child: Image.network(
+eventPosterUrl,
+fit: BoxFit.cover,
+height: double.infinity,
+width: 100,
+),
+),
+),
+),
+],
+),*/
