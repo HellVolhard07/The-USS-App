@@ -141,6 +141,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
             startTime: eventStartTime,
             endTime: eventEndTime,
             posterURL: _imagePick == null ? loggedInSocietyLogo : url,
+            societyName: loggedInSocietyName,
+            societyLogo: loggedInSocietyLogo,
           }
         ]),
       });
