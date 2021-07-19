@@ -111,6 +111,8 @@ class _EventsScreenState extends State<EventsScreen> {
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
                     itemBuilder: (ctx, index) => EventItem(
+                      orgLogo: eventsData[index][societyLogo],
+                      orgSocietyName: eventsData[index][societyName],
                       eventPosterUrl: eventsData[index][posterURL],
                       boxColor: index % 2 == 0
                           ? Theme.of(context).colorScheme.primary

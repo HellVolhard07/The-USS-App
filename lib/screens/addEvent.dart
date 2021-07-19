@@ -125,6 +125,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         endTime: eventEndTime,
         posterURL: _imagePick == null ? loggedInSocietyLogo : url,
         societyName: loggedInSocietyName,
+        societyLogo: loggedInSocietyLogo,
       });
 
       await firestore
@@ -140,6 +141,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
             startTime: eventStartTime,
             endTime: eventEndTime,
             posterURL: _imagePick == null ? loggedInSocietyLogo : url,
+            societyName: loggedInSocietyName,
+            societyLogo: loggedInSocietyLogo,
           }
         ]),
       });
@@ -567,23 +570,23 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Upload poster",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16.0,
-                              ),
-                            ),
-                            //TODO: implement delete poster
-                            IconButton(
-                              icon: Icon(Icons.delete_outline_rounded),
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       "Upload poster",
+                        //       style: TextStyle(
+                        //         color: Colors.grey,
+                        //         fontSize: 16.0,
+                        //       ),
+                        //     ),
+                        //     //TODO: implement delete poster
+                        //     IconButton(
+                        //       icon: Icon(Icons.delete_outline_rounded),
+                        //       onPressed: () {},
+                        //     ),
+                        //   ],
+                        // ),
                         PosterUpload(_imagePicked),
                         Divider(
                           thickness: 2.0,
