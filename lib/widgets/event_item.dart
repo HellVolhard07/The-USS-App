@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import '../screens/event_screen.dart';
 
 class EventItem extends StatelessWidget {
+  final String orgLogo;
   final Color boxColor;
   final String? eventId;
   final String eventTitle;
@@ -16,8 +17,10 @@ class EventItem extends StatelessWidget {
   final String eventVenue;
   final String aboutEvent;
   final String eventPosterUrl;
+  final String orgSocietyName;
 
   EventItem({
+    required this.orgLogo,
     required this.eventPosterUrl,
     required this.boxColor,
     this.eventId,
@@ -27,6 +30,7 @@ class EventItem extends StatelessWidget {
     required this.eventStartTime,
     required this.eventTitle,
     required this.eventVenue,
+    required this.orgSocietyName,
   });
 
   @override
@@ -70,6 +74,8 @@ class EventItem extends StatelessWidget {
             builder: (ctx) => EventScreen(),
             settings: RouteSettings(
               arguments: EventItem(
+                orgLogo: orgLogo,
+                orgSocietyName: orgSocietyName,
                 eventPosterUrl: eventPosterUrl,
                 boxColor: boxColor,
                 eventId: eventId,
