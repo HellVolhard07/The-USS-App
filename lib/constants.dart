@@ -15,6 +15,8 @@ String startTime = "startTime";
 String endTime = "endTime";
 String societyName = "societyName";
 String societyLogo = "societyLogo";
+String societyAbout = "societyAbout";
+String societyTeam = "teamMembers";
 String aboutEvent = "aboutEvent";
 String posterURL = "poster";
 
