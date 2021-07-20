@@ -12,6 +12,7 @@ import 'package:the_uss_project/widgets/about_profile_widget.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
 import 'package:the_uss_project/widgets/event_profile_widget.dart';
+import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
 import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
@@ -139,8 +140,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //TODO: Add animation here, if needed.
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddEventScreen()));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddEventScreen(),
+              settings: RouteSettings(
+                arguments: EventProfileWidgetItem(
+                  orgLogo: "",
+                  eventPosterUrl: "",
+                  aboutEvent: "",
+                  eventStartTime: "",
+                  eventTitle: "",
+                  eventVenue: "",
+                  orgSocietyName: "",
+                ),
+              ),
+            ),
+          );
         },
         elevation: 20,
         backgroundColor: Colors.greenAccent,
