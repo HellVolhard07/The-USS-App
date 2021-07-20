@@ -7,7 +7,6 @@ import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
 
 import 'auth.dart';
-import 'event_item.dart';
 
 class EventWidget extends StatefulWidget {
   @override
@@ -20,6 +19,7 @@ class _EventWidgetState extends State<EventWidget> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    loggedInSocietyEvents.sort((e1, e2) => e2["date"].compareTo(e1["date"]));
     return Container(
       padding: EdgeInsets.all(0),
       decoration: BoxDecoration(
@@ -37,9 +37,6 @@ class _EventWidgetState extends State<EventWidget> {
               orgLogo: loggedInSocietyEvents[index][societyLogo],
               orgSocietyName: loggedInSocietyEvents[index][societyName],
               eventPosterUrl: loggedInSocietyEvents[index]['poster'],
-              boxColor: index % 2 == 0
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.secondary,
               eventId: loggedInSocietyEvents[index]['eventId'],
               aboutEvent: loggedInSocietyEvents[index]['aboutEvent'],
               eventDate: loggedInSocietyEvents[index]['date'],
