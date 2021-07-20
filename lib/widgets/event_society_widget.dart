@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
+import 'package:the_uss_project/widgets/society_item.dart';
 
 import 'auth.dart';
 import 'event_item.dart';
@@ -15,9 +16,12 @@ class EventSocietyWidget extends StatefulWidget {
 
 class _EventSocietyWidgetState extends State<EventSocietyWidget> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final societyArgs =
+        ModalRoute.of(context)!.settings.arguments as SocietyItem;
     return Container(
       padding: EdgeInsets.all(0),
       decoration: BoxDecoration(
@@ -26,36 +30,27 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
         //     : Colors.greenAccent.withOpacity(0.4),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      child: StreamBuilder<Object>(
-          stream: _firestore.collection(societiesCollection).snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: Colors.lightBlue,
-                ),
-              );
-            }
-            return ListView.builder(
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: societyEvents.length,
-              itemBuilder: (context, index) {
-                return EventItem(
-                    eventPosterUrl: societyEvents[index]['poster'],
-                    boxColor: index % 2 == 0
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.secondary,
-                    eventId: societyEvents[index]['eventId'],
-                    aboutEvent: societyEvents[index]['aboutEvent'],
-                    eventDate: societyEvents[index]['date'],
-                    eventStartTime: societyEvents[index]['startTime'],
-                    eventEndTime: societyEvents[index]['endTime'],
-                    eventTitle: societyEvents[index]['title'],
-                    eventVenue: societyEvents[index]['venue']);
-              },
-            );
-          }),
+      child: ListView.builder(
+        physics: ScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: societyArgs.societyKeEvents.length,
+        itemBuilder: (context, index) {
+          return EventItem(
+              orgLogo: societyArgs.societyKeEvents[index][societyLogo],
+              orgSocietyName: societyArgs.societyKeEvents[index][societyName],
+              eventPosterUrl: societyArgs.societyKeEvents[index]['poster'],
+              boxColor: index % 2 == 0
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.secondary,
+              eventId: societyArgs.societyKeEvents[index]['eventId'],
+              aboutEvent: societyArgs.societyKeEvents[index]['aboutEvent'],
+              eventDate: societyArgs.societyKeEvents[index]['date'],
+              eventStartTime: societyArgs.societyKeEvents[index]['startTime'],
+              eventEndTime: societyArgs.societyKeEvents[index]['endTime'],
+              eventTitle: societyArgs.societyKeEvents[index]['title'],
+              eventVenue: societyArgs.societyKeEvents[index]['venue']);
+        },
+      ),
     );
   }
 }

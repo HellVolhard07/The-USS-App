@@ -2,8 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>MFMailComposeViewController</key>
-	<string>This app needs to send email</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  		<string>https</string>
+  		<string>http</string>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires Gallery access</string>
 	<key>NSCameraUsageDescription</key>

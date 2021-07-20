@@ -27,11 +27,15 @@ class EventScreen extends StatelessWidget {
                   (BuildContext context, ScrollController scrollController) {
                 return Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFFFFEEDB),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(35),
                       topRight: Radius.circular(35),
                     ),
+                    // border: Border.all(
+                    //   color: Colors.grey,
+                    //   width: 1,
+                    // ),
                   ),
                   child: SingleChildScrollView(
                     controller: scrollController,
@@ -117,7 +121,8 @@ class EventScreen extends StatelessWidget {
                                     ),
                                     SizedBox(width: 15),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "${eventArgs.eventDate.toDate().day}/${eventArgs.eventDate.toDate().month}/${eventArgs.eventDate.toDate().year}",
@@ -183,9 +188,7 @@ class EventScreen extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5
-                            ),
+                                horizontal: 10, vertical: 5),
                             child: Text(
                               "About",
                               style: TextStyle(
