@@ -31,6 +31,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
   @override
   void initState() {
     getCurrentUserData();
+    /*_titleController = TextEditingController(
+      text: _isNew ? "" : "Abrakadabra",
+    );*/
     super.initState();
   }
 
@@ -59,6 +62,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   void _imagePicked(File image) {
     _imagePick = image;
   }
+
+  bool _isNew = false;
 
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
@@ -147,6 +152,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         ]),
       });
       setState(() {
+        _imagePick = null;
         _isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
@@ -154,13 +160,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
           content: Text("Event added successfully"),
         ),
       );
+      Navigator.of(context).pop();
       _titleController.clear();
       _descController.clear();
       _venueController.clear();
       _dateEditingController.clear();
       _startTimeEditingController.clear();
       _endTimeEditingController.clear();
-      _imagePick = null;
       _miscController.clear();
     } catch (err) {
       print(err);
@@ -570,23 +576,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text(
-                        //       "Upload poster",
-                        //       style: TextStyle(
-                        //         color: Colors.grey,
-                        //         fontSize: 16.0,
-                        //       ),
-                        //     ),
-                        //     //TODO: implement delete poster
-                        //     IconButton(
-                        //       icon: Icon(Icons.delete_outline_rounded),
-                        //       onPressed: () {},
-                        //     ),
-                        //   ],
-                        // ),
                         PosterUpload(_imagePicked),
                         Divider(
                           thickness: 2.0,
