@@ -7,7 +7,6 @@ import '../screens/event_screen.dart';
 
 class EventItem extends StatelessWidget {
   final String orgLogo;
-  final Color boxColor;
   final String? eventId;
   final String eventTitle;
   final Timestamp eventDate;
@@ -21,7 +20,6 @@ class EventItem extends StatelessWidget {
   EventItem({
     required this.orgLogo,
     required this.eventPosterUrl,
-    required this.boxColor,
     this.eventId,
     required this.aboutEvent,
     required this.eventDate,
@@ -46,7 +44,6 @@ class EventItem extends StatelessWidget {
                 orgLogo: orgLogo,
                 orgSocietyName: orgSocietyName,
                 eventPosterUrl: eventPosterUrl,
-                boxColor: boxColor,
                 eventId: eventId,
                 aboutEvent: aboutEvent,
                 eventDate: eventDate,

@@ -37,9 +37,6 @@ class _EventWidgetState extends State<EventWidget> {
               orgLogo: loggedInSocietyEvents[index][societyLogo],
               orgSocietyName: loggedInSocietyEvents[index][societyName],
               eventPosterUrl: loggedInSocietyEvents[index]['poster'],
-              boxColor: index % 2 == 0
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.secondary,
               eventId: loggedInSocietyEvents[index]['eventId'],
               aboutEvent: loggedInSocietyEvents[index]['aboutEvent'],
               eventDate: loggedInSocietyEvents[index]['date'],

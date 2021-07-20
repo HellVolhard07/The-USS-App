@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/widgets/auth.dart';
+import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
@@ -31,10 +32,39 @@ class _AddEventScreenState extends State<AddEventScreen> {
   @override
   void initState() {
     getCurrentUserData();
-    /*_titleController = TextEditingController(
-      text: _isNew ? "" : "Abrakadabra",
-    );*/
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
+    _titleController = TextEditingController(
+      text: args == null ? "" : args.eventTitle,
+    );
+    super.didChangeDependencies();
+    _descController = TextEditingController(
+      text: args == null ? "" : args.aboutEvent,
+    );
+    _venueController = TextEditingController(
+      text: args == null ? "" : args.eventVenue,
+    );
+
+    bool _isLoading = false;
+
+    _miscController = TextEditingController(
+      text: "",
+    );
+
+    _dateEditingController = TextEditingController(
+      text: "",
+    );
+    _startTimeEditingController = TextEditingController(
+      text: args == null ? "" : args.eventStartTime,
+    );
+    _endTimeEditingController = TextEditingController(
+      text: args == null ? "" : args.eventEndTime,
+    );
   }
 
   Future getCurrentUserData() async {
@@ -62,8 +92,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
   void _imagePicked(File image) {
     _imagePick = image;
   }
-
-  bool _isNew = false;
 
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
@@ -198,7 +226,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 23.0, vertical: 25.0),
+                      horizontal: 23.0,
+                      vertical: 25.0,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
