@@ -39,9 +39,6 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
               orgLogo: societyArgs.societyKeEvents[index][societyLogo],
               orgSocietyName: societyArgs.societyKeEvents[index][societyName],
               eventPosterUrl: societyArgs.societyKeEvents[index]['poster'],
-              boxColor: index % 2 == 0
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.secondary,
               eventId: societyArgs.societyKeEvents[index]['eventId'],
               aboutEvent: societyArgs.societyKeEvents[index]['aboutEvent'],
               eventDate: societyArgs.societyKeEvents[index]['date'],

@@ -115,9 +115,6 @@ class _EventsScreenState extends State<EventsScreen> {
                       orgLogo: eventsData[index][societyLogo],
                       orgSocietyName: eventsData[index][societyName],
                       eventPosterUrl: eventsData[index][posterURL],
-                      boxColor: index % 2 == 0
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.secondary,
                       eventId: eventsData[index].id,
                       aboutEvent: eventsData[index][aboutEvent],
                       eventDate: eventsData[index][date],

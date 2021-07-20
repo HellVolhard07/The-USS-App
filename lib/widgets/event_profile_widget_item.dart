@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/screens/addEvent.dart';
 
 class EventProfileWidgetItem extends StatelessWidget {
   final String orgLogo;
-  final Color boxColor;
   final String? eventId;
   final String eventTitle;
-  final Timestamp eventDate;
+  final Timestamp? eventDate;
   final String? eventEndTime;
   final String eventStartTime;
   final String eventVenue;
@@ -17,10 +18,9 @@ class EventProfileWidgetItem extends StatelessWidget {
   EventProfileWidgetItem({
     required this.orgLogo,
     required this.eventPosterUrl,
-    required this.boxColor,
     this.eventId,
     required this.aboutEvent,
-    required this.eventDate,
+    this.eventDate,
     this.eventEndTime,
     required this.eventStartTime,
     required this.eventTitle,
@@ -30,24 +30,6 @@ class EventProfileWidgetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _titleController = TextEditingController(
-      text: eventTitle,
-    );
-    TextEditingController _descController = TextEditingController(
-      text: aboutEvent,
-    );
-    TextEditingController _venueController = TextEditingController(
-      text: eventVenue,
-    );
-    TextEditingController _miscController = TextEditingController();
-    TextEditingController _dateEditingController = TextEditingController();
-    TextEditingController _startTimeEditingController = TextEditingController(
-      text: eventStartTime,
-    );
-    TextEditingController _endTimeEditingController = TextEditingController(
-      text: eventEndTime,
-    );
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
@@ -70,11 +52,31 @@ class EventProfileWidgetItem extends StatelessWidget {
             ),
           ),
           subtitle: Text(
-            "${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year} \n$eventVenue",
+            "${eventDate!.toDate().day}/${eventDate!.toDate().month}/${eventDate!.toDate().year} \n$eventVenue",
           ),
           isThreeLine: true,
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddEventScreen(),
+                  settings: RouteSettings(
+                    arguments: EventProfileWidgetItem(
+                      orgLogo: orgLogo,
+                      eventPosterUrl: eventPosterUrl,
+                      aboutEvent: aboutEvent,
+                      eventStartTime: eventStartTime,
+                      eventDate: eventDate,
+                      eventTitle: eventTitle,
+                      eventVenue: eventVenue,
+                      orgSocietyName: orgSocietyName,
+                      eventEndTime: eventEndTime,
+                    ),
+                  ),
+                ),
+              );
+            },
             icon: Icon(Icons.edit_outlined),
           ),
           dense: true,
