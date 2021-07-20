@@ -32,7 +32,7 @@ class _EventsScreenState extends State<EventsScreen> {
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
 
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
-      societyEvents = await loggedInUserDetail.get('myEvents');
+      loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
       teamMembers = await loggedInUserDetail.get('teamMembers');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
 

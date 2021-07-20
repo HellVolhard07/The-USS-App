@@ -48,16 +48,6 @@ class HomeScreen extends StatelessWidget {
         activeColorPrimary:
             isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
       ),
-      PersistentBottomNavBarItem(
-        icon: Icon(Icons.add),
-        title: 'Add Event',
-        textStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 12,
-        ),
-        activeColorPrimary:
-            isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
-      ),
     ];
   }
 
@@ -73,7 +63,6 @@ class HomeScreen extends StatelessWidget {
         loginProvider.getAuth.currentUser == null
             ? LoginScreen()
             : ProfileScreen(),
-        AddEventScreen(),
       ];
     }
 
