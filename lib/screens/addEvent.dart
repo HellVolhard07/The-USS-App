@@ -31,6 +31,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
   @override
   void initState() {
     getCurrentUserData();
+    /*_titleController = TextEditingController(
+      text: _isNew ? "" : "Abrakadabra",
+    );*/
     super.initState();
   }
 
@@ -59,6 +62,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   void _imagePicked(File image) {
     _imagePick = image;
   }
+
+  bool _isNew = false;
 
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
