@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
-
-import 'package:the_uss_project/screens/home_screen.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
+import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 
 import '../constants.dart';
 
@@ -17,10 +14,12 @@ String loggedInSoceityAbout = '';
 List loggedInSocietyEvents = [];
 List teamMembers = [];
 
+
 String loggedInSocietyLogo = '';
 
 class LoginProvider with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
+
   FirebaseAuth get getAuth => _auth;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
