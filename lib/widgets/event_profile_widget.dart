@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
+import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
 
 import 'auth.dart';
 import 'event_item.dart';
@@ -32,7 +33,7 @@ class _EventWidgetState extends State<EventWidget> {
         physics: ScrollPhysics(),
         itemCount: loggedInSocietyEvents.length,
         itemBuilder: (context, index) {
-          return EventItem(
+          return EventProfileWidgetItem(
               orgLogo: loggedInSocietyEvents[index][societyLogo],
               orgSocietyName: loggedInSocietyEvents[index][societyName],
               eventPosterUrl: loggedInSocietyEvents[index]['poster'],
