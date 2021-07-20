@@ -10,6 +10,7 @@ class SocietyItem extends StatelessWidget {
   final Color myColor;
   final String societyAbout;
   final societyTeam;
+  final societyKeEvents;
   // final String societyEventName;
   // final String societyEventDate;
   // final String societyEventStartTime;
@@ -22,6 +23,7 @@ class SocietyItem extends StatelessWidget {
     required this.myColor,
     required this.societyAbout,
     required this.societyTeam,
+    required this.societyKeEvents,
     // required this.societyEventDate,
     // required this.societyEventName,
     // required this.societyEventStartTime,
@@ -45,6 +47,7 @@ class SocietyItem extends StatelessWidget {
                 societyName: societyName,
                 societyAbout: societyAbout,
                 societyTeam: societyTeam,
+                societyKeEvents: societyKeEvents,
                 // societyEventDate: societyEventDate,
                 // societyEventName: societyEventName,
                 // societyEventStartTime: societyEventStartTime,
