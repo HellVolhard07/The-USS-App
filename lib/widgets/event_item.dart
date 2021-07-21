@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 import '../screens/event_screen.dart';
+import '../utils.dart';
 
 class EventItem extends StatelessWidget {
   final String orgLogo;
@@ -66,7 +67,7 @@ class EventItem extends StatelessWidget {
                 Text(
                   "${eventDate.toDate().day}",
                   style: TextStyle(
-                    fontSize: 23,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -91,7 +92,7 @@ class EventItem extends StatelessWidget {
                   bottomLeft: Radius.circular(20),
                 ),
               ),
-              height: 130,
+              height: 110,
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -108,7 +109,7 @@ class EventItem extends StatelessWidget {
                               eventTitle,
                               style: TextStyle(
                                 fontWeight: FontWeight.w900,
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Colors.black,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -122,13 +123,22 @@ class EventItem extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: Text(
-                            eventVenue,
-                            style: TextStyle(
-                              backgroundColor: Colors.black12,
-                              color: Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: GestureDetector(
+                              onTap: () {
+                                Utils.openLink(link: eventVenue);
+                              },
+                              child: Text(
+                                eventVenue,
+                                style: TextStyle(
+                                  backgroundColor: Colors.blueGrey.shade100,
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],

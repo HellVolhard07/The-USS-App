@@ -217,6 +217,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Form(
