@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
-import 'package:the_uss_project/screens/addEvent.dart';
 import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
@@ -25,6 +24,7 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 12,
         ),
+        // activeColorPrimary: Colors.deepPurpleAccent,
         activeColorPrimary:
             isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
       ),
@@ -35,6 +35,8 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
+        // activeColorPrimary: Colors.deepPurpleAccent,
+
         activeColorPrimary:
             isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
       ),
@@ -45,6 +47,8 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 12,
         ),
+        // activeColorPrimary: Colors.deepPurpleAccent,
+
         activeColorPrimary:
             isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
       ),
@@ -74,6 +78,7 @@ class HomeScreen extends StatelessWidget {
       items: navBarItems(),
       navBarHeight: 65,
       //TODO: make it dynamic
+      // backgroundColor: Colors.white,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       // decoration: NavBarDecoration(
       //   border: Border(
