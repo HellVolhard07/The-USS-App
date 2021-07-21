@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/widgets/auth.dart';
+import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
@@ -32,6 +33,38 @@ class _AddEventScreenState extends State<AddEventScreen> {
   void initState() {
     getCurrentUserData();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
+    _titleController = TextEditingController(
+      text: args == null ? "" : args.eventTitle,
+    );
+    super.didChangeDependencies();
+    _descController = TextEditingController(
+      text: args == null ? "" : args.aboutEvent,
+    );
+    _venueController = TextEditingController(
+      text: args == null ? "" : args.eventVenue,
+    );
+
+    bool _isLoading = false;
+
+    _miscController = TextEditingController(
+      text: "",
+    );
+
+    _dateEditingController = TextEditingController(
+      text: "",
+    );
+    _startTimeEditingController = TextEditingController(
+      text: args == null ? "" : args.eventStartTime,
+    );
+    _endTimeEditingController = TextEditingController(
+      text: args == null ? "" : args.eventEndTime,
+    );
   }
 
   Future getCurrentUserData() async {
@@ -147,6 +180,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         ]),
       });
       setState(() {
+        _imagePick = null;
         _isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
@@ -154,13 +188,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
           content: Text("Event added successfully"),
         ),
       );
+      Navigator.of(context).pop();
       _titleController.clear();
       _descController.clear();
       _venueController.clear();
       _dateEditingController.clear();
       _startTimeEditingController.clear();
       _endTimeEditingController.clear();
-      _imagePick = null;
       _miscController.clear();
     } catch (err) {
       print(err);
@@ -192,7 +226,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 23.0, vertical: 25.0),
+                      horizontal: 23.0,
+                      vertical: 25.0,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -570,23 +606,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text(
-                        //       "Upload poster",
-                        //       style: TextStyle(
-                        //         color: Colors.grey,
-                        //         fontSize: 16.0,
-                        //       ),
-                        //     ),
-                        //     //TODO: implement delete poster
-                        //     IconButton(
-                        //       icon: Icon(Icons.delete_outline_rounded),
-                        //       onPressed: () {},
-                        //     ),
-                        //   ],
-                        // ),
                         PosterUpload(_imagePicked),
                         Divider(
                           thickness: 2.0,
