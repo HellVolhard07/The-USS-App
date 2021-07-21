@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/screens/addEvent.dart';
 import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/home_screen.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
             eventsScreen: (_) => EventsScreen(),
             societyListScreen: (_) => SocietyListScreen(),
             profileScreen: (_) => ProfileScreen(),
+            addEventScreen: (_) => AddEventScreen(),
           },
         );
       },
