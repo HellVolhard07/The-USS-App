@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 import '../screens/event_screen.dart';
+import '../utils.dart';
 
 class EventItem extends StatelessWidget {
   final String orgLogo;
@@ -122,13 +123,22 @@ class EventItem extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          child: Text(
-                            eventVenue,
-                            style: TextStyle(
-                              backgroundColor: Colors.black12,
-                              color: Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: GestureDetector(
+                              onTap: () {
+                                Utils.openLink(link: eventVenue);
+                              },
+                              child: Text(
+                                eventVenue,
+                                style: TextStyle(
+                                  backgroundColor: Colors.blueGrey.shade100,
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],

@@ -6,6 +6,10 @@ class Utils {
     await canLaunch(url) ? launch(url) : print('Cannot launch url');
   }
 
+  static Future openLink({
+    @required link,
+  }) =>
+      _launchUrl(link);
   static Future openEmail({
     @required toEmail,
     @required subject,
