@@ -70,7 +70,7 @@ class EventScreen extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 27,
+                                  fontSize: 20,
                                 ),
                               ),
                               Padding(
@@ -85,7 +85,7 @@ class EventScreen extends StatelessWidget {
                                     Text(
                                       "Society: ${eventArgs.orgSocietyName}",
                                       style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 13,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -104,7 +104,7 @@ class EventScreen extends StatelessWidget {
                                     Text(
                                       eventArgs.eventVenue,
                                       style: TextStyle(
-                                        fontSize: 17,
+                                        fontSize: 13,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -127,7 +127,7 @@ class EventScreen extends StatelessWidget {
                                         Text(
                                           "${eventArgs.eventDate.toDate().day}/${eventArgs.eventDate.toDate().month}/${eventArgs.eventDate.toDate().year}",
                                           style: TextStyle(
-                                            fontSize: 17,
+                                            fontSize: 13,
                                             color: Colors.black,
                                           ),
                                         ),
