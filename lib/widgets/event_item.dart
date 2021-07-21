@@ -2,12 +2,13 @@ import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:intl/intl.dart';
 
 import '../screens/event_screen.dart';
+import '../utils.dart';
 
 class EventItem extends StatelessWidget {
   final String orgLogo;
-  final Color boxColor;
   final String? eventId;
   final String eventTitle;
   final Timestamp eventDate;
@@ -21,7 +22,6 @@ class EventItem extends StatelessWidget {
   EventItem({
     required this.orgLogo,
     required this.eventPosterUrl,
-    required this.boxColor,
     this.eventId,
     required this.aboutEvent,
     required this.eventDate,
@@ -46,7 +46,6 @@ class EventItem extends StatelessWidget {
                 orgLogo: orgLogo,
                 orgSocietyName: orgSocietyName,
                 eventPosterUrl: eventPosterUrl,
-                boxColor: boxColor,
                 eventId: eventId,
                 aboutEvent: aboutEvent,
                 eventDate: eventDate,
@@ -59,7 +58,183 @@ class EventItem extends StatelessWidget {
           ),
         );
       },
-      child: Container(
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Column(
+              children: [
+                Text(
+                  "${eventDate.toDate().day}",
+                  style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                Text(
+                  "${DateFormat("MMMM").format(eventDate.toDate()).substring(0, 3)}, ${eventDate.toDate().year}",
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              decoration: BoxDecoration(
+                color: Color(0xFFe7eaeb),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
+              ),
+              height: 130,
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Hero(
+                            tag: eventTitle,
+                            child: Text(
+                              eventTitle,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "$eventStartTime - $eventEndTime",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: GestureDetector(
+                              onTap: () {
+                                Utils.openLink(link: eventVenue);
+                              },
+                              child: Text(
+                                eventVenue,
+                                style: TextStyle(
+                                  backgroundColor: Colors.blueGrey.shade100,
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Hero(
+                        tag: eventPosterUrl,
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: Image.network(
+                            eventPosterUrl,
+                            fit: BoxFit.cover,
+                            height: double.infinity,
+                            width: 100,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+/*Row(
+mainAxisAlignment: MainAxisAlignment.spaceAround,
+children: [
+Expanded(
+child: Column(
+mainAxisAlignment: MainAxisAlignment.spaceAround,
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+Expanded(
+child: Text(
+eventTitle,
+style: TextStyle(
+fontWeight: FontWeight.w900,
+fontSize: 16,
+),
+overflow: TextOverflow.ellipsis,
+),
+),
+Text(
+"${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
+// style: TextStyle(
+//   color: Colors.grey,
+// ),
+),
+Text(
+"$eventStartTime - $eventEndTime",
+// style: TextStyle(
+//   color: Colors.grey,
+// ),
+),
+Expanded(
+child: Text(
+eventVenue,
+style: TextStyle(
+backgroundColor: Colors.black12,
+),
+overflow: TextOverflow.ellipsis,
+// style: TextStyle(
+//   color: Colors.grey,
+// ),
+),
+),
+],
+),
+),
+Container(
+child: ClipRRect(
+borderRadius: BorderRadius.circular(12),
+child: Material(
+type: MaterialType.transparency,
+child: Image.network(
+eventPosterUrl,
+fit: BoxFit.cover,
+height: double.infinity,
+width: 100,
+),
+),
+),
+),
+],
+),*/
+
+// **********PREVIOUS CODE SARTHAK*********
+/*
+Container(
         margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
@@ -137,67 +312,4 @@ class EventItem extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-/*Row(
-mainAxisAlignment: MainAxisAlignment.spaceAround,
-children: [
-Expanded(
-child: Column(
-mainAxisAlignment: MainAxisAlignment.spaceAround,
-crossAxisAlignment: CrossAxisAlignment.start,
-children: [
-Expanded(
-child: Text(
-eventTitle,
-style: TextStyle(
-fontWeight: FontWeight.w900,
-fontSize: 16,
-),
-overflow: TextOverflow.ellipsis,
-),
-),
-Text(
-"${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-Text(
-"$eventStartTime - $eventEndTime",
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-Expanded(
-child: Text(
-eventVenue,
-style: TextStyle(
-backgroundColor: Colors.black12,
-),
-overflow: TextOverflow.ellipsis,
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-),
-],
-),
-),
-Container(
-child: ClipRRect(
-borderRadius: BorderRadius.circular(12),
-child: Material(
-type: MaterialType.transparency,
-child: Image.network(
-eventPosterUrl,
-fit: BoxFit.cover,
-height: double.infinity,
-width: 100,
-),
-),
-),
-),
-],
-),*/
+ */
