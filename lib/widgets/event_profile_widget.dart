@@ -7,8 +7,6 @@ import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
 
-import 'auth.dart';
-
 class EventWidget extends StatefulWidget {
   @override
   State<EventWidget> createState() => _EventWidgetState();
@@ -18,10 +16,19 @@ class _EventWidgetState extends State<EventWidget> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  List convertToDate(List event) {
+    event.forEach((element) {
+      element[date].toDate();
+    });
+
+    event.sort((e1, e2) => e2[date].compareTo(e1[date]));
+
+    return event;
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    loggedInSocietyEvents.sort((e1, e2) => e2["date"].compareTo(e1["date"]));
     return Container(
       padding: EdgeInsets.all(0),
       decoration: BoxDecoration(
@@ -41,8 +48,8 @@ class _EventWidgetState extends State<EventWidget> {
                 child: CircularProgressIndicator(),
               );
             } else {
-              final loggedInDatas = snapshot.data.get('myEvents');
-
+              var loggedInDatas = snapshot.data.get('myEvents');
+              loggedInDatas = convertToDate(loggedInDatas);
               return ListView.builder(
                 shrinkWrap: true,
                 physics: ScrollPhysics(),

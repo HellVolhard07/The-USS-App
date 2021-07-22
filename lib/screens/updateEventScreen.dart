@@ -7,19 +7,38 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/widgets/auth.dart';
-import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
 
-class AddEventScreen extends StatefulWidget {
-  const AddEventScreen({Key? key}) : super(key: key);
+class UpdateEventScreen extends StatefulWidget {
+  final String eventTitle;
+  final String eventID;
+  final String eventDesc;
+  final String eventVenue;
+  final DateTime eventDate;
+  final String eventStartTime;
+  final String? eventEndTime;
+  final String eventPoster;
+  final String? miscellaneous;
+
+  UpdateEventScreen({
+    required this.eventTitle,
+    required this.eventVenue,
+    required this.eventDate,
+    this.eventEndTime,
+    required this.eventStartTime,
+    required this.eventDesc,
+    this.miscellaneous,
+    required this.eventID,
+    required this.eventPoster,
+  });
 
   @override
-  _AddEventScreenState createState() => _AddEventScreenState();
+  _UpdateEventScreenState createState() => _UpdateEventScreenState();
 }
 
-class _AddEventScreenState extends State<AddEventScreen> {
+class _UpdateEventScreenState extends State<UpdateEventScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   firebase_storage.FirebaseStorage storage =
@@ -32,8 +51,63 @@ class _AddEventScreenState extends State<AddEventScreen> {
   @override
   void initState() {
     getCurrentUserData();
+    _titleController = TextEditingController(
+      text: widget.eventTitle,
+    );
+
+    _descController = TextEditingController(
+      text: widget.eventDesc,
+    );
+    _venueController = TextEditingController(
+      text: widget.eventVenue,
+    );
+
+    _miscController = TextEditingController(
+      text: "",
+    );
+
+    _dateEditingController = TextEditingController(
+      text: "",
+    );
+    _startTimeEditingController = TextEditingController(
+      text: widget.eventStartTime,
+    );
+    _endTimeEditingController = TextEditingController(
+      text: widget.eventEndTime,
+    );
     super.initState();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   final args =
+  //       ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
+  //
+  //   _titleController = TextEditingController(
+  //     text: args == null ? "" : args.eventTitle,
+  //   );
+  //   super.didChangeDependencies();
+  //   _descController = TextEditingController(
+  //     text: args == null ? "" : args.aboutEvent,
+  //   );
+  //   _venueController = TextEditingController(
+  //     text: args == null ? "" : args.eventVenue,
+  //   );
+  //
+  //   _miscController = TextEditingController(
+  //     text: "",
+  //   );
+  //
+  //   _dateEditingController = TextEditingController(
+  //     text: "",
+  //   );
+  //   _startTimeEditingController = TextEditingController(
+  //     text: args == null ? "" : args.eventStartTime,
+  //   );
+  //   _endTimeEditingController = TextEditingController(
+  //     text: args == null ? "" : args.eventEndTime,
+  //   );
+  // }
 
   Future getCurrentUserData() async {
     try {
@@ -249,9 +323,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -704,11 +775,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         )
                       : Center(
                           child: ElevatedButton(
-                          onPressed: () {
-                            verifyAndSchedule();
-                          },
-                          child: Text("Schedule"),
-                        )),
+                            onPressed: () {
+                              verifyAndUpdate(
+                                widget.eventID,
+                                widget.eventPoster,
+                              );
+                            },
+                            child: Text("Edit"),
+                          ),
+                        ),
                 ],
               ),
             ),

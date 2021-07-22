@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:the_uss_project/constants.dart';
-import 'package:the_uss_project/screens/addEvent.dart';
+import 'package:the_uss_project/screens/updateEventScreen.dart';
 
 class EventProfileWidgetItem extends StatelessWidget {
   final String orgLogo;
@@ -60,20 +59,15 @@ class EventProfileWidgetItem extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddEventScreen(),
-                  settings: RouteSettings(
-                    arguments: EventProfileWidgetItem(
-                      eventId: eventId,
-                      orgLogo: orgLogo,
-                      eventPosterUrl: eventPosterUrl,
-                      aboutEvent: aboutEvent,
-                      eventStartTime: eventStartTime,
-                      eventDate: eventDate,
-                      eventTitle: eventTitle,
-                      eventVenue: eventVenue,
-                      orgSocietyName: orgSocietyName,
-                      eventEndTime: eventEndTime,
-                    ),
+                  builder: (context) => UpdateEventScreen(
+                    eventTitle: eventTitle,
+                    eventVenue: eventVenue,
+                    eventDate: eventDate!.toDate(),
+                    eventStartTime: eventStartTime,
+                    eventDesc: aboutEvent,
+                    eventID: eventId,
+                    eventPoster: eventPosterUrl,
+                    eventEndTime: eventEndTime,
                   ),
                 ),
               );
