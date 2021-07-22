@@ -39,6 +39,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   void didChangeDependencies() {
     final args =
         ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
+
     _titleController = TextEditingController(
       text: args == null ? "" : args.eventTitle,
     );
@@ -49,8 +50,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
     _venueController = TextEditingController(
       text: args == null ? "" : args.eventVenue,
     );
-
-    bool _isLoading = false;
 
     _miscController = TextEditingController(
       text: "",
@@ -75,15 +74,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
           .get();
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
-
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
-
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
-
-      print(loggedInSocietyName);
-      // print(loggedInSocietyLogo);
-      // print('society events are : $loggedInSocietyEvents');
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -93,14 +86,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
     _imagePick = image;
   }
 
+  bool _isLoading = false;
+
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
   TextEditingController _venueController = TextEditingController();
-
-  bool _isLoading = false;
-
   TextEditingController _miscController = TextEditingController();
-
   TextEditingController _dateEditingController = TextEditingController();
   TextEditingController _startTimeEditingController = TextEditingController();
   TextEditingController _endTimeEditingController = TextEditingController();
@@ -117,6 +108,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
   FocusNode _misc = FocusNode();
 
   String eventTitle = "";
+  String eventID = "";
+
+  //eventID contains the document id for events
+
   String eventDesc = "";
   String eventVenue = "";
   late DateTime eventDate;
@@ -125,6 +120,73 @@ class _AddEventScreenState extends State<AddEventScreen> {
   String eventEndTime = "";
   String eventPoster = "";
   String miscellaneous = "";
+
+  void verifyAndUpdate(String id, String posterUrl) async {
+    if (!_addEventFormKey.currentState!.validate()) {
+      showMyDialog(context, "Some fields are missing", showAction: true);
+      return;
+    }
+    _addEventFormKey.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      var url;
+      if (_imagePick != null) {
+        final ref = storage
+            .ref()
+            .child("event_posters")
+            .child("${_auth.currentUser!.uid}-${Uuid().v4()}");
+
+        await ref.putFile(_imagePick!);
+        url = await ref.getDownloadURL();
+      }
+
+      await firestore.collection(eventsCollection).doc(id).update({
+        title: eventTitle,
+        aboutEvent: eventDesc,
+        venue: eventVenue,
+        date: eventDate,
+        startTime: eventStartTime,
+        endTime: eventEndTime,
+        posterURL: _imagePick == null ? posterUrl : url,
+        societyName: loggedInSocietyName,
+        societyLogo: loggedInSocietyLogo,
+      });
+
+      var index = loggedInSocietyEvents
+          .indexWhere((element) => element['eventId'] == id);
+      loggedInSocietyEvents[index] = {
+        eventId: id,
+        title: eventTitle,
+        aboutEvent: eventDesc,
+        venue: eventVenue,
+        date: eventDate,
+        startTime: eventStartTime,
+        endTime: eventEndTime,
+        posterURL: _imagePick == null ? posterUrl : url,
+        societyName: loggedInSocietyName,
+        societyLogo: loggedInSocietyLogo,
+      };
+      await firestore
+          .collection(societiesCollection)
+          .doc(_auth.currentUser!.uid)
+          .update({"myEvents": loggedInSocietyEvents});
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Event updated successfully"),
+        ),
+      );
+      Navigator.of(context).pop();
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future verifyAndSchedule() async {
     if (!_addEventFormKey.currentState!.validate()) {
@@ -159,6 +221,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
         posterURL: _imagePick == null ? loggedInSocietyLogo : url,
         societyName: loggedInSocietyName,
         societyLogo: loggedInSocietyLogo,
+      }).then((value) {
+        eventID = value.id;
       });
 
       await firestore
@@ -167,6 +231,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           .update({
         "myEvents": FieldValue.arrayUnion([
           {
+            eventId: eventID,
             title: eventTitle,
             aboutEvent: eventDesc,
             venue: eventVenue,
@@ -189,29 +254,35 @@ class _AddEventScreenState extends State<AddEventScreen> {
         ),
       );
       Navigator.of(context).pop();
-      _titleController.clear();
-      _descController.clear();
-      _venueController.clear();
-      _dateEditingController.clear();
-      _startTimeEditingController.clear();
-      _endTimeEditingController.clear();
-      _miscController.clear();
     } catch (err) {
       print(err);
     }
+  }
 
-    // print(eventTitle);
-    // print(eventDesc);
-    // print(eventVenue);
-    // print(eventDate);
-    // print(eventStartTime);
-    // print(eventEndTime);
-    // print(miscellaneous);
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _dateEditingController.dispose();
+    _descController.dispose();
+    _venueController.dispose();
+    _miscController.dispose();
+    _startTimeEditingController.dispose();
+    _endTimeEditingController.dispose();
+    _eventTitleNode.dispose();
+    _eventDescriptionNode.dispose();
+    _eventVenue.dispose();
+    _eventDate.dispose();
+    _eventStartTime.dispose();
+    _eventEndTime.dispose();
+    _misc.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(loggedInSocietyLogo);
+    final args =
+        ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -407,7 +478,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),
                             ))!;
-                            // var date = DateTime.parse("$selectedDate");
                             eventDate = selectedDate;
                             _dateEditingController.text =
                                 DateFormat.yMMMd().format(selectedDate);
@@ -664,12 +734,20 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           child: CircularProgressIndicator(),
                         )
                       : Center(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              verifyAndSchedule();
-                            },
-                            child: Text("Schedule"),
-                          ),
+                          child: args.eventTitle.isEmpty
+                              ? ElevatedButton(
+                                  onPressed: () {
+                                    verifyAndSchedule();
+                                  },
+                                  child: Text("Schedule"),
+                                )
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    verifyAndUpdate(
+                                        args.eventId, args.eventPosterUrl);
+                                  },
+                                  child: Text("Edit"),
+                                ),
                         ),
                 ],
               ),
