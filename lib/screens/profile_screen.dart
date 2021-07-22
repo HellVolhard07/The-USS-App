@@ -146,6 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               builder: (context) => AddEventScreen(),
               settings: RouteSettings(
                 arguments: EventProfileWidgetItem(
+                  eventId: "",
                   orgLogo: "",
                   eventPosterUrl: "",
                   aboutEvent: "",
