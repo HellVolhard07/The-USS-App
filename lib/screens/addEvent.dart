@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/widgets/auth.dart';
-import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
@@ -249,9 +248,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
