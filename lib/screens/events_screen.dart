@@ -111,7 +111,11 @@ class _EventsScreenState extends State<EventsScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: mediaQuery.height * 0.12),
+                    margin: EdgeInsets.only(
+                      top: mediaQuery.height * 0.12,
+                      bottom: 0,
+                    ),
+                    height: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
