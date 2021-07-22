@@ -5,7 +5,7 @@ import 'package:the_uss_project/screens/addEvent.dart';
 
 class EventProfileWidgetItem extends StatelessWidget {
   final String orgLogo;
-  final String? eventId;
+  final String eventId;
   final String eventTitle;
   final Timestamp? eventDate;
   final String? eventEndTime;
@@ -18,7 +18,7 @@ class EventProfileWidgetItem extends StatelessWidget {
   EventProfileWidgetItem({
     required this.orgLogo,
     required this.eventPosterUrl,
-    this.eventId,
+    required this.eventId,
     required this.aboutEvent,
     this.eventDate,
     this.eventEndTime,
@@ -63,6 +63,7 @@ class EventProfileWidgetItem extends StatelessWidget {
                   builder: (context) => AddEventScreen(),
                   settings: RouteSettings(
                     arguments: EventProfileWidgetItem(
+                      eventId: eventId,
                       orgLogo: orgLogo,
                       eventPosterUrl: eventPosterUrl,
                       aboutEvent: aboutEvent,

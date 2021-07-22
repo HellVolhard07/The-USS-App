@@ -34,16 +34,17 @@ class _EventWidgetState extends State<EventWidget> {
         itemCount: loggedInSocietyEvents.length,
         itemBuilder: (context, index) {
           return EventProfileWidgetItem(
-              orgLogo: loggedInSocietyEvents[index][societyLogo],
-              orgSocietyName: loggedInSocietyEvents[index][societyName],
-              eventPosterUrl: loggedInSocietyEvents[index]['poster'],
-              eventId: loggedInSocietyEvents[index]['eventId'],
-              aboutEvent: loggedInSocietyEvents[index]['aboutEvent'],
-              eventDate: loggedInSocietyEvents[index]['date'],
-              eventStartTime: loggedInSocietyEvents[index]['startTime'],
-              eventEndTime: loggedInSocietyEvents[index]['endTime'],
-              eventTitle: loggedInSocietyEvents[index]['title'],
-              eventVenue: loggedInSocietyEvents[index]['venue']);
+            orgLogo: loggedInSocietyEvents[index][societyLogo],
+            orgSocietyName: loggedInSocietyEvents[index][societyName],
+            eventPosterUrl: loggedInSocietyEvents[index]['poster'],
+            eventId: loggedInSocietyEvents[index]['eventId'],
+            aboutEvent: loggedInSocietyEvents[index]['aboutEvent'],
+            eventDate: loggedInSocietyEvents[index]['date'],
+            eventStartTime: loggedInSocietyEvents[index]['startTime'],
+            eventEndTime: loggedInSocietyEvents[index]['endTime'],
+            eventTitle: loggedInSocietyEvents[index]['title'],
+            eventVenue: loggedInSocietyEvents[index]['venue'],
+          );
         },
       ),
     );
