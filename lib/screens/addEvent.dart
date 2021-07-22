@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -51,8 +50,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
       text: args == null ? "" : args.eventVenue,
     );
 
-    bool _isLoading = false;
-
     _miscController = TextEditingController(
       text: "",
     );
@@ -76,15 +73,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
           .get();
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
-
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
-
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
-
-      print(loggedInSocietyName);
-      // print(loggedInSocietyLogo);
-      // print('society events are : $loggedInSocietyEvents');
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -94,14 +85,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
     _imagePick = image;
   }
 
+  bool _isLoading = false;
+
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descController = TextEditingController();
   TextEditingController _venueController = TextEditingController();
-
-  bool _isLoading = false;
-
   TextEditingController _miscController = TextEditingController();
-
   TextEditingController _dateEditingController = TextEditingController();
   TextEditingController _startTimeEditingController = TextEditingController();
   TextEditingController _endTimeEditingController = TextEditingController();
@@ -120,7 +109,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   String eventTitle = "";
   String eventID = "";
 
-  //eventID id h and eventId variable h
+  //eventID contains the document id for events
 
   String eventDesc = "";
   String eventVenue = "";
@@ -131,7 +120,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   String eventPoster = "";
   String miscellaneous = "";
 
-  void verifyAndUpdate(String id) async {
+  void verifyAndUpdate(String id, String posterUrl) async {
     if (!_addEventFormKey.currentState!.validate()) {
       showMyDialog(context, "Some fields are missing", showAction: true);
       return;
@@ -159,12 +148,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
         date: eventDate,
         startTime: eventStartTime,
         endTime: eventEndTime,
-        posterURL: _imagePick == null ? loggedInSocietyLogo : url,
+        posterURL: _imagePick == null ? posterUrl : url,
         societyName: loggedInSocietyName,
         societyLogo: loggedInSocietyLogo,
       });
-      print(id);
-      print(loggedInSocietyEvents);
 
       var index = loggedInSocietyEvents
           .indexWhere((element) => element['eventId'] == id);
@@ -294,8 +281,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
-    print(loggedInSocietyLogo);
-    print(args.eventId);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -491,7 +477,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),
                             ))!;
-                            // var date = DateTime.parse("$selectedDate");
                             eventDate = selectedDate;
                             _dateEditingController.text =
                                 DateFormat.yMMMd().format(selectedDate);
@@ -757,7 +742,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 )
                               : ElevatedButton(
                                   onPressed: () {
-                                    verifyAndUpdate(args.eventId);
+                                    verifyAndUpdate(
+                                        args.eventId, args.eventPosterUrl);
                                   },
                                   child: Text("Edit"),
                                 ),
