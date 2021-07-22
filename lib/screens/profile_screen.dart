@@ -3,18 +3,14 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/screens/addEvent.dart';
-import 'package:the_uss_project/screens/login_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/about_profile_widget.dart';
 import 'package:the_uss_project/widgets/auth.dart';
-import 'package:the_uss_project/widgets/event_item.dart';
 import 'package:the_uss_project/widgets/event_profile_widget.dart';
-import 'package:the_uss_project/widgets/event_profile_widget_item.dart';
-import 'package:the_uss_project/widgets/sliver_header.dart';
-import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 
 List<Widget> profileWidgets = [
   AboutWidget(),
@@ -144,17 +140,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => AddEventScreen(),
-              settings: RouteSettings(
-                arguments: EventProfileWidgetItem(
-                  orgLogo: "",
-                  eventPosterUrl: "",
-                  aboutEvent: "",
-                  eventStartTime: "",
-                  eventTitle: "",
-                  eventVenue: "",
-                  orgSocietyName: "",
-                ),
-              ),
             ),
           );
         },
