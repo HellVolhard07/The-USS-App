@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:the_uss_project/constants.dart';
-import 'package:the_uss_project/widgets/society_item.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
+import 'package:the_uss_project/widgets/society_item.dart';
 
 var societiesData;
 
 class SocietyListScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -27,38 +28,15 @@ class SocietyListScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
-                      child: Text(
-                        'Societies',
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.w900),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                  child: Text(
+                    'Societies',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(160.0, 20, 20, 10),
-                        child: IconButton(
-                          icon: themeProvider.isDarkTheme
-                              ? Icon(
-                                  Icons.wb_twighlight,
-                                  color: Colors.yellow,
-                                )
-                              : Icon(
-                                  Icons.nights_stay_rounded,
-                                  color: Colors.black,
-                                ),
-                          onPressed: () {
-                            themeProvider
-                                .changeTheme(themeProvider.isDarkTheme);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
                 Divider(
                   indent: 20,
