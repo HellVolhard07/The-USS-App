@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ class EventWidget extends StatefulWidget {
 
 class _EventWidgetState extends State<EventWidget> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +30,39 @@ class _EventWidgetState extends State<EventWidget> {
         //     : Colors.greenAccent.withOpacity(0.4),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        itemCount: loggedInSocietyEvents.length,
-        itemBuilder: (context, index) {
-          return EventProfileWidgetItem(
-              orgLogo: loggedInSocietyEvents[index][societyLogo],
-              orgSocietyName: loggedInSocietyEvents[index][societyName],
-              eventPosterUrl: loggedInSocietyEvents[index]['poster'],
-              eventId: loggedInSocietyEvents[index]['eventId'],
-              aboutEvent: loggedInSocietyEvents[index]['aboutEvent'],
-              eventDate: loggedInSocietyEvents[index]['date'],
-              eventStartTime: loggedInSocietyEvents[index]['startTime'],
-              eventEndTime: loggedInSocietyEvents[index]['endTime'],
-              eventTitle: loggedInSocietyEvents[index]['title'],
-              eventVenue: loggedInSocietyEvents[index]['venue']);
-        },
-      ),
+      child: StreamBuilder<dynamic>(
+          stream: _firestore
+              .collection(societiesCollection)
+              .doc(_auth.currentUser?.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              final loggedInDatas = snapshot.data.get('myEvents');
+
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                itemCount: loggedInDatas.length,
+                itemBuilder: (context, index) {
+                  return EventProfileWidgetItem(
+                      orgLogo: loggedInDatas[index][societyLogo],
+                      orgSocietyName: loggedInDatas[index][societyName],
+                      eventPosterUrl: loggedInDatas[index]['poster'],
+                      eventId: loggedInDatas[index]['eventId'],
+                      aboutEvent: loggedInDatas[index]['aboutEvent'],
+                      eventDate: loggedInDatas[index]['date'],
+                      eventStartTime: loggedInDatas[index]['startTime'],
+                      eventEndTime: loggedInDatas[index]['endTime'],
+                      eventTitle: loggedInDatas[index]['title'],
+                      eventVenue: loggedInDatas[index]['venue']);
+                },
+              );
+            }
+          }),
     );
   }
 }
