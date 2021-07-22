@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -163,7 +164,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         date: eventDate,
         startTime: eventStartTime,
         endTime: eventEndTime,
-        posterURL: _imagePick == null ? loggedInSocietyLogo : url,
+        posterURL: _imagePick == null ? posterUrl : url,
         societyName: loggedInSocietyName,
         societyLogo: loggedInSocietyLogo,
       };
