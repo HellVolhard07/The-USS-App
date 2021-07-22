@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  		<string>https</string>
+  		<string>http</string>
+	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires Gallery access</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires camera access</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires microphone access</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
