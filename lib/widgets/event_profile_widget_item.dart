@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:the_uss_project/constants.dart';
-import 'package:the_uss_project/screens/addEvent.dart';
+import 'package:the_uss_project/screens/updateEventScreen.dart';
 
 class EventProfileWidgetItem extends StatelessWidget {
   final String orgLogo;
-  final String? eventId;
+  final String eventId;
   final String eventTitle;
   final Timestamp? eventDate;
   final String? eventEndTime;
@@ -18,7 +17,7 @@ class EventProfileWidgetItem extends StatelessWidget {
   EventProfileWidgetItem({
     required this.orgLogo,
     required this.eventPosterUrl,
-    this.eventId,
+    required this.eventId,
     required this.aboutEvent,
     this.eventDate,
     this.eventEndTime,
@@ -60,19 +59,15 @@ class EventProfileWidgetItem extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddEventScreen(),
-                  settings: RouteSettings(
-                    arguments: EventProfileWidgetItem(
-                      orgLogo: orgLogo,
-                      eventPosterUrl: eventPosterUrl,
-                      aboutEvent: aboutEvent,
-                      eventStartTime: eventStartTime,
-                      eventDate: eventDate,
-                      eventTitle: eventTitle,
-                      eventVenue: eventVenue,
-                      orgSocietyName: orgSocietyName,
-                      eventEndTime: eventEndTime,
-                    ),
+                  builder: (context) => UpdateEventScreen(
+                    eventTitle: eventTitle,
+                    eventVenue: eventVenue,
+                    eventDate: eventDate!.toDate(),
+                    eventStartTime: eventStartTime,
+                    eventDesc: aboutEvent,
+                    eventID: eventId,
+                    eventPoster: eventPosterUrl,
+                    eventEndTime: eventEndTime,
                   ),
                 ),
               );
