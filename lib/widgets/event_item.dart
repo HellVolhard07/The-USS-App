@@ -67,7 +67,7 @@ class EventItem extends StatelessWidget {
                 Text(
                   "${eventDate.toDate().day}",
                   style: TextStyle(
-                    fontSize: 23,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -92,7 +92,7 @@ class EventItem extends StatelessWidget {
                   bottomLeft: Radius.circular(20),
                 ),
               ),
-              height: 130,
+              height: 110,
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -109,7 +109,7 @@ class EventItem extends StatelessWidget {
                               eventTitle,
                               style: TextStyle(
                                 fontWeight: FontWeight.w900,
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Colors.black,
                               ),
                               overflow: TextOverflow.ellipsis,
