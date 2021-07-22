@@ -101,7 +101,7 @@ class _EventsScreenState extends State<EventsScreen> {
                           child: Text(
                             "${DateFormat("d").format(DateTime.now())} ${DateFormat("MMMM").format(DateTime.now())}, ${DateFormat("EEEE").format(DateTime.now())} ",
                             style: TextStyle(
-                              fontSize: 23,
+                              fontSize: 20,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -129,7 +129,7 @@ class _EventsScreenState extends State<EventsScreen> {
                             child: Text(
                               'Upcoming Events',
                               style: TextStyle(
-                                fontSize: 25,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w900,
                                 color: Colors.black,
                               ),
