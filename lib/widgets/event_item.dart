@@ -69,13 +69,13 @@ class EventItem extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
                 Text(
                   "${DateFormat("MMMM").format(eventDate.toDate()).substring(0, 3)}, ${eventDate.toDate().year}",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -90,18 +90,18 @@ class EventItem extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  // color: Color(0xFFe7eaeb),
+                  //color: Color(0xFFe7eaeb),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     bottomLeft: Radius.circular(20),
                   ),
-                  boxShadow: [
+                  /*boxShadow: [
                     BoxShadow(
                       color: Colors.grey,
                       offset: Offset(0.0, 1.0), //(x,y)
                       blurRadius: 8.0,
                     ),
-                  ],
+                  ],*/
                 ),
                 height: 110,
                 width: double.infinity,

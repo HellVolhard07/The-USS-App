@@ -20,14 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isLogin = false;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _emailNode = FocusNode();
-  //   _passwordNode = FocusNode();
-  //   _loginNode = FocusNode();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
@@ -44,10 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       await loginProvider.loginUser(email, password, context);
-
-      //String error = loginProvider.getError;
-
-      //showMyDialog(context, error);
 
       setState(() {
         isLogin = false;

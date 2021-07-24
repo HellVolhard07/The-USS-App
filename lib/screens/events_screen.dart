@@ -31,16 +31,10 @@ class _EventsScreenState extends State<EventsScreen> {
           .get();
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
-
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
       teamMembers = await loggedInUserDetail.get('teamMembers');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
-
-      print(loggedInSocietyName);
-      print(teamMembers);
-      // print(loggedInSoceityAbout);
-      // print('society events are : $societyEvents');
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -67,8 +61,6 @@ class _EventsScreenState extends State<EventsScreen> {
             );
           }
           var eventsData = snapshot.data.docs;
-          // print(eventsData[0].id);
-          // print(snapshot.data.docs[0]["title"]);
           return SafeArea(
             child: SizedBox(
               height: mediaQuery.height,
@@ -83,7 +75,7 @@ class _EventsScreenState extends State<EventsScreen> {
                           child: IconButton(
                             icon: themeProvider.isDarkTheme
                                 ? Icon(
-                                    Icons.wb_twighlight,
+                                    Icons.light_mode,
                                     color: Colors.yellow,
                                   )
                                 : Icon(
@@ -117,7 +109,16 @@ class _EventsScreenState extends State<EventsScreen> {
                     ),
                     height: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      /*gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: <Color>[
+                          Colors.red,
+                          Colors.blue
+                        ],
+                      ),
+                    ),*/
+                      color: Color(0xff323232),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
@@ -135,7 +136,7 @@ class _EventsScreenState extends State<EventsScreen> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900,
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                           ),

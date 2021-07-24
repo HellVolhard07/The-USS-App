@@ -32,10 +32,6 @@ class EventScreen extends StatelessWidget {
                       topLeft: Radius.circular(35),
                       topRight: Radius.circular(35),
                     ),
-                    // border: Border.all(
-                    //   color: Colors.grey,
-                    //   width: 1,
-                    // ),
                   ),
                   child: SingleChildScrollView(
                     controller: scrollController,
@@ -142,48 +138,6 @@ class EventScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              // ListTile(
-                              //   leading: Icon(
-                              //     Icons.person_add_alt_1_outlined,
-                              //     color: Colors.black,
-                              //   ),
-                              //   title: Text(
-                              //     "Society: ${eventArgs.orgSocietyName}",
-                              //     style: TextStyle(
-                              //       color: Colors.black,
-                              //     ),
-                              //   ),
-                              // ),
-                              // ListTile(
-                              //   leading: Icon(
-                              //     Icons.location_on_outlined,
-                              //     color: Colors.black,
-                              //   ),
-                              //   title: Text(
-                              //     eventArgs.eventVenue,
-                              //     style: TextStyle(
-                              //       color: Colors.black,
-                              //     ),
-                              //   ),
-                              // ),
-                              // ListTile(
-                              //   leading: Icon(
-                              //     Icons.date_range_outlined,
-                              //     color: Colors.black,
-                              //   ),
-                              //   title: Text(
-                              //     "${eventArgs.eventDate.toDate().day}/${eventArgs.eventDate.toDate().month}/${eventArgs.eventDate.toDate().year}",
-                              //     style: TextStyle(
-                              //       color: Colors.black,
-                              //     ),
-                              //   ),
-                              //   subtitle: Text(
-                              //     "${eventArgs.eventStartTime} - ${eventArgs.eventEndTime}",
-                              //     style: TextStyle(
-                              //       color: Colors.black54,
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                           Padding(
