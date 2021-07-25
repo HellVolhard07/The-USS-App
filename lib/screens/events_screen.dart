@@ -75,7 +75,7 @@ class _EventsScreenState extends State<EventsScreen> {
                           child: IconButton(
                             icon: themeProvider.isDarkTheme
                                 ? Icon(
-                                    Icons.light_mode,
+                                    Icons.wb_sunny_outlined,
                                     color: Colors.yellow,
                                   )
                                 : Icon(
