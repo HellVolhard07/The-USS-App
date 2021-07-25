@@ -31,16 +31,10 @@ class _EventsScreenState extends State<EventsScreen> {
           .get();
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
-
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
       teamMembers = await loggedInUserDetail.get('teamMembers');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
-
-      print(loggedInSocietyName);
-      print(teamMembers);
-      // print(loggedInSoceityAbout);
-      // print('society events are : $societyEvents');
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -67,8 +61,6 @@ class _EventsScreenState extends State<EventsScreen> {
             );
           }
           var eventsData = snapshot.data.docs;
-          // print(eventsData[0].id);
-          // print(snapshot.data.docs[0]["title"]);
           return SafeArea(
             child: SizedBox(
               height: mediaQuery.height,
@@ -83,7 +75,7 @@ class _EventsScreenState extends State<EventsScreen> {
                           child: IconButton(
                             icon: themeProvider.isDarkTheme
                                 ? Icon(
-                                    Icons.wb_twighlight,
+                                    Icons.light_mode,
                                     color: Colors.yellow,
                                   )
                                 : Icon(
