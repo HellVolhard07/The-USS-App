@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -26,8 +25,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   final _addEventFormKey = GlobalKey<FormState>();
 
-  File? _imagePick;
-
   @override
   void initState() {
     getCurrentUserData();
@@ -49,6 +46,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
       print(e);
     }
   }
+
+  File? _imagePick;
 
   void _imagePicked(File image) {
     _imagePick = image;
@@ -76,10 +75,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   FocusNode _misc = FocusNode();
 
   String eventTitle = "";
-  String eventID = "";
-
-  //eventID contains the document id for events
-
+  String eventID = ""; //eventID contains the document id for events
   String eventDesc = "";
   String eventVenue = "";
   late DateTime eventDate;
@@ -88,73 +84,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
   String eventEndTime = "";
   String eventPoster = "";
   String miscellaneous = "";
-
-  void verifyAndUpdate(String id, String posterUrl) async {
-    if (!_addEventFormKey.currentState!.validate()) {
-      showMyDialog(context, "Some fields are missing", showAction: true);
-      return;
-    }
-    _addEventFormKey.currentState!.save();
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      var url;
-      if (_imagePick != null) {
-        final ref = storage
-            .ref()
-            .child("event_posters")
-            .child("${_auth.currentUser!.uid}-${Uuid().v4()}");
-
-        await ref.putFile(_imagePick!);
-        url = await ref.getDownloadURL();
-      }
-
-      await firestore.collection(eventsCollection).doc(id).update({
-        title: eventTitle,
-        aboutEvent: eventDesc,
-        venue: eventVenue,
-        date: eventDate,
-        startTime: eventStartTime,
-        endTime: eventEndTime,
-        posterURL: _imagePick == null ? posterUrl : url,
-        societyName: loggedInSocietyName,
-        societyLogo: loggedInSocietyLogo,
-      });
-
-      var index = loggedInSocietyEvents
-          .indexWhere((element) => element['eventId'] == id);
-      loggedInSocietyEvents[index] = {
-        eventId: id,
-        title: eventTitle,
-        aboutEvent: eventDesc,
-        venue: eventVenue,
-        date: eventDate,
-        startTime: eventStartTime,
-        endTime: eventEndTime,
-        posterURL: _imagePick == null ? posterUrl : url,
-        societyName: loggedInSocietyName,
-        societyLogo: loggedInSocietyLogo,
-      };
-      await firestore
-          .collection(societiesCollection)
-          .doc(_auth.currentUser!.uid)
-          .update({"myEvents": loggedInSocietyEvents});
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Event updated successfully"),
-        ),
-      );
-      Navigator.of(context).pop();
-    } catch (e) {
-      print(e);
-    }
-  }
 
   Future verifyAndSchedule() async {
     if (!_addEventFormKey.currentState!.validate()) {
@@ -700,11 +629,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         )
                       : Center(
                           child: ElevatedButton(
-                          onPressed: () {
-                            verifyAndSchedule();
-                          },
-                          child: Text("Schedule"),
-                        )),
+                            onPressed: () {
+                              verifyAndSchedule();
+                            },
+                            child: Text("Schedule"),
+                          ),
+                        ),
                 ],
               ),
             ),

@@ -82,86 +82,90 @@ class EventItem extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 25),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              decoration: BoxDecoration(
-                color: Color(0xFFe7eaeb),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 10, left: 25),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    bottomLeft: Radius.circular(20),
+                  ),
                 ),
-              ),
-              height: 110,
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Hero(
-                            tag: eventTitle,
-                            child: Text(
-                              eventTitle,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "$eventStartTime - $eventEndTime",
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                Utils.openLink(link: eventVenue);
-                              },
+                height: 110,
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Hero(
+                              tag: eventTitle,
                               child: Text(
-                                eventVenue,
+                                eventTitle,
                                 style: TextStyle(
-                                  backgroundColor: Colors.blueGrey.shade100,
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 14,
+                                  color: Colors.black,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Text(
+                            "$eventStartTime - $eventEndTime",
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Utils.openLink(link: eventVenue);
+                                },
+                                child: Text(
+                                  eventVenue,
+                                  style: TextStyle(
+                                    backgroundColor: Colors.blueGrey.shade100,
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Hero(
-                        tag: eventPosterUrl,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Image.network(
-                            eventPosterUrl,
-                            fit: BoxFit.cover,
-                            height: double.infinity,
-                            width: 100,
+                    Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Hero(
+                          tag: eventPosterUrl,
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: Image.network(
+                              eventPosterUrl,
+                              fit: BoxFit.cover,
+                              height: double.infinity,
+                              width: 100,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -170,146 +174,3 @@ class EventItem extends StatelessWidget {
     );
   }
 }
-/*Row(
-mainAxisAlignment: MainAxisAlignment.spaceAround,
-children: [
-Expanded(
-child: Column(
-mainAxisAlignment: MainAxisAlignment.spaceAround,
-crossAxisAlignment: CrossAxisAlignment.start,
-children: [
-Expanded(
-child: Text(
-eventTitle,
-style: TextStyle(
-fontWeight: FontWeight.w900,
-fontSize: 16,
-),
-overflow: TextOverflow.ellipsis,
-),
-),
-Text(
-"${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-Text(
-"$eventStartTime - $eventEndTime",
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-Expanded(
-child: Text(
-eventVenue,
-style: TextStyle(
-backgroundColor: Colors.black12,
-),
-overflow: TextOverflow.ellipsis,
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-),
-],
-),
-),
-Container(
-child: ClipRRect(
-borderRadius: BorderRadius.circular(12),
-child: Material(
-type: MaterialType.transparency,
-child: Image.network(
-eventPosterUrl,
-fit: BoxFit.cover,
-height: double.infinity,
-width: 100,
-),
-),
-),
-),
-],
-),*/
-
-// **********PREVIOUS CODE SARTHAK*********
-/*
-Container(
-        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            width: double.infinity,
-            height: 300,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(eventPosterUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  left: -20,
-                  top: -20,
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 27.0, top: 16.0),
-                      child: Text(
-                        "${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white70,
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20.0),
-                      ),
-                    ),
-                    width: 110,
-                    height: 50,
-                  ),
-                ),
-                Positioned(
-                  top: 220,
-                  left: -20,
-                  child: Container(
-                    width: 360,
-                    height: 90,
-                    color: Colors.white70,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 25.0,
-                        vertical: 10.0,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            eventTitle,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            eventVenue,
-                            style: TextStyle(
-                              fontSize: 11.0,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              clipBehavior: Clip.none,
-            ),
-          ),
-        ),
-      ),
- */
