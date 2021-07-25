@@ -82,90 +82,87 @@ class EventItem extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                margin: const EdgeInsets.only(top: 10, bottom: 10, left: 25),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                  ),
+            child: Container(
+              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 25),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
                 ),
-                height: 110,
-                width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Hero(
-                              tag: eventTitle,
+              ),
+              height: 110,
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Hero(
+                            tag: eventTitle,
+                            child: Text(
+                              eventTitle,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "$eventStartTime - $eventEndTime",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: GestureDetector(
+                              onTap: () {
+                                Utils.openLink(link: eventVenue);
+                              },
                               child: Text(
-                                eventTitle,
+                                eventVenue,
                                 style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 14,
-                                  color: Colors.black,
+                                  backgroundColor: Colors.blueGrey.shade100,
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
-                          Text(
-                            "$eventStartTime - $eventEndTime",
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Utils.openLink(link: eventVenue);
-                                },
-                                child: Text(
-                                  eventVenue,
-                                  style: TextStyle(
-                                    backgroundColor: Colors.blueGrey.shade100,
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Hero(
-                          tag: eventPosterUrl,
-                          child: Material(
-                            type: MaterialType.transparency,
-                            child: Image.network(
-                              eventPosterUrl,
-                              fit: BoxFit.cover,
-                              height: double.infinity,
-                              width: 100,
-                            ),
+                  ),
+                  Container(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Hero(
+                        tag: eventPosterUrl,
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: Image.network(
+                            eventPosterUrl,
+                            fit: BoxFit.cover,
+                            height: double.infinity,
+                            width: 100,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
