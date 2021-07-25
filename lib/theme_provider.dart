@@ -14,15 +14,12 @@ class ThemeProvider with ChangeNotifier {
 
 class ThemeBuilder {
   static final darkTheme = ThemeData(
-    //scaffoldBackgroundColor: Color(0xFF343F56),
     scaffoldBackgroundColor: Color(0xFF1d1e42),
     fontFamily: "Poppins",
     primaryColor: Colors.orangeAccent,
     colorScheme: ColorScheme.dark(
       primary: Color(0xFFF54748),
       secondary: Color(0xFFFB9300),
-
-      //fa6d41
     ),
     iconTheme: IconThemeData(
       color: Colors.white,

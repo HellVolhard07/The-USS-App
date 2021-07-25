@@ -109,16 +109,7 @@ class _EventsScreenState extends State<EventsScreen> {
                     ),
                     height: double.infinity,
                     decoration: BoxDecoration(
-                      /*gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: <Color>[
-                          Colors.red,
-                          Colors.blue
-                        ],
-                      ),
-                    ),*/
-                      color: Color(0xff323232),
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
@@ -136,7 +127,7 @@ class _EventsScreenState extends State<EventsScreen> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             ),
                           ),

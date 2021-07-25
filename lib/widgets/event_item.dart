@@ -69,13 +69,13 @@ class EventItem extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 Text(
                   "${DateFormat("MMMM").format(eventDate.toDate()).substring(0, 3)}, ${eventDate.toDate().year}",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ],
@@ -90,18 +90,10 @@ class EventItem extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  //color: Color(0xFFe7eaeb),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     bottomLeft: Radius.circular(20),
                   ),
-                  /*boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.0, 1.0), //(x,y)
-                      blurRadius: 8.0,
-                    ),
-                  ],*/
                 ),
                 height: 110,
                 width: double.infinity,
@@ -182,146 +174,3 @@ class EventItem extends StatelessWidget {
     );
   }
 }
-/*Row(
-mainAxisAlignment: MainAxisAlignment.spaceAround,
-children: [
-Expanded(
-child: Column(
-mainAxisAlignment: MainAxisAlignment.spaceAround,
-crossAxisAlignment: CrossAxisAlignment.start,
-children: [
-Expanded(
-child: Text(
-eventTitle,
-style: TextStyle(
-fontWeight: FontWeight.w900,
-fontSize: 16,
-),
-overflow: TextOverflow.ellipsis,
-),
-),
-Text(
-"${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-Text(
-"$eventStartTime - $eventEndTime",
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-Expanded(
-child: Text(
-eventVenue,
-style: TextStyle(
-backgroundColor: Colors.black12,
-),
-overflow: TextOverflow.ellipsis,
-// style: TextStyle(
-//   color: Colors.grey,
-// ),
-),
-),
-],
-),
-),
-Container(
-child: ClipRRect(
-borderRadius: BorderRadius.circular(12),
-child: Material(
-type: MaterialType.transparency,
-child: Image.network(
-eventPosterUrl,
-fit: BoxFit.cover,
-height: double.infinity,
-width: 100,
-),
-),
-),
-),
-],
-),*/
-
-// **********PREVIOUS CODE SARTHAK*********
-/*
-Container(
-        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            width: double.infinity,
-            height: 300,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(eventPosterUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Stack(
-              children: <Widget>[
-                Positioned(
-                  left: -20,
-                  top: -20,
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 27.0, top: 16.0),
-                      child: Text(
-                        "${eventDate.toDate().day}/${eventDate.toDate().month}/${eventDate.toDate().year}",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white70,
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(20.0),
-                      ),
-                    ),
-                    width: 110,
-                    height: 50,
-                  ),
-                ),
-                Positioned(
-                  top: 220,
-                  left: -20,
-                  child: Container(
-                    width: 360,
-                    height: 90,
-                    color: Colors.white70,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 25.0,
-                        vertical: 10.0,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            eventTitle,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            eventVenue,
-                            style: TextStyle(
-                              fontSize: 11.0,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-              clipBehavior: Clip.none,
-            ),
-          ),
-        ),
-      ),
- */
