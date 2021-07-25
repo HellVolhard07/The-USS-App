@@ -78,37 +78,6 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
     super.initState();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   final args =
-  //       ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
-  //
-  //   _titleController = TextEditingController(
-  //     text: args == null ? "" : args.eventTitle,
-  //   );
-  //   super.didChangeDependencies();
-  //   _descController = TextEditingController(
-  //     text: args == null ? "" : args.aboutEvent,
-  //   );
-  //   _venueController = TextEditingController(
-  //     text: args == null ? "" : args.eventVenue,
-  //   );
-  //
-  //   _miscController = TextEditingController(
-  //     text: "",
-  //   );
-  //
-  //   _dateEditingController = TextEditingController(
-  //     text: "",
-  //   );
-  //   _startTimeEditingController = TextEditingController(
-  //     text: args == null ? "" : args.eventStartTime,
-  //   );
-  //   _endTimeEditingController = TextEditingController(
-  //     text: args == null ? "" : args.eventEndTime,
-  //   );
-  // }
-
   Future getCurrentUserData() async {
     try {
       final loggedInUserDetail = await firestore
@@ -151,10 +120,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
   FocusNode _misc = FocusNode();
 
   String eventTitle = "";
-  String eventID = "";
-
-  //eventID contains the document id for events
-
+  String eventID = ""; //eventID contains the document id for events
   String eventDesc = "";
   String eventVenue = "";
   late DateTime eventDate;
@@ -781,7 +747,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                 widget.eventPoster,
                               );
                             },
-                            child: Text("Edit"),
+                            child: Text("Update"),
                           ),
                         ),
                 ],

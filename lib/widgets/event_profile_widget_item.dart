@@ -45,15 +45,16 @@ class EventProfileWidgetItem extends StatelessWidget {
           ),
           title: Text(
             eventTitle,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
             ),
           ),
           subtitle: Text(
-            "${eventDate!.toDate().day}/${eventDate!.toDate().month}/${eventDate!.toDate().year} \n$eventVenue",
+            "${eventDate!.toDate().day}/${eventDate!.toDate().month}/${eventDate!.toDate().year}",
+            style: TextStyle(fontSize: 14.0),
           ),
-          isThreeLine: true,
           trailing: IconButton(
             onPressed: () {
               Navigator.push(
