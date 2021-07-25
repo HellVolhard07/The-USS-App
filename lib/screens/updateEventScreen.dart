@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -78,37 +77,6 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
     super.initState();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   final args =
-  //       ModalRoute.of(context)!.settings.arguments as EventProfileWidgetItem;
-  //
-  //   _titleController = TextEditingController(
-  //     text: args == null ? "" : args.eventTitle,
-  //   );
-  //   super.didChangeDependencies();
-  //   _descController = TextEditingController(
-  //     text: args == null ? "" : args.aboutEvent,
-  //   );
-  //   _venueController = TextEditingController(
-  //     text: args == null ? "" : args.eventVenue,
-  //   );
-  //
-  //   _miscController = TextEditingController(
-  //     text: "",
-  //   );
-  //
-  //   _dateEditingController = TextEditingController(
-  //     text: "",
-  //   );
-  //   _startTimeEditingController = TextEditingController(
-  //     text: args == null ? "" : args.eventStartTime,
-  //   );
-  //   _endTimeEditingController = TextEditingController(
-  //     text: args == null ? "" : args.eventEndTime,
-  //   );
-  // }
-
   Future getCurrentUserData() async {
     try {
       final loggedInUserDetail = await firestore
@@ -151,10 +119,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
   FocusNode _misc = FocusNode();
 
   String eventTitle = "";
-  String eventID = "";
-
-  //eventID contains the document id for events
-
+  String eventID = ""; //eventID contains the document id for events
   String eventDesc = "";
   String eventVenue = "";
   late DateTime eventDate;
@@ -228,77 +193,6 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
       Navigator.of(context).pop();
     } catch (e) {
       print(e);
-    }
-  }
-
-  Future verifyAndSchedule() async {
-    if (!_addEventFormKey.currentState!.validate()) {
-      showMyDialog(context, "Some fields are missing", showAction: true);
-      return;
-    }
-    _addEventFormKey.currentState!.save();
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      var url;
-      if (_imagePick != null) {
-        final ref = storage
-            .ref()
-            .child("event_posters")
-            .child("${_auth.currentUser!.uid}-${Uuid().v4()}");
-
-        await ref.putFile(_imagePick!);
-        url = await ref.getDownloadURL();
-      }
-
-      await firestore.collection(eventsCollection).add({
-        title: eventTitle,
-        aboutEvent: eventDesc,
-        venue: eventVenue,
-        date: eventDate,
-        startTime: eventStartTime,
-        endTime: eventEndTime,
-        posterURL: _imagePick == null ? loggedInSocietyLogo : url,
-        societyName: loggedInSocietyName,
-        societyLogo: loggedInSocietyLogo,
-      }).then((value) {
-        eventID = value.id;
-      });
-
-      await firestore
-          .collection(societiesCollection)
-          .doc(_auth.currentUser!.uid)
-          .update({
-        "myEvents": FieldValue.arrayUnion([
-          {
-            eventId: eventID,
-            title: eventTitle,
-            aboutEvent: eventDesc,
-            venue: eventVenue,
-            date: eventDate,
-            startTime: eventStartTime,
-            endTime: eventEndTime,
-            posterURL: _imagePick == null ? loggedInSocietyLogo : url,
-            societyName: loggedInSocietyName,
-            societyLogo: loggedInSocietyLogo,
-          }
-        ]),
-      });
-      setState(() {
-        _imagePick = null;
-        _isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Event added successfully"),
-        ),
-      );
-      Navigator.of(context).pop();
-    } catch (err) {
-      print(err);
     }
   }
 
@@ -659,7 +553,6 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                     context: context,
                                     initialTime: TimeOfDay.now(),
                                   ))!;
-                                  // eventStartTime = selectedStartTime.toString();
                                   var dt = DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
@@ -781,7 +674,8 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                 widget.eventPoster,
                               );
                             },
-                            child: Text("Edit"),
+                            child: Text("Update"),
+
                           ),
                         ),
                 ],
