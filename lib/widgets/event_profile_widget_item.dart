@@ -1,0 +1,83 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:the_uss_project/screens/updateEventScreen.dart';
+
+class EventProfileWidgetItem extends StatelessWidget {
+  final String orgLogo;
+  final String eventId;
+  final String eventTitle;
+  final Timestamp? eventDate;
+  final String? eventEndTime;
+  final String eventStartTime;
+  final String eventVenue;
+  final String aboutEvent;
+  final String eventPosterUrl;
+  final String orgSocietyName;
+
+  EventProfileWidgetItem({
+    required this.orgLogo,
+    required this.eventPosterUrl,
+    required this.eventId,
+    required this.aboutEvent,
+    this.eventDate,
+    this.eventEndTime,
+    required this.eventStartTime,
+    required this.eventTitle,
+    required this.eventVenue,
+    required this.orgSocietyName,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Container(
+        height: 100.0,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          color: Colors.blueAccent,
+        ),
+        child: ListTile(
+          leading: CircleAvatar(
+            radius: 30.0,
+            backgroundImage: NetworkImage(eventPosterUrl),
+          ),
+          title: Text(
+            eventTitle,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0,
+            ),
+          ),
+          subtitle: Text(
+            "${eventDate!.toDate().day}/${eventDate!.toDate().month}/${eventDate!.toDate().year}",
+            style: TextStyle(fontSize: 14.0),
+          ),
+          trailing: IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UpdateEventScreen(
+                    eventTitle: eventTitle,
+                    eventVenue: eventVenue,
+                    eventDate: eventDate!.toDate(),
+                    eventStartTime: eventStartTime,
+                    eventDesc: aboutEvent,
+                    eventID: eventId,
+                    eventPoster: eventPosterUrl,
+                    eventEndTime: eventEndTime,
+                  ),
+                ),
+              );
+            },
+            icon: Icon(Icons.edit_outlined),
+          ),
+          dense: true,
+        ),
+      ),
+    );
+  }
+}
