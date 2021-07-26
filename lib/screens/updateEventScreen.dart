@@ -278,18 +278,24 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           ),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Event Title",
-                            labelStyle: TextStyle(fontSize: 18.0),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: Color(0xffffa265),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Event Title",
                             hintStyle: TextStyle(
@@ -324,19 +330,24 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Event description",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: Color(0xffffa265),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Event description",
                             hintStyle: TextStyle(
@@ -376,19 +387,24 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Venue",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: Color(0xffffa265),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Venue(Link if online)",
                             hintStyle: TextStyle(
@@ -433,22 +449,30 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Date",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: Color(0xffffa265),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Event Date",
-                            suffixIcon: Icon(Icons.calendar_today_outlined),
+                            suffixIcon: Icon(
+                              Icons.calendar_today_outlined,
+                              color: Color(0xffd59b78),
+                            ),
                             hintStyle: TextStyle(
                               color: Colors.grey,
                             ),
@@ -481,7 +505,6 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                     context: context,
                                     initialTime: TimeOfDay.now(),
                                   ))!;
-                                  // eventStartTime = selectedStartTime.toString();
                                   var dt = DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
@@ -507,22 +530,30 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   labelText: "Start Time",
                                   labelStyle: TextStyle(
-                                      fontSize: 18.0, color: Colors.green),
+                                    fontSize: 18.0,
+                                    color: Color(0xffffa265),
+                                  ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Colors.white,
+                                    ),
                                   ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   hintText: "Event start time",
                                   contentPadding: EdgeInsets.all(15.0),
-                                  suffixIcon: Icon(Icons.more_time),
+                                  suffixIcon: Icon(
+                                    Icons.more_time,
+                                    color: Color(0xffd59b78),
+                                  ),
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -579,21 +610,29 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                   contentPadding: EdgeInsets.all(15.0),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   labelText: "End time",
                                   labelStyle: TextStyle(
-                                      fontSize: 18.0, color: Colors.green),
+                                    fontSize: 18.0,
+                                    color: Color(0xffffa265),
+                                  ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Colors.white,
+                                    ),
                                   ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   hintText: "Event end time",
-                                  suffixIcon: Icon(Icons.more_time),
+                                  suffixIcon: Icon(
+                                    Icons.more_time,
+                                    color: Color(0xffd59b78),
+                                  ),
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -636,18 +675,24 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           maxLines: null,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Miscellaneous",
-                            labelStyle: TextStyle(fontSize: 18.0),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: Color(0xffffa265),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText:
                                 "Any additional information/guidelines/links",
@@ -674,10 +719,17 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                 widget.eventPoster,
                               );
                             },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Color(0xffffa265),
+                              ),
+                            ),
                             child: Text("Update"),
-
                           ),
                         ),
+                  SizedBox(
+                    height: 50.0,
+                  ),
                 ],
               ),
             ),

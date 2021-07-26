@@ -67,15 +67,16 @@ class EventItem extends StatelessWidget {
                 Text(
                   "${eventDate.toDate().day}",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Color(0xffD59B78),
                   ),
                 ),
                 Text(
                   "${DateFormat("MMMM").format(eventDate.toDate()).substring(0, 3)}, ${eventDate.toDate().year}",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
+                    fontSize: 12.0,
                   ),
                 ),
               ],
@@ -83,17 +84,16 @@ class EventItem extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 25),
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               decoration: BoxDecoration(
-                color: Colors.grey,
+                color: Color(0xff232323),
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
+                  topLeft: Radius.circular(15),
+                  bottomLeft: Radius.circular(15),
                 ),
               ),
-              height: 110,
+              height: 90,
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -104,23 +104,21 @@ class EventItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: Hero(
-                            tag: eventTitle,
-                            child: Text(
-                              eventTitle,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                          child: Text(
+                            eventTitle,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              color: Color(0xffD59B78),
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Text(
                           "$eventStartTime - $eventEndTime",
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Color(0xff686868),
+                            fontSize: 11.0,
                           ),
                         ),
                         Expanded(
@@ -133,10 +131,9 @@ class EventItem extends StatelessWidget {
                               child: Text(
                                 eventVenue,
                                 style: TextStyle(
-                                  backgroundColor: Colors.blueGrey.shade100,
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
-                                ),
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 10.0),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -148,17 +145,11 @@ class EventItem extends StatelessWidget {
                   Container(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Hero(
-                        tag: eventPosterUrl,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: Image.network(
-                            eventPosterUrl,
-                            fit: BoxFit.cover,
-                            height: double.infinity,
-                            width: 100,
-                          ),
-                        ),
+                      child: Image.network(
+                        eventPosterUrl,
+                        fit: BoxFit.cover,
+                        height: double.infinity,
+                        width: 60,
                       ),
                     ),
                   ),

@@ -36,7 +36,7 @@ class EventProfileWidgetItem extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
-          color: Colors.blueAccent,
+          color: Color(0xff232323),
         ),
         child: ListTile(
           leading: CircleAvatar(
@@ -49,6 +49,7 @@ class EventProfileWidgetItem extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
+              color: Color(0xffd59b78),
             ),
           ),
           subtitle: Text(

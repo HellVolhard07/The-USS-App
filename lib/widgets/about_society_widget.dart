@@ -17,38 +17,43 @@ class AboutSocietyWidget extends StatelessWidget {
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: themeProvider.isDarkTheme
-              ? Colors.deepPurpleAccent.withOpacity(0.1)
+              ? Color(0xff0c0c0c)
               : Colors.greenAccent.withOpacity(0.4),
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              child: Text(
-                'About',
-                style: TextStyle(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                child: Text(
+                  'About',
+                  style: TextStyle(
                     // color: Colors.white,
                     color:
                         themeProvider.isDarkTheme ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 43),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 36.0,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            SingleChildScrollView(
-              child: Text(
-                societyArgs.societyAbout,
-                style: TextStyle(
+              SizedBox(
+                height: 10.0,
+              ),
+              SingleChildScrollView(
+                child: Text(
+                  societyArgs.societyAbout,
+                  style: TextStyle(
                     // color: Colors.white,
                     color:
                         themeProvider.isDarkTheme ? Colors.white : Colors.black,
-                    fontSize: 18),
+                    fontSize: 16.0,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

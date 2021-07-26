@@ -21,38 +21,24 @@ SliverAppBar sliverHeader(
         StretchMode.zoomBackground,
         StretchMode.fadeTitle,
       ],
-      background: Hero(
-        tag: url,
-        transitionOnUserGestures: true,
-        child: Material(
-          type: MaterialType.transparency,
-          child: Image.network(
-            url,
-            fit: BoxFit.fitHeight,
-          ),
-        ),
+      background: Image.network(
+        url,
+        fit: BoxFit.fitHeight,
       ),
-      title: Hero(
-        tag: title,
-        // transitionOnUserGestures: true,
-        child: Material(
-          type: MaterialType.transparency,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Color(0xFFFFEEDB),
-            ),
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.25,
-                fontSize: title.length >= 15 ? 15 : 20,
-              ),
-            ),
+      title: Container(
+        padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: Color(0xFF232323).withOpacity(0.8),
+        ),
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.25,
+            fontSize: title.length >= 15 ? 15 : 20,
           ),
         ),
       ),

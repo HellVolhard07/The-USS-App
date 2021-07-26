@@ -22,23 +22,22 @@ class HomeScreen extends StatelessWidget {
         title: 'Events',
         textStyle: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 12,
+          fontSize: 14,
         ),
-        // activeColorPrimary: Colors.deepPurpleAccent,
         activeColorPrimary:
-            isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
+            isDarkTheme ? Color(0xffffa265) : Colors.deepPurpleAccent,
+        activeColorSecondary: isDarkTheme ? Colors.black : Colors.white,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.people),
         title: 'Societies',
         textStyle: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: 14,
         ),
-        // activeColorPrimary: Colors.deepPurpleAccent,
-
         activeColorPrimary:
-            isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
+            isDarkTheme ? Color(0xffffa265) : Colors.deepPurpleAccent,
+        activeColorSecondary: isDarkTheme ? Colors.black : Colors.white,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.account_circle_outlined),
@@ -47,10 +46,9 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 12,
         ),
-        // activeColorPrimary: Colors.deepPurpleAccent,
-
         activeColorPrimary:
-            isDarkTheme ? Colors.white : Colors.deepPurpleAccent,
+            isDarkTheme ? Color(0xffffa265) : Colors.deepPurpleAccent,
+        activeColorSecondary: isDarkTheme ? Colors.black : Colors.white,
       ),
     ];
   }
@@ -73,22 +71,22 @@ class HomeScreen extends StatelessWidget {
     themeProvider.isDarkTheme ? isDarkTheme = true : isDarkTheme = false;
     return PersistentTabView(
       context,
+      navBarStyle: NavBarStyle.style7,
       controller: _controller,
       screens: screens(),
       items: navBarItems(),
-      navBarHeight: 65,
-      //TODO: make it dynamic
-      // backgroundColor: Colors.white,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      // decoration: NavBarDecoration(
-      //   border: Border(
-      //     top: BorderSide(
-      //       color: Colors.deepPurpleAccent,
-      //       width: 3,
-      //       style: BorderStyle.solid,
-      //     ),
-      //   ),
-      // ),
+      navBarHeight: 75,
+      backgroundColor: isDarkTheme ? Color(0xff030303) : Colors.green,
+      decoration: NavBarDecoration(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5.0,
+            color: Color(0xff181818),
+          ),
+        ],
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+      ),
     );
   }
 }

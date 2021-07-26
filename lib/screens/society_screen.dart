@@ -71,11 +71,11 @@ class _SocietyScreenState extends State<SocietyScreen> {
                                   });
                                 },
                                 selectedTextStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                 ),
                                 unSelectedTextStyle: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                 ),
                                 selectedBackgroundColors:

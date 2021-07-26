@@ -24,7 +24,7 @@ class TeamMembers extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 40,
+                width: 30,
               ),
               Text(
                 'Team Members',
@@ -32,16 +32,16 @@ class TeamMembers extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 28,
                     color: themeProvider.isDarkTheme
-                        ? Colors.white70
+                        ? Colors.white
                         : Colors.black),
               ),
             ],
           ),
           Divider(
-            endIndent: 20,
-            indent: 20,
-            thickness: 3,
-            color: Colors.deepPurpleAccent,
+            endIndent: 30,
+            indent: 30,
+            thickness: 2,
+            color: Color(0xffd59b78),
           ),
           SizedBox(
             height: 20,
@@ -57,21 +57,6 @@ class TeamMembers extends StatelessWidget {
               return MemberCircle(index);
             },
           ),
-          // GridView.count(
-          //   physics: ScrollPhysics(),
-          //   shrinkWrap: true,
-          //   crossAxisCount: 3,
-          //   children: [
-          //     MemberCircle(),
-          //     MemberCircle(),
-          //     MemberCircle(),
-          //     MemberCircle(),
-          //     MemberCircle(),
-          //     MemberCircle(),
-          //     MemberCircle(),
-          //     MemberCircle(),
-          //   ],
-          // ),
         ],
       ),
     );
@@ -99,7 +84,7 @@ class MemberCircle extends StatelessWidget {
           },
           child: CircleAvatar(
             radius: 32,
-            backgroundColor: Colors.greenAccent,
+            backgroundColor: Color(0xffd59b78),
             child: Text(
               societyArgs.societyTeam[index]['name'][0],
               style: TextStyle(

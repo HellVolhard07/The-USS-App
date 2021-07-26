@@ -31,7 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(loggedInSocietyName);
     final themeProvider = Provider.of<ThemeProvider>(context);
     final loginProvider = Provider.of<LoginProvider>(context);
     return Scaffold(
@@ -133,24 +132,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //TODO: Add animation here, if needed.
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddEventScreen(),
-            ),
-          );
-        },
-        elevation: 20,
-        backgroundColor: Colors.greenAccent,
-        focusColor: Colors.greenAccent,
-        splashColor: Colors.blueAccent,
-        child: Icon(
-          Icons.add,
-          color: Colors.black,
-          size: 38,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 25.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            //TODO: Add animation here, if needed.
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddEventScreen(),
+              ),
+            );
+          },
+          elevation: 20,
+          backgroundColor: Color(0xffffa265),
+          splashColor: Colors.blueAccent,
+          child: Icon(
+            Icons.add,
+            color: Colors.black,
+            size: 38,
+          ),
         ),
       ),
     );

@@ -36,10 +36,10 @@ List<Color> kLightThemeUnselectedToggleColors = [
   Colors.greenAccent
 ];
 List<Color> kDarkThemeSelectedToggleColors = [
-  Colors.blueAccent,
-  Colors.deepPurpleAccent,
+  Color(0xffD59B78),
+  Color(0xfff2d6b3),
 ];
 List<Color> kDarkThemeUnselectedToggleColors = [
-  Colors.greenAccent,
-  Colors.lightBlueAccent,
+  Color(0xfff2d6b3),
+  Color(0xffD59B78),
 ];
