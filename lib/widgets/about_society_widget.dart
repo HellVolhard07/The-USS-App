@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
 
 import '../theme_provider.dart';
-import 'auth.dart';
 
 class AboutSocietyWidget extends StatelessWidget {
   @override
@@ -16,9 +14,8 @@ class AboutSocietyWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: themeProvider.isDarkTheme
-              ? Color(0xff0c0c0c)
-              : Colors.greenAccent.withOpacity(0.4),
+          color:
+              themeProvider.isDarkTheme ? Color(0xff0c0c0c) : Color(0xffffe4c9),
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Padding(
@@ -31,8 +28,9 @@ class AboutSocietyWidget extends StatelessWidget {
                   'About',
                   style: TextStyle(
                     // color: Colors.white,
-                    color:
-                        themeProvider.isDarkTheme ? Colors.white : Colors.black,
+                    color: themeProvider.isDarkTheme
+                        ? Colors.white
+                        : Color(0xffcd885f),
                     fontWeight: FontWeight.w500,
                     fontSize: 36.0,
                   ),
@@ -46,8 +44,9 @@ class AboutSocietyWidget extends StatelessWidget {
                   societyArgs.societyAbout,
                   style: TextStyle(
                     // color: Colors.white,
-                    color:
-                        themeProvider.isDarkTheme ? Colors.white : Colors.black,
+                    color: themeProvider.isDarkTheme
+                        ? Colors.white
+                        : Color(0xffd1926b),
                     fontSize: 16.0,
                   ),
                 ),

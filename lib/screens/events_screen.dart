@@ -45,9 +45,6 @@ class _EventsScreenState extends State<EventsScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: themeProvider.isDarkTheme
-          ? Theme.of(context).scaffoldBackgroundColor
-          : Color(0xFF4044c9),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection(eventsCollection)
@@ -80,7 +77,7 @@ class _EventsScreenState extends State<EventsScreen> {
                                   )
                                 : Icon(
                                     Icons.nights_stay_rounded,
-                                    color: Colors.white,
+                                    color: Color(0xffcd885f),
                                   ),
                             onPressed: () {
                               themeProvider
@@ -94,7 +91,9 @@ class _EventsScreenState extends State<EventsScreen> {
                             "${DateFormat("d").format(DateTime.now())} ${DateFormat("MMMM").format(DateTime.now())}, ${DateFormat("EEEE").format(DateTime.now())} ",
                             style: TextStyle(
                               fontSize: 20,
-                              color: Color(0xffD59B78),
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffD59B78)
+                                  : Color(0xffcd885f),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -111,13 +110,9 @@ class _EventsScreenState extends State<EventsScreen> {
                       width: mediaQuery.width * 0.85,
                       height: double.infinity,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          // BoxShadow(
-                          //   blurRadius: 20.0,
-                          //   color: Color(0xff212121),
-                          // ),
-                        ],
-                        color: Color(0xff0c0c0c),
+                        color: themeProvider.isDarkTheme
+                            ? Color(0xff0c0c0c)
+                            : Color(0xffffe4c9),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(39),
                           topRight: Radius.circular(39),
@@ -135,7 +130,9 @@ class _EventsScreenState extends State<EventsScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Color(0xffd1926b),
                                 ),
                               ),
                             ),

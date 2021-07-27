@@ -1,15 +1,11 @@
-import 'dart:io';
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
-import 'package:the_uss_project/widgets/society_item.dart';
-import 'auth.dart';
 import 'package:the_uss_project/utils.dart';
+import 'package:the_uss_project/widgets/society_item.dart';
 
 class TeamMembers extends StatelessWidget {
   @override
@@ -30,10 +26,11 @@ class TeamMembers extends StatelessWidget {
                 'Team Members',
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                    fontSize: 28,
-                    color: themeProvider.isDarkTheme
-                        ? Colors.white
-                        : Colors.black),
+                  fontSize: 28,
+                  color: themeProvider.isDarkTheme
+                      ? Colors.white
+                      : Color(0xffcd885f),
+                ),
               ),
             ],
           ),
@@ -41,7 +38,9 @@ class TeamMembers extends StatelessWidget {
             endIndent: 30,
             indent: 30,
             thickness: 2,
-            color: Color(0xffd59b78),
+            color: themeProvider.isDarkTheme
+                ? Color(0xffd59b78)
+                : Color(0xffcd885f),
           ),
           SizedBox(
             height: 20,
@@ -65,7 +64,9 @@ class TeamMembers extends StatelessWidget {
 
 class MemberCircle extends StatelessWidget {
   final int index;
+
   MemberCircle(@required this.index);
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -84,12 +85,16 @@ class MemberCircle extends StatelessWidget {
           },
           child: CircleAvatar(
             radius: 32,
-            backgroundColor: Color(0xffd59b78),
+            backgroundColor: themeProvider.isDarkTheme
+                ? Color(0xffd59b78)
+                : Color(0xffffe4c9),
             child: Text(
               societyArgs.societyTeam[index]['name'][0],
               style: TextStyle(
                 fontSize: 32,
-                color: Colors.black,
+                color: themeProvider.isDarkTheme
+                    ? Colors.black
+                    : Color(0xffcd885f),
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -99,7 +104,8 @@ class MemberCircle extends StatelessWidget {
         Text(
           societyArgs.societyTeam[index]['name'],
           style: TextStyle(
-              color: themeProvider.isDarkTheme ? Colors.white : Colors.black),
+            color: themeProvider.isDarkTheme ? Colors.white : Color(0xffcd885f),
+          ),
         )
       ],
     );
