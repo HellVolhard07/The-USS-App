@@ -16,9 +16,8 @@ class AboutWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: themeProvider.isDarkTheme
-              ? Color(0xff0c0c0c)
-              : Colors.greenAccent.withOpacity(0.4),
+          color:
+              themeProvider.isDarkTheme ? Color(0xff0c0c0c) : Color(0xffffe4c9),
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Padding(
@@ -31,8 +30,9 @@ class AboutWidget extends StatelessWidget {
                   'About',
                   style: TextStyle(
                     // color: Colors.white,
-                    color:
-                        themeProvider.isDarkTheme ? Colors.white : Colors.black,
+                    color: themeProvider.isDarkTheme
+                        ? Colors.white
+                        : Color(0xffcd885f),
                     fontWeight: FontWeight.w900,
                     fontSize: 36.0,
                   ),
@@ -46,8 +46,9 @@ class AboutWidget extends StatelessWidget {
                   loggedInSoceityAbout,
                   style: TextStyle(
                     // color: Colors.white,
-                    color:
-                        themeProvider.isDarkTheme ? Colors.white : Colors.black,
+                    color: themeProvider.isDarkTheme
+                        ? Colors.white
+                        : Color(0xffd1926b),
                     fontSize: 16.0,
                   ),
                 ),

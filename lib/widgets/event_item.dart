@@ -3,8 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/event_screen.dart';
+import '../theme_provider.dart';
 import '../utils.dart';
 
 class EventItem extends StatelessWidget {
@@ -34,6 +36,8 @@ class EventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
     return GestureDetector(
@@ -75,7 +79,9 @@ class EventItem extends StatelessWidget {
                 Text(
                   "${DateFormat("MMMM").format(eventDate.toDate()).substring(0, 3)}, ${eventDate.toDate().year}",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: themeProvider.isDarkTheme
+                        ? Colors.white
+                        : Color(0xffD59B78),
                     fontSize: 12.0,
                   ),
                 ),
@@ -87,7 +93,9 @@ class EventItem extends StatelessWidget {
               margin: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               decoration: BoxDecoration(
-                color: Color(0xff232323),
+                color: themeProvider.isDarkTheme
+                    ? Color(0xff232323)
+                    : Color(0xffffd8b1),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
                   bottomLeft: Radius.circular(15),
@@ -109,7 +117,9 @@ class EventItem extends StatelessWidget {
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
-                              color: Color(0xffD59B78),
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffD59B78)
+                                  : Color(0xffcd885f),
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -117,7 +127,9 @@ class EventItem extends StatelessWidget {
                         Text(
                           "$eventStartTime - $eventEndTime",
                           style: TextStyle(
-                            color: Color(0xff686868),
+                            color: themeProvider.isDarkTheme
+                                ? Color(0xff686868)
+                                : Color(0xffc57545),
                             fontSize: 11.0,
                           ),
                         ),
@@ -131,7 +143,9 @@ class EventItem extends StatelessWidget {
                               child: Text(
                                 eventVenue,
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: themeProvider.isDarkTheme
+                                        ? Colors.white
+                                        : Color(0xffd1926b),
                                     decoration: TextDecoration.underline,
                                     fontSize: 10.0),
                                 overflow: TextOverflow.ellipsis,

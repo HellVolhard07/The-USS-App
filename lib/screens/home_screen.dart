@@ -24,9 +24,8 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 14,
         ),
-        activeColorPrimary:
-            isDarkTheme ? Color(0xffffa265) : Colors.deepPurpleAccent,
-        activeColorSecondary: isDarkTheme ? Colors.black : Colors.white,
+        activeColorPrimary: isDarkTheme ? Color(0xffffa265) : Color(0xffFFD8B1),
+        activeColorSecondary: isDarkTheme ? Colors.black : Color(0xffcd885f),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.people),
@@ -35,20 +34,18 @@ class HomeScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 14,
         ),
-        activeColorPrimary:
-            isDarkTheme ? Color(0xffffa265) : Colors.deepPurpleAccent,
-        activeColorSecondary: isDarkTheme ? Colors.black : Colors.white,
+        activeColorPrimary: isDarkTheme ? Color(0xffffa265) : Color(0xffFFD8B1),
+        activeColorSecondary: isDarkTheme ? Colors.black : Color(0xffcd885f),
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.account_circle_outlined),
         title: 'Account',
         textStyle: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 12,
+          fontSize: 14,
         ),
-        activeColorPrimary:
-            isDarkTheme ? Color(0xffffa265) : Colors.deepPurpleAccent,
-        activeColorSecondary: isDarkTheme ? Colors.black : Colors.white,
+        activeColorPrimary: isDarkTheme ? Color(0xffffa265) : Color(0xffFFD8B1),
+        activeColorSecondary: isDarkTheme ? Colors.black : Color(0xffcd885f),
       ),
     ];
   }
@@ -76,16 +73,18 @@ class HomeScreen extends StatelessWidget {
       screens: screens(),
       items: navBarItems(),
       navBarHeight: 75,
-      backgroundColor: isDarkTheme ? Color(0xff030303) : Colors.green,
+      backgroundColor: isDarkTheme ? Color(0xff030303) : Color(0xffcd885f),
       decoration: NavBarDecoration(
         boxShadow: [
           BoxShadow(
-            blurRadius: 5.0,
-            color: Color(0xff181818),
+            blurRadius: 7.0,
+            color: isDarkTheme?Color(0xff181818):Color(0xffe09d7a),
           ),
         ],
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+          topLeft: Radius.circular(30.0),
+          topRight: Radius.circular(30.0),
+        ),
       ),
     );
   }

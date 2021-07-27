@@ -52,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(
                       color: themeProvider.isDarkTheme
                           ? Colors.white70
-                          : Colors.black87,
+                          : Color(0xffcd885f),
                       fontSize: 25,
                     ),
                   ),
@@ -61,14 +61,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(
                       color: themeProvider.isDarkTheme
                           ? Colors.white
-                          : Colors.deepPurpleAccent,
+                          : Color(0xffc57545),
                       fontSize: 30,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                   Divider(
                     thickness: 3,
-                    color: Colors.deepPurpleAccent,
+                    color: Color(0xffD59B78),
                   ),
                   SizedBox(
                     height: 20,
@@ -145,11 +145,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           },
           elevation: 20,
-          backgroundColor: Color(0xffffa265),
+          backgroundColor:
+              themeProvider.isDarkTheme ? Color(0xffffa265) : Color(0xffe09d7a),
           splashColor: Colors.blueAccent,
           child: Icon(
             Icons.add,
-            color: Colors.black,
+            color: themeProvider.isDarkTheme ? Colors.black : Color(0xfffff0e1),
             size: 38,
           ),
         ),

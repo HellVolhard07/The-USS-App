@@ -1,8 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:the_uss_project/constants.dart';
-import 'package:the_uss_project/screens/society_list_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:the_uss_project/screens/society_screen.dart';
+
+import '../theme_provider.dart';
 
 class SocietyItem extends StatelessWidget {
   final String societyName;
@@ -11,11 +12,6 @@ class SocietyItem extends StatelessWidget {
   final String societyAbout;
   final societyTeam;
   final societyKeEvents;
-  // final String societyEventName;
-  // final String societyEventDate;
-  // final String societyEventStartTime;
-  // final String societyEventEndTime;
-  // final String societyEventVenue;
 
   SocietyItem({
     required this.societyName,
@@ -24,15 +20,12 @@ class SocietyItem extends StatelessWidget {
     required this.societyAbout,
     required this.societyTeam,
     required this.societyKeEvents,
-    // required this.societyEventDate,
-    // required this.societyEventName,
-    // required this.societyEventStartTime,
-    // required this.societyEventEndTime,
-    // required this.societyEventVenue,
   });
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
     return GestureDetector(
@@ -48,11 +41,6 @@ class SocietyItem extends StatelessWidget {
                 societyAbout: societyAbout,
                 societyTeam: societyTeam,
                 societyKeEvents: societyKeEvents,
-                // societyEventDate: societyEventDate,
-                // societyEventName: societyEventName,
-                // societyEventStartTime: societyEventStartTime,
-                // societyEventEndTime: societyEventEndTime,
-                // societyEventVenue: societyEventVenue,
               ),
             ),
             transitionDuration: Duration(milliseconds: 800),
@@ -107,6 +95,9 @@ class SocietyItem extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.w600,
+                          color: themeProvider.isDarkTheme
+                              ? Colors.white
+                              : Color(0xffcd885f),
                         ),
                       ),
                     ),
@@ -114,12 +105,15 @@ class SocietyItem extends StatelessWidget {
                       child: SizedBox(
                         width: 120.0,
                         child: Text(
-                          loremIpsum,
+                          societyAbout,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                           style: TextStyle(
                             fontSize: 12.0,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Color(0xffd1926b),
                           ),
                         ),
                       ),

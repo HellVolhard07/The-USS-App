@@ -26,6 +26,7 @@ class ThemeBuilder {
     ),
   );
   static final lightTheme = ThemeData(
+    scaffoldBackgroundColor: Color(0xfffff0e1),
     fontFamily: "Poppins",
     colorScheme: ColorScheme.light(
       primary: Colors.orangeAccent,
