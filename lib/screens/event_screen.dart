@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
 
 class EventScreen extends StatelessWidget {
@@ -7,6 +9,7 @@ class EventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
     final eventArgs = ModalRoute.of(context)!.settings.arguments as EventItem;
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -27,7 +30,9 @@ class EventScreen extends StatelessWidget {
                   (BuildContext context, ScrollController scrollController) {
                 return Container(
                   decoration: BoxDecoration(
-                    color: Color(0xff232323),
+                    color: themeProvider.isDarkTheme
+                        ? Color(0xff232323)
+                        : Color(0xffffe4c9),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(35),
                       topRight: Radius.circular(35),
@@ -75,14 +80,18 @@ class EventScreen extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.person_add_alt_1_outlined,
-                                      color: Colors.white,
+                                      color: themeProvider.isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
                                     SizedBox(width: 15),
                                     Text(
                                       "Society: ${eventArgs.orgSocietyName}",
                                       style: TextStyle(
                                         fontSize: 13,
-                                        color: Colors.white,
+                                        color: themeProvider.isDarkTheme
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                   ],
@@ -94,14 +103,18 @@ class EventScreen extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.maps_ugc_outlined,
-                                      color: Colors.white,
+                                      color: themeProvider.isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
                                     SizedBox(width: 15),
                                     Text(
                                       eventArgs.eventVenue,
                                       style: TextStyle(
                                         fontSize: 13,
-                                        color: Colors.white,
+                                        color: themeProvider.isDarkTheme
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                   ],
@@ -113,7 +126,9 @@ class EventScreen extends StatelessWidget {
                                   children: [
                                     Icon(
                                       Icons.date_range_outlined,
-                                      color: Colors.white,
+                                      color: themeProvider.isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
                                     SizedBox(width: 15),
                                     Column(
@@ -124,13 +139,17 @@ class EventScreen extends StatelessWidget {
                                           "${eventArgs.eventDate.toDate().day}/${eventArgs.eventDate.toDate().month}/${eventArgs.eventDate.toDate().year}",
                                           style: TextStyle(
                                             fontSize: 13,
-                                            color: Colors.white,
+                                            color: themeProvider.isDarkTheme
+                                                ? Colors.white
+                                                : Colors.black,
                                           ),
                                         ),
                                         Text(
                                           "${eventArgs.eventStartTime} - ${eventArgs.eventEndTime}",
                                           style: TextStyle(
-                                            color: Colors.white60,
+                                            color: themeProvider.isDarkTheme
+                                                ? Colors.white60
+                                                : Colors.black54,
                                           ),
                                         ),
                                       ],
@@ -146,7 +165,9 @@ class EventScreen extends StatelessWidget {
                             child: Text(
                               "About",
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Colors.black,
                                   fontWeight: FontWeight.w900,
                                   fontSize: 17),
                             ),
@@ -156,7 +177,9 @@ class EventScreen extends StatelessWidget {
                             child: Text(
                               eventArgs.aboutEvent,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                           ),
