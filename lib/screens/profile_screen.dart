@@ -52,7 +52,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(
                       color: themeProvider.isDarkTheme
                           ? Colors.white70
-                          : Color(0xffcd885f),
+                          : Colors.black,
+                      // : Color(0xffcd885f),
                       fontSize: 25,
                     ),
                   ),
@@ -61,6 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(
                       color: themeProvider.isDarkTheme
                           ? Colors.white
+                          // : Colors.black,
                           : Color(0xffc57545),
                       fontSize: 30,
                       fontWeight: FontWeight.w900,

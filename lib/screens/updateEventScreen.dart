@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
@@ -217,6 +219,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -274,7 +277,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                           focusNode: _eventTitleNode,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -285,11 +290,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                             labelText: "Event Title",
                             labelStyle: TextStyle(
                               fontSize: 18.0,
-                              color: Color(0xffffa265),
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.white,
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -320,7 +329,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                           focusNode: _eventDescriptionNode,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -337,11 +348,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                             labelText: "Event description",
                             labelStyle: TextStyle(
                               fontSize: 18.0,
-                              color: Color(0xffffa265),
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.white,
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -374,7 +389,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                           focusNode: _eventVenue,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -394,11 +411,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                             labelText: "Venue",
                             labelStyle: TextStyle(
                               fontSize: 18.0,
-                              color: Color(0xffffa265),
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.white,
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -439,7 +460,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                           focusNode: _eventDate,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -456,11 +479,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                             labelText: "Date",
                             labelStyle: TextStyle(
                               fontSize: 18.0,
-                              color: Color(0xffffa265),
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.white,
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -519,7 +546,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                 },
                                 focusNode: _eventStartTime,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -536,11 +565,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                   labelText: "Start Time",
                                   labelStyle: TextStyle(
                                     fontSize: 18.0,
-                                    color: Color(0xffffa265),
+                                    color: themeProvider.isDarkTheme
+                                        ? Color(0xffffa265)
+                                        : Color(0xffcd885f),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Colors.white,
+                                      color: themeProvider.isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
                                   ),
                                   border: OutlineInputBorder(
@@ -598,7 +631,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                 },
                                 focusNode: _eventEndTime,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -616,11 +651,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                   labelText: "End time",
                                   labelStyle: TextStyle(
                                     fontSize: 18.0,
-                                    color: Color(0xffffa265),
+                                    color: themeProvider.isDarkTheme
+                                        ? Color(0xffffa265)
+                                        : Color(0xffcd885f),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Colors.white,
+                                      color: themeProvider.isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
                                   ),
                                   border: OutlineInputBorder(
@@ -664,7 +703,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           controller: _miscController,
                           focusNode: _misc,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           onSaved: (misc) {
                             setState(() {
@@ -682,11 +723,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                             labelText: "Miscellaneous",
                             labelStyle: TextStyle(
                               fontSize: 18.0,
-                              color: Color(0xffffa265),
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.white,
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -721,7 +766,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                Color(0xffffa265),
+                                themeProvider.isDarkTheme
+                                    ? Color(0xffffa265)
+                                    : Color(0xffcd885f),
                               ),
                             ),
                             child: Text("Update"),
