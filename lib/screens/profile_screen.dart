@@ -31,7 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(loggedInSocietyName);
     final themeProvider = Provider.of<ThemeProvider>(context);
     final loginProvider = Provider.of<LoginProvider>(context);
     return Scaffold(
@@ -53,7 +52,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(
                       color: themeProvider.isDarkTheme
                           ? Colors.white70
-                          : Colors.black87,
+                          : Colors.black,
+                      // : Color(0xffcd885f),
                       fontSize: 25,
                     ),
                   ),
@@ -62,14 +62,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(
                       color: themeProvider.isDarkTheme
                           ? Colors.white
-                          : Colors.deepPurpleAccent,
+                          // : Colors.black,
+                          : Color(0xffc57545),
                       fontSize: 30,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                   Divider(
                     thickness: 3,
-                    color: Colors.deepPurpleAccent,
+                    color: Color(0xffD59B78),
                   ),
                   SizedBox(
                     height: 20,
@@ -133,24 +134,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //TODO: Add animation here, if needed.
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddEventScreen(),
-            ),
-          );
-        },
-        elevation: 20,
-        backgroundColor: Colors.greenAccent,
-        focusColor: Colors.greenAccent,
-        splashColor: Colors.blueAccent,
-        child: Icon(
-          Icons.add,
-          color: Colors.black,
-          size: 38,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 25.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            //TODO: Add animation here, if needed.
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddEventScreen(),
+              ),
+            );
+          },
+          elevation: 20,
+          backgroundColor:
+              themeProvider.isDarkTheme ? Color(0xffffa265) : Color(0xffe09d7a),
+          splashColor: Colors.blueAccent,
+          child: Icon(
+            Icons.add,
+            color: themeProvider.isDarkTheme ? Colors.black : Color(0xfffff0e1),
+            size: 38,
+          ),
         ),
       ),
     );

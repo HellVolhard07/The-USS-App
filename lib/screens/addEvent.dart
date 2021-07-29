@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
@@ -177,6 +179,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -234,22 +237,32 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           focusNode: _eventTitleNode,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Event Title",
-                            labelStyle: TextStyle(fontSize: 18.0),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Event Title",
                             hintStyle: TextStyle(
@@ -274,7 +287,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           focusNode: _eventDescriptionNode,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -284,19 +299,26 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Event description",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Event description",
                             hintStyle: TextStyle(
@@ -323,7 +345,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           focusNode: _eventVenue,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -336,19 +360,26 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Venue",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Venue(Link if online)",
                             hintStyle: TextStyle(
@@ -383,7 +414,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           focusNode: _eventDate,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -393,22 +426,30 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Date",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(color: Color(0xffd59b78)),
                             ),
                             hintText: "Event Date",
-                            suffixIcon: Icon(Icons.calendar_today_outlined),
+                            suffixIcon: Icon(
+                              Icons.calendar_today_outlined,
+                              color: Color(0xffd59b78),
+                            ),
                             hintStyle: TextStyle(
                               color: Colors.grey,
                             ),
@@ -456,7 +497,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 },
                                 focusNode: _eventStartTime,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -467,22 +510,32 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   labelText: "Start Time",
                                   labelStyle: TextStyle(
-                                      fontSize: 18.0, color: Colors.green),
+                                    fontSize: 18.0,
+                                    color: themeProvider.isDarkTheme
+                                        ? Color(0xffffa265)
+                                        : Color(0xffcd885f),
+                                  ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   hintText: "Event start time",
                                   contentPadding: EdgeInsets.all(15.0),
-                                  suffixIcon: Icon(Icons.more_time),
+                                  suffixIcon: Icon(
+                                    Icons.more_time,
+                                    color: Color(0xffd59b78),
+                                  ),
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -528,7 +581,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 },
                                 focusNode: _eventEndTime,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -540,21 +595,32 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                   contentPadding: EdgeInsets.all(15.0),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   labelText: "End time",
                                   labelStyle: TextStyle(
-                                      fontSize: 18.0, color: Colors.green),
+                                    fontSize: 18.0,
+                                    color: themeProvider.isDarkTheme
+                                        ? Color(0xffffa265)
+                                        : Color(0xffcd885f),
+                                  ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                      // color: themeProvider.isDarkTheme ? Colors.white : Colors.black,
+                                    ),
                                   ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   hintText: "Event end time",
-                                  suffixIcon: Icon(Icons.more_time),
+                                  suffixIcon: Icon(
+                                    Icons.more_time,
+                                    color: Color(0xffd59b78),
+                                  ),
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -586,7 +652,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           controller: _miscController,
                           focusNode: _misc,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           onSaved: (misc) {
                             setState(() {
@@ -597,18 +665,27 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           maxLines: null,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Miscellaneous",
-                            labelStyle: TextStyle(fontSize: 18.0),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                                // color: themeProvider.isDarkTheme ? Colors.white : Colors.black,
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText:
                                 "Any additional information/guidelines/links",
@@ -629,12 +706,22 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         )
                       : Center(
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                themeProvider.isDarkTheme
+                                    ? Color(0xffffa265)
+                                    : Color(0xffcd885f),
+                              ),
+                            ),
                             onPressed: () {
                               verifyAndSchedule();
                             },
                             child: Text("Schedule"),
                           ),
                         ),
+                  SizedBox(
+                    height: 50.0,
+                  ),
                 ],
               ),
             ),

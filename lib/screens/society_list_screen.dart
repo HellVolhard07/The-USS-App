@@ -35,21 +35,31 @@ class SocietyListScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w900,
+                      color: themeProvider.isDarkTheme
+                          ? Color(0xffD59B78)
+                          : Color(0xffcd885f),
                     ),
                   ),
                 ),
                 Divider(
                   indent: 20,
                   endIndent: 20,
-                  thickness: 3.0,
-                  color: Colors.deepPurpleAccent,
+                  thickness: 2.0,
+                  color: themeProvider.isDarkTheme
+                      ? Color(0xffD59B78)
+                      : Color(0xffcd885f),
                 ),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemBuilder: (ctx, index) => SocietyItem(
-                    myColor:
-                        index % 2 == 0 ? Colors.blueAccent : Colors.redAccent,
+                    myColor: index % 2 == 0
+                        ? themeProvider.isDarkTheme
+                            ? Color(0xfff2d6b3)
+                            : Color(0xffffd8b1)
+                        : themeProvider.isDarkTheme
+                            ? Color(0xffD59B78)
+                            : Color(0xffffcc99),
                     societyName: societiesData[index][societyName],
                     societyLogo: societiesData[index][societyLogo],
                     societyAbout: societiesData[index][societyAbout],

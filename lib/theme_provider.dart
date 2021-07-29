@@ -14,7 +14,7 @@ class ThemeProvider with ChangeNotifier {
 
 class ThemeBuilder {
   static final darkTheme = ThemeData(
-    scaffoldBackgroundColor: Color(0xFF1d1e42),
+    scaffoldBackgroundColor: Color(0xff181818),
     fontFamily: "Poppins",
     primaryColor: Colors.orangeAccent,
     colorScheme: ColorScheme.dark(
@@ -26,6 +26,7 @@ class ThemeBuilder {
     ),
   );
   static final lightTheme = ThemeData(
+    scaffoldBackgroundColor: Color(0xfffff0e1),
     fontFamily: "Poppins",
     colorScheme: ColorScheme.light(
       primary: Colors.orangeAccent,

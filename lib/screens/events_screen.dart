@@ -45,9 +45,6 @@ class _EventsScreenState extends State<EventsScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: themeProvider.isDarkTheme
-          ? Theme.of(context).scaffoldBackgroundColor
-          : Color(0xFF4044c9),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection(eventsCollection)
@@ -76,11 +73,11 @@ class _EventsScreenState extends State<EventsScreen> {
                             icon: themeProvider.isDarkTheme
                                 ? Icon(
                                     Icons.wb_sunny_outlined,
-                                    color: Colors.yellow,
+                                    color: Color(0xffD59B78),
                                   )
                                 : Icon(
                                     Icons.nights_stay_rounded,
-                                    color: Colors.white,
+                                    color: Color(0xffcd885f),
                                   ),
                             onPressed: () {
                               themeProvider
@@ -94,7 +91,9 @@ class _EventsScreenState extends State<EventsScreen> {
                             "${DateFormat("d").format(DateTime.now())} ${DateFormat("MMMM").format(DateTime.now())}, ${DateFormat("EEEE").format(DateTime.now())} ",
                             style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffD59B78)
+                                  : Color(0xffcd885f),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -102,59 +101,66 @@ class _EventsScreenState extends State<EventsScreen> {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: mediaQuery.height * 0.12,
-                      bottom: 0,
-                    ),
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: mediaQuery.height * 0.12,
+                        bottom: 0,
                       ),
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
-                            child: Text(
-                              'Upcoming Events',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
+                      width: mediaQuery.width * 0.85,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: themeProvider.isDarkTheme
+                            ? Color(0xff0c0c0c)
+                            : Color(0xffffe4c9),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(39),
+                          topRight: Radius.circular(39),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(30.0, 25, 20, 10),
+                              child: Text(
+                                'Upcoming Events',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Color(0xffd1926b),
+                                ),
                               ),
                             ),
-                          ),
-                          Divider(
-                            indent: 20,
-                            endIndent: 20,
-                            thickness: 3.0,
-                            color: Colors.deepPurpleAccent,
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (ctx, index) => EventItem(
-                              orgLogo: eventsData[index][societyLogo],
-                              orgSocietyName: eventsData[index][societyName],
-                              eventPosterUrl: eventsData[index][posterURL],
-                              eventId: eventsData[index].id,
-                              aboutEvent: eventsData[index][aboutEvent],
-                              eventDate: eventsData[index][date],
-                              eventStartTime: eventsData[index][startTime],
-                              eventTitle: eventsData[index][title],
-                              eventVenue: eventsData[index][venue],
-                              eventEndTime: eventsData[index][endTime],
+                            Divider(
+                              indent: 30,
+                              endIndent: 30,
+                              thickness: 2.0,
+                              color: Color(0xffD59B78),
                             ),
-                            itemCount: eventsData.length,
-                          ),
-                        ],
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (ctx, index) => EventItem(
+                                orgLogo: eventsData[index][societyLogo],
+                                orgSocietyName: eventsData[index][societyName],
+                                eventPosterUrl: eventsData[index][posterURL],
+                                eventId: eventsData[index].id,
+                                aboutEvent: eventsData[index][aboutEvent],
+                                eventDate: eventsData[index][date],
+                                eventStartTime: eventsData[index][startTime],
+                                eventTitle: eventsData[index][title],
+                                eventVenue: eventsData[index][venue],
+                                eventEndTime: eventsData[index][endTime],
+                              ),
+                              itemCount: eventsData.length,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

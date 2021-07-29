@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';
-import 'package:the_uss_project/screens/profile_screen.dart';
-import 'package:the_uss_project/widgets/about_profile_widget.dart';
 import 'package:the_uss_project/widgets/about_society_widget.dart';
-import 'package:the_uss_project/widgets/event_profile_widget.dart';
 import 'package:the_uss_project/widgets/event_society_widget.dart';
 import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
 import 'package:the_uss_project/widgets/team_members_widget.dart';
+
 import '../constants.dart';
 import '../theme_provider.dart';
-import 'society_list_screen.dart';
 
 List societyWidgets = [
   AboutSocietyWidget(),
@@ -44,7 +41,8 @@ class _SocietyScreenState extends State<SocietyScreen> {
         child: CustomScrollView(
           physics: BouncingScrollPhysics(),
           slivers: [
-            sliverHeader(societyArgs.societyName, societyArgs.societyLogo),
+            sliverHeader(
+                context, societyArgs.societyName, societyArgs.societyLogo),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
@@ -71,11 +69,11 @@ class _SocietyScreenState extends State<SocietyScreen> {
                                   });
                                 },
                                 selectedTextStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                 ),
                                 unSelectedTextStyle: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                 ),
                                 selectedBackgroundColors:

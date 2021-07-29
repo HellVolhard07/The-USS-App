@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
 
 import '../theme_provider.dart';
-import 'auth.dart';
 
 class AboutSocietyWidget extends StatelessWidget {
   @override
@@ -16,39 +14,45 @@ class AboutSocietyWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: themeProvider.isDarkTheme
-              ? Colors.deepPurpleAccent.withOpacity(0.1)
-              : Colors.greenAccent.withOpacity(0.4),
+          color:
+              themeProvider.isDarkTheme ? Color(0xff0c0c0c) : Color(0xffffe4c9),
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              child: Text(
-                'About',
-                style: TextStyle(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                child: Text(
+                  'About',
+                  style: TextStyle(
                     // color: Colors.white,
-                    color:
-                        themeProvider.isDarkTheme ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 43),
+                    color: themeProvider.isDarkTheme
+                        ? Colors.white
+                        : Color(0xffcd885f),
+                    fontWeight: FontWeight.w500,
+                    fontSize: 36.0,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            SingleChildScrollView(
-              child: Text(
-                societyArgs.societyAbout,
-                style: TextStyle(
+              SizedBox(
+                height: 10.0,
+              ),
+              SingleChildScrollView(
+                child: Text(
+                  societyArgs.societyAbout,
+                  style: TextStyle(
                     // color: Colors.white,
-                    color:
-                        themeProvider.isDarkTheme ? Colors.white : Colors.black,
-                    fontSize: 18),
+                    color: themeProvider.isDarkTheme
+                        ? Colors.white
+                        : Color(0xffd1926b),
+                    fontSize: 16.0,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
