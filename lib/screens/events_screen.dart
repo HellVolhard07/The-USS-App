@@ -22,13 +22,27 @@ class _EventsScreenState extends State<EventsScreen> {
   void initState() {
     super.initState();
     getCurrentUserData();
+
     FirebaseMessaging.instance.subscribeToTopic('Events');
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
       print('Message data: ${message.data}');
-
+      // AlertDialog(
+      //   title: Text("New Event Posted"),
+      //   actions: [
+      //     TextButton(
+      //       onPressed: () {
+      //         Navigator.of(context).pop();
+      //       },
+      //       child: Text("OK"),
+      //     ),
+      //   ],
+      // );
       if (message.notification != null) {
-        print('Message also contained a notification with title: ${message.notification!.title}');
+        print(
+          'Message also contained a notification with title: ${message.notification!.title}',
+        );
       }
     });
   }
