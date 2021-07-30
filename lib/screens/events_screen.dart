@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,31 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   void initState() {
-    getCurrentUserData();
     super.initState();
+    getCurrentUserData();
+
+    FirebaseMessaging.instance.subscribeToTopic('Events');
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+      // AlertDialog(
+      //   title: Text("New Event Posted"),
+      //   actions: [
+      //     TextButton(
+      //       onPressed: () {
+      //         Navigator.of(context).pop();
+      //       },
+      //       child: Text("OK"),
+      //     ),
+      //   ],
+      // );
+      if (message.notification != null) {
+        print(
+          'Message also contained a notification with title: ${message.notification!.title}',
+        );
+      }
+    });
   }
 
   Future getCurrentUserData() async {
