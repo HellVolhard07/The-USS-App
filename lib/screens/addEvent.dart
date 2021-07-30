@@ -12,6 +12,8 @@ import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
 
+enum SingingCharacter { online, offline }
+
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({Key? key}) : super(key: key);
 
@@ -20,6 +22,7 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
+  SingingCharacter? _character = SingingCharacter.online;
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   firebase_storage.FirebaseStorage storage =
@@ -390,8 +393,47 @@ class _AddEventScreenState extends State<AddEventScreen> {
                             _eventVenue.unfocus();
                           },
                         ),
-                        SizedBox(
-                          height: 20.0,
+                        Row(
+                          children: [
+                            // Expanded(child: child)
+                            // Expanded(
+                            //   child: ListTile(
+                            //     title: Text('Online'),
+                            //     leading: Radio<SingingCharacter>(
+                            //       value: SingingCharacter.online,
+                            //       groupValue: _character,
+                            //       onChanged: (SingingCharacter? value) {
+                            //         setState(() {
+                            //           _character = value;
+                            //         });
+                            //       },
+                            //     ),
+                            //   ),
+                            // ),
+                            // Expanded(
+                            //   child: ListTile(
+                            //     title: Text('Offline'),
+                            //     leading: Radio<SingingCharacter>(
+                            //       value: SingingCharacter.offline,
+                            //       groupValue: _character,
+                            //       onChanged: (SingingCharacter? value) {
+                            //         setState(() {
+                            //           _character = value;
+                            //         });
+                            //       },
+                            //     ),
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(value: false, onChanged: (newValue) {}),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text('Requires registeration'),
+                          ],
                         ),
                         TextFormField(
                           controller: _dateEditingController,
