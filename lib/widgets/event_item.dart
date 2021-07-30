@@ -1,10 +1,10 @@
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../screens/event_screen.dart';
 import '../theme_provider.dart';
 import '../utils.dart';
@@ -37,6 +37,7 @@ class EventItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
 
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
@@ -101,7 +102,7 @@ class EventItem extends StatelessWidget {
                   bottomLeft: Radius.circular(15),
                 ),
               ),
-              height: 90,
+              height: mediaQuery.height * 0.15,
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -133,22 +134,38 @@ class EventItem extends StatelessWidget {
                             fontSize: 11.0,
                           ),
                         ),
+                        SizedBox(
+                          height: 5.0,
+                        ),
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: GestureDetector(
-                              onTap: () {
+                          child: SizedBox(
+                            width: mediaQuery.width * 0.15,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                shadowColor: MaterialStateProperty.all<Color>(
+                                  themeProvider.isDarkTheme
+                                      ? Color(0xffFFD8B1)
+                                      : Colors.black,
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  themeProvider.isDarkTheme
+                                      ? Color(0xffffa265)
+                                      : Color(0xffFFD8B1),
+                                ),
+                              ),
+                              onPressed: () {
                                 Utils.openLink(link: eventVenue);
                               },
                               child: Text(
-                                eventVenue,
+                                "Join",
                                 style: TextStyle(
-                                    color: themeProvider.isDarkTheme
-                                        ? Colors.white
-                                        : Color(0xffd1926b),
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 10.0),
-                                overflow: TextOverflow.ellipsis,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.black
+                                      : Color(0xffd1926b),
+                                  fontSize: 11.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -176,3 +193,24 @@ class EventItem extends StatelessWidget {
     );
   }
 }
+
+// Expanded(
+// child: Padding(
+// padding: const EdgeInsets.symmetric(vertical: 5),
+// child: GestureDetector(
+// onTap: () {
+// Utils.openLink(link: eventVenue);
+// },
+// child: Text(
+// eventVenue,
+// style: TextStyle(
+// color: themeProvider.isDarkTheme
+// ? Colors.white
+//     : Color(0xffd1926b),
+// decoration: TextDecoration.underline,
+// fontSize: 10.0),
+// overflow: TextOverflow.ellipsis,
+// ),
+// ),
+// ),
+// ),
