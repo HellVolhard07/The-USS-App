@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import '../key.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
@@ -147,6 +151,32 @@ class _AddEventScreenState extends State<AddEventScreen> {
         _imagePick = null;
         _isLoading = false;
       });
+
+      var msgUrl = Uri.parse("https://fcm.googleapis.com/fcm/send");
+
+      var response = http.post(
+        msgUrl,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "key=$KEY",
+        },
+        body: jsonEncode(
+          {
+            "to": "/topics/Events",
+            "notification": {
+              "title": "Event Posted",
+              "body": "hey checkout new event",
+              "click_action": "FLUTTER_CLICK_ACTION"
+            },
+            "data": {
+              "title": "Event Posted",
+              "body": "hey checkout new event",
+              "click_action": "FLUTTER_CLICK_ACTION"
+            }
+          },
+        ),
+      );
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Event added successfully"),
