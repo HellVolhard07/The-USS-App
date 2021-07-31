@@ -7,7 +7,6 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import '../key.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
@@ -15,6 +14,8 @@ import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
+
+import '../key.dart';
 
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({Key? key}) : super(key: key);
@@ -218,7 +219,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(
+            color: themeProvider.isDarkTheme
+                ? Color(0xffcd885f)
+                : Color(0xffD59B78),
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -230,7 +236,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 23.0,
-                      vertical: 25.0,
+                      vertical: 0.0,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -730,6 +736,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 25),
                   _isLoading
                       ? Center(
                           child: CircularProgressIndicator(),
