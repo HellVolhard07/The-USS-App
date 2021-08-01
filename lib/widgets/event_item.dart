@@ -1,10 +1,10 @@
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../screens/event_screen.dart';
 import '../theme_provider.dart';
 import '../utils.dart';
@@ -20,6 +20,8 @@ class EventItem extends StatelessWidget {
   final String aboutEvent;
   final String eventPosterUrl;
   final String orgSocietyName;
+  final bool online;
+  final bool registeration;
 
   EventItem({
     required this.orgLogo,
@@ -32,11 +34,14 @@ class EventItem extends StatelessWidget {
     required this.eventTitle,
     required this.eventVenue,
     required this.orgSocietyName,
+    required this.online,
+    required this.registeration,
   });
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
 
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
@@ -57,6 +62,8 @@ class EventItem extends StatelessWidget {
                 eventTitle: eventTitle,
                 eventVenue: eventVenue,
                 eventEndTime: eventEndTime,
+                online: online,
+                registeration: registeration,
               ),
             ),
           ),
@@ -101,14 +108,14 @@ class EventItem extends StatelessWidget {
                   bottomLeft: Radius.circular(15),
                 ),
               ),
-              height: 90,
+              height: mediaQuery.height * 0.13,
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
@@ -133,22 +140,68 @@ class EventItem extends StatelessWidget {
                             fontSize: 11.0,
                           ),
                         ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
                         Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: GestureDetector(
-                              onTap: () {
-                                Utils.openLink(link: eventVenue);
-                              },
-                              child: Text(
-                                eventVenue,
-                                style: TextStyle(
-                                    color: themeProvider.isDarkTheme
-                                        ? Colors.white
-                                        : Color(0xffd1926b),
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 10.0),
-                                overflow: TextOverflow.ellipsis,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              // maximumSize:
+                              //     MaterialStateProperty.all(Size(, 4)),
+                              //  padding: MaterialStateProperty.all<EdgeInsets>(
+                              //    EdgeInsets.symmetric(
+                              //        horizontal: 3, vertical: 5),
+                              // ),
+                              shadowColor: MaterialStateProperty.all<Color>(
+                                themeProvider.isDarkTheme
+                                    ? Color(0xffFFD8B1)
+                                    : Colors.black,
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                themeProvider.isDarkTheme
+                                    ? Color(0xffffa265)
+                                    : Color(0xffFFD8B1),
+                              ),
+                            ),
+                            onPressed: !registeration && !online
+                                ? () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (ctx) => EventScreen(),
+                                        settings: RouteSettings(
+                                          arguments: EventItem(
+                                            orgLogo: orgLogo,
+                                            orgSocietyName: orgSocietyName,
+                                            eventPosterUrl: eventPosterUrl,
+                                            eventId: eventId,
+                                            aboutEvent: aboutEvent,
+                                            eventDate: eventDate,
+                                            eventStartTime: eventStartTime,
+                                            eventTitle: eventTitle,
+                                            eventVenue: eventVenue,
+                                            eventEndTime: eventEndTime,
+                                            online: online,
+                                            registeration: registeration,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                : () {
+                                    Utils.openLink(link: eventVenue);
+                                  },
+                            child: Text(
+                              registeration
+                                  ? "Register"
+                                  : online
+                                      ? "Join"
+                                      : "View",
+                              style: TextStyle(
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.black
+                                    : Color(0xffd1926b),
+                                fontSize: 11.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -176,3 +229,24 @@ class EventItem extends StatelessWidget {
     );
   }
 }
+
+// Expanded(
+// child: Padding(
+// padding: const EdgeInsets.symmetric(vertical: 5),
+// child: GestureDetector(
+// onTap: () {
+// Utils.openLink(link: eventVenue);
+// },
+// child: Text(
+// eventVenue,
+// style: TextStyle(
+// color: themeProvider.isDarkTheme
+// ? Colors.white
+//     : Color(0xffd1926b),
+// decoration: TextDecoration.underline,
+// fontSize: 10.0),
+// overflow: TextOverflow.ellipsis,
+// ),
+// ),
+// ),
+// ),
