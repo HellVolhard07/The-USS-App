@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:the_uss_project/screens/addEvent.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
 
@@ -183,6 +184,33 @@ class EventScreen extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 150,
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text(
+                                eventArgs.registeration
+                                    ? "Register"
+                                    : eventArgs.online
+                                        ? "Join"
+                                        : "View",
+                                style: TextStyle(
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.black
+                                      : Color(0xffd1926b),
+                                  fontSize: 11.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // child: Text(isRegisterationRequired
+                          //     ? 'Register'
+                          //     : isOnline
+                          //         ? 'Join'
+                          //         : 'View on Map'))),
                         ],
                       ),
                     ),

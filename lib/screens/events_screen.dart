@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
+
+import '../main.dart';
 
 class EventsScreen extends StatefulWidget {
   @override
@@ -26,23 +29,49 @@ class _EventsScreenState extends State<EventsScreen> {
     FirebaseMessaging.instance.subscribeToTopic('Events');
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-      // AlertDialog(
-      //   title: Text("New Event Posted"),
-      //   actions: [
-      //     TextButton(
-      //       onPressed: () {
-      //         Navigator.of(context).pop();
-      //       },
-      //       child: Text("OK"),
-      //     ),
-      //   ],
-      // );
-      if (message.notification != null) {
-        print(
-          'Message also contained a notification with title: ${message.notification!.title}',
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channel.description,
+              playSound: true,
+              priority: Priority.max,
+              icon: "@mipmap/ic_launcher",
+              // other properties...
+            ),
+          ),
         );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("OnMesgOpen");
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text("${notification.title}"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("OK"),
+                  ),
+                ],
+              );
+            });
       }
     });
   }
@@ -62,6 +91,39 @@ class _EventsScreenState extends State<EventsScreen> {
     } on FirebaseAuthException catch (e) {
       print(e);
     }
+  }
+
+  Widget eventsWidget(List eventsData) {
+    if (eventsData.length == 0) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'No upcoming events to display, Enjoy the day!',
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (ctx, index) => EventItem(
+        online: eventsData[index][onlineEvent],
+        registeration: eventsData[index][registerationRequired],
+        orgLogo: eventsData[index][societyLogo],
+        orgSocietyName: eventsData[index][societyName],
+        eventPosterUrl: eventsData[index][posterURL],
+        eventId: eventsData[index].id,
+        aboutEvent: eventsData[index][aboutEvent],
+        eventDate: eventsData[index][date],
+        eventStartTime: eventsData[index][startTime],
+        eventTitle: eventsData[index][title],
+        eventVenue: eventsData[index][venue],
+        eventEndTime: eventsData[index][endTime],
+      ),
+      itemCount: eventsData.length,
+    );
   }
 
   @override
@@ -166,23 +228,7 @@ class _EventsScreenState extends State<EventsScreen> {
                               thickness: 2.0,
                               color: Color(0xffD59B78),
                             ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (ctx, index) => EventItem(
-                                orgLogo: eventsData[index][societyLogo],
-                                orgSocietyName: eventsData[index][societyName],
-                                eventPosterUrl: eventsData[index][posterURL],
-                                eventId: eventsData[index].id,
-                                aboutEvent: eventsData[index][aboutEvent],
-                                eventDate: eventsData[index][date],
-                                eventStartTime: eventsData[index][startTime],
-                                eventTitle: eventsData[index][title],
-                                eventVenue: eventsData[index][venue],
-                                eventEndTime: eventsData[index][endTime],
-                              ),
-                              itemCount: eventsData.length,
-                            ),
+                            eventsWidget(eventsData),
                           ],
                         ),
                       ),

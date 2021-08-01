@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -11,6 +12,8 @@ import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
+
+enum SingingCharacter { online, offline }
 
 class UpdateEventScreen extends StatefulWidget {
   final String eventTitle;
@@ -40,6 +43,10 @@ class UpdateEventScreen extends StatefulWidget {
 }
 
 class _UpdateEventScreenState extends State<UpdateEventScreen> {
+  SingingCharacter? _character = SingingCharacter.online;
+  bool? _checkBoxValue = false;
+  bool isOnline = true;
+  bool isRegisterationRequired = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   firebase_storage.FirebaseStorage storage =
@@ -162,6 +169,8 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
         posterURL: _imagePick == null ? posterUrl : url,
         societyName: loggedInSocietyName,
         societyLogo: loggedInSocietyLogo,
+        onlineEvent: isOnline,
+        registerationRequired: isRegisterationRequired,
       });
 
       var index = loggedInSocietyEvents
@@ -177,6 +186,8 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
         posterURL: _imagePick == null ? posterUrl : url,
         societyName: loggedInSocietyName,
         societyLogo: loggedInSocietyLogo,
+        onlineEvent: isOnline,
+        registerationRequired: isRegisterationRequired,
       };
       await firestore
           .collection(societiesCollection)
@@ -189,6 +200,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin:
+              EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.7),
           content: Text("Event updated successfully"),
         ),
       );
@@ -228,7 +242,12 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(
+            color: themeProvider.isDarkTheme
+                ? Color(0xffcd885f)
+                : Color(0xffD59B78),
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -240,7 +259,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 23.0,
-                      vertical: 25.0,
+                      vertical: 0.0,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -380,6 +399,64 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                         SizedBox(
                           height: 10.0,
                         ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('Online'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.online,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      isOnline = true;
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('Offline'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.offline,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      isOnline = false;
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // SizedBox(
+                        //   width: 70,
+                        // ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Expanded(
+                              child: CheckboxListTile(
+                                  title: Text('Requires Registeration'),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  value: _checkBoxValue,
+                                  onChanged: (newCheckBoxValue) {
+                                    setState(() {
+                                      isRegisterationRequired =
+                                          !isRegisterationRequired;
+                                      _checkBoxValue = newCheckBoxValue;
+                                    });
+                                  }),
+                            ),
+                          ],
+                        ),
                         TextFormField(
                           controller: _venueController,
                           onSaved: (venue) {
@@ -397,7 +474,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                             if (value!.isEmpty) {
                               return "Required";
                             }
-                            if (!value.contains("https://")) {
+                            if (isOnline && !value.contains("https://") ||
+                                isRegisterationRequired &&
+                                    !value.contains("https://")) {
                               return "Invalid";
                             }
                             return null;
@@ -427,7 +506,11 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                 color: Color(0xffd59b78),
                               ),
                             ),
-                            hintText: "Venue(Link if online)",
+                            hintText: isRegisterationRequired
+                                ? "Registeration Link"
+                                : isOnline
+                                    ? "Event link"
+                                    : "Venue",
                             hintStyle: TextStyle(
                               color: Colors.grey,
                             ),
@@ -752,6 +835,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 25),
                   _isLoading
                       ? Center(
                           child: CircularProgressIndicator(),
