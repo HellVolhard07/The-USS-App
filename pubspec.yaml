@@ -41,7 +41,10 @@ dependencies:
   image_picker: ^0.7.4
   flutter_toggle_tab: ^1.1.4
   url_launcher: ^6.0.9
-#  expansion_tile_card: ^2.0.0
+  firebase_messaging: ^10.0.4
+  flutter_local_notifications: ^8.0.0
+  http: ^0.13.3
+
 
 dev_dependencies:
   flutter_test:

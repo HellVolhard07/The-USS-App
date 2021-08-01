@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -241,7 +242,12 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(
+            color: themeProvider.isDarkTheme
+                ? Color(0xffcd885f)
+                : Color(0xffD59B78),
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -253,7 +259,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 23.0,
-                      vertical: 25.0,
+                      vertical: 0.0,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -829,6 +835,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 25),
                   _isLoading
                       ? Center(
                           child: CircularProgressIndicator(),

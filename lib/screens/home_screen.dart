@@ -10,8 +10,10 @@ import 'package:the_uss_project/widgets/auth.dart';
 
 import '../theme_provider.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   bool isDarkTheme = true;
+
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
@@ -78,7 +80,7 @@ class HomeScreen extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             blurRadius: 7.0,
-            color: isDarkTheme?Color(0xff181818):Color(0xffe09d7a),
+            color: isDarkTheme ? Color(0xff181818) : Color(0xffe09d7a),
           ),
         ],
         borderRadius: BorderRadius.only(
