@@ -93,6 +93,39 @@ class _EventsScreenState extends State<EventsScreen> {
     }
   }
 
+  Widget eventsWidget(List eventsData) {
+    if (eventsData.length == 0) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'No upcoming events to display, Enjoy the day!',
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (ctx, index) => EventItem(
+        online: eventsData[index][onlineEvent],
+        registeration: eventsData[index][registerationRequired],
+        orgLogo: eventsData[index][societyLogo],
+        orgSocietyName: eventsData[index][societyName],
+        eventPosterUrl: eventsData[index][posterURL],
+        eventId: eventsData[index].id,
+        aboutEvent: eventsData[index][aboutEvent],
+        eventDate: eventsData[index][date],
+        eventStartTime: eventsData[index][startTime],
+        eventTitle: eventsData[index][title],
+        eventVenue: eventsData[index][venue],
+        eventEndTime: eventsData[index][endTime],
+      ),
+      itemCount: eventsData.length,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -195,23 +228,7 @@ class _EventsScreenState extends State<EventsScreen> {
                               thickness: 2.0,
                               color: Color(0xffD59B78),
                             ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (ctx, index) => EventItem(
-                                orgLogo: eventsData[index][societyLogo],
-                                orgSocietyName: eventsData[index][societyName],
-                                eventPosterUrl: eventsData[index][posterURL],
-                                eventId: eventsData[index].id,
-                                aboutEvent: eventsData[index][aboutEvent],
-                                eventDate: eventsData[index][date],
-                                eventStartTime: eventsData[index][startTime],
-                                eventTitle: eventsData[index][title],
-                                eventVenue: eventsData[index][venue],
-                                eventEndTime: eventsData[index][endTime],
-                              ),
-                              itemCount: eventsData.length,
-                            ),
+                            eventsWidget(eventsData),
                           ],
                         ),
                       ),

@@ -14,8 +14,9 @@ import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
-
+enum SingingCharacter { online, offline }
 import '../key.dart';
+
 
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({Key? key}) : super(key: key);
@@ -25,6 +26,10 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
+  SingingCharacter? _character = SingingCharacter.online;
+  bool? _checkBoxValue = false;
+  bool isOnline = true;
+  bool isRegisterationRequired = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   firebase_storage.FirebaseStorage storage =
@@ -125,6 +130,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
         posterURL: _imagePick == null ? loggedInSocietyLogo : url,
         societyName: loggedInSocietyName,
         societyLogo: loggedInSocietyLogo,
+        onlineEvent: isOnline,
+        registerationRequired: isRegisterationRequired,
       }).then((value) {
         eventID = value.id;
       });
@@ -145,6 +152,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
             posterURL: _imagePick == null ? loggedInSocietyLogo : url,
             societyName: loggedInSocietyName,
             societyLogo: loggedInSocietyLogo,
+            onlineEvent: isOnline,
+            registerationRequired: isRegisterationRequired,
           }
         ]),
       });
@@ -180,6 +189,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(bottom: 20),
           content: Text("Event added successfully"),
         ),
       );
@@ -372,6 +383,64 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         SizedBox(
                           height: 10.0,
                         ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('Online'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.online,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      isOnline = true;
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('Offline'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.offline,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      isOnline = false;
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // SizedBox(
+                        //   width: 70,
+                        // ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Expanded(
+                              child: CheckboxListTile(
+                                  title: Text('Requires Registeration'),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  value: _checkBoxValue,
+                                  onChanged: (newCheckBoxValue) {
+                                    setState(() {
+                                      isRegisterationRequired =
+                                          !isRegisterationRequired;
+                                      _checkBoxValue = newCheckBoxValue;
+                                    });
+                                  }),
+                            ),
+                          ],
+                        ),
                         TextFormField(
                           controller: _venueController,
                           onSaved: (venue) {
@@ -389,7 +458,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                             if (value!.isEmpty) {
                               return "Required";
                             }
-                            if (!value.contains("https://")) {
+                            if (isOnline && !value.contains("https://") ||
+                                isRegisterationRequired &&
+                                    !value.contains("https://")) {
                               return "Invalid";
                             }
                             return null;
@@ -417,7 +488,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 color: Color(0xffd59b78),
                               ),
                             ),
-                            hintText: "Venue(Link if online)",
+                            hintText: isRegisterationRequired
+                                ? "Registeration Link"
+                                : isOnline
+                                    ? "Event link"
+                                    : "Venue",
                             hintStyle: TextStyle(
                               color: Colors.grey,
                             ),
@@ -427,7 +502,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: 10,
                         ),
                         TextFormField(
                           controller: _dateEditingController,
