@@ -56,6 +56,8 @@ class _EventsScreenState extends State<EventsScreen> {
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (ctx, index) => EventItem(
+        online: eventsData[index][onlineEvent],
+        registeration: eventsData[index][registerationRequired],
         orgLogo: eventsData[index][societyLogo],
         orgSocietyName: eventsData[index][societyName],
         eventPosterUrl: eventsData[index][posterURL],

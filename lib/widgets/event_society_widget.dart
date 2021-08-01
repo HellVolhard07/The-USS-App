@@ -28,10 +28,11 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // print('registeration : $registeration');
     final themeProvider = Provider.of<ThemeProvider>(context);
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
-
+    // print("online: ${societyArgs.societyKeEvents}");
     sortByDate(societyArgs.societyKeEvents);
     return Container(
       padding: EdgeInsets.all(0),
@@ -47,16 +48,20 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
         itemCount: societyArgs.societyKeEvents.length,
         itemBuilder: (context, index) {
           return EventItem(
-              orgLogo: societyArgs.societyKeEvents[index][societyLogo],
-              orgSocietyName: societyArgs.societyKeEvents[index][societyName],
-              eventPosterUrl: societyArgs.societyKeEvents[index]['poster'],
-              eventId: societyArgs.societyKeEvents[index]['eventId'],
-              aboutEvent: societyArgs.societyKeEvents[index]['aboutEvent'],
-              eventDate: societyArgs.societyKeEvents[index]['date'],
-              eventStartTime: societyArgs.societyKeEvents[index]['startTime'],
-              eventEndTime: societyArgs.societyKeEvents[index]['endTime'],
-              eventTitle: societyArgs.societyKeEvents[index]['title'],
-              eventVenue: societyArgs.societyKeEvents[index]['venue']);
+            orgLogo: societyArgs.societyKeEvents[index][societyLogo],
+            orgSocietyName: societyArgs.societyKeEvents[index][societyName],
+            eventPosterUrl: societyArgs.societyKeEvents[index]['poster'],
+            eventId: societyArgs.societyKeEvents[index]['eventId'],
+            aboutEvent: societyArgs.societyKeEvents[index]['aboutEvent'],
+            eventDate: societyArgs.societyKeEvents[index]['date'],
+            eventStartTime: societyArgs.societyKeEvents[index]['startTime'],
+            eventEndTime: societyArgs.societyKeEvents[index]['endTime'],
+            eventTitle: societyArgs.societyKeEvents[index]['title'],
+            eventVenue: societyArgs.societyKeEvents[index]['venue'],
+            online: societyArgs.societyKeEvents[index][onlineEvent],
+            registeration: societyArgs.societyKeEvents[index]
+                [registerationRequired],
+          );
         },
       ),
     );
