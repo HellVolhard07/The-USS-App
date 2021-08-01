@@ -539,6 +539,14 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           onSaved: (date) {
                             setState(() {
                               eventDate = selectedDate;
+                              eventDate = DateTime(
+                                eventDate.year,
+                                eventDate.month,
+                                eventDate.day,
+                                23,
+                                59,
+                                59,
+                              );
                             });
                           },
                           focusNode: _eventDate,
@@ -843,6 +851,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                       : Center(
                           child: ElevatedButton(
                             onPressed: () {
+                              // print(eventDate);
                               verifyAndUpdate(
                                 widget.eventID,
                                 widget.eventPoster,

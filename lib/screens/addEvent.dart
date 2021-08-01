@@ -14,8 +14,10 @@ import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
-enum SingingCharacter { online, offline }
 import '../key.dart';
+
+
+enum SingingCharacter { online, offline }
 
 
 class AddEventScreen extends StatefulWidget {
@@ -521,6 +523,14 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           onSaved: (date) {
                             setState(() {
                               eventDate = selectedDate;
+                              eventDate = DateTime(
+                                eventDate.year,
+                                eventDate.month,
+                                eventDate.day,
+                                23,
+                                59,
+                                59,
+                              );
                             });
                           },
                           focusNode: _eventDate,
