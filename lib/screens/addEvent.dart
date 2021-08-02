@@ -18,6 +18,9 @@ import '../key.dart';
 
 enum SingingCharacter { online, offline }
 
+enum SingingCharacter { online, offline }
+
+
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({Key? key}) : super(key: key);
 
@@ -518,6 +521,14 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           onSaved: (date) {
                             setState(() {
                               eventDate = selectedDate;
+                              eventDate = DateTime(
+                                eventDate.year,
+                                eventDate.month,
+                                eventDate.day,
+                                23,
+                                59,
+                                59,
+                              );
                             });
                           },
                           focusNode: _eventDate,

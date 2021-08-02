@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../screens/event_screen.dart';
 import '../theme_provider.dart';
 import '../utils.dart';

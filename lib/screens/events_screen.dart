@@ -138,7 +138,7 @@ class _EventsScreenState extends State<EventsScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection(eventsCollection)
-            .where("date", isGreaterThanOrEqualTo: DateTime.now())
+            .where("date", isGreaterThanOrEqualTo: DateTime.now().toUtc())
             .orderBy("date", descending: false)
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {

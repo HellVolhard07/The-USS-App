@@ -13,6 +13,7 @@ class SocietyListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore.collection(societiesCollection).snapshots(),
@@ -29,7 +30,13 @@ class SocietyListScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                  // padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                  padding: EdgeInsets.fromLTRB(
+                    mediaQuery.width * 0.05,
+                    mediaQuery.height * 0.02,
+                    mediaQuery.width * 0.05,
+                    mediaQuery.height * 0.02,
+                  ),
                   child: Text(
                     'Societies',
                     style: TextStyle(
@@ -42,8 +49,8 @@ class SocietyListScreen extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  indent: 20,
-                  endIndent: 20,
+                  indent: mediaQuery.width * 0.05,
+                  endIndent: mediaQuery.width * 0.05,
                   thickness: 2.0,
                   color: themeProvider.isDarkTheme
                       ? Color(0xffD59B78)
