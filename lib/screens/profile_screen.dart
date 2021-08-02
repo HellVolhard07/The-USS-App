@@ -33,11 +33,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final loginProvider = Provider.of<LoginProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: EdgeInsets.symmetric(
+            horizontal: mediaQuery.width * 0.05,
+            vertical: mediaQuery.width * 0.05,
+          ),
           child: Stack(
             children: [
               Column(
@@ -45,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 15,
+                    height: mediaQuery.width * 0.035,
                   ),
                   Text(
                     'Hello',
@@ -73,12 +77,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Color(0xffD59B78),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: mediaQuery.width * 0.05,
                   ),
                   Center(
                     child: FlutterToggleTab(
                       borderRadius: 15,
-                      width: 70,
+                      width: mediaQuery.width * 0.1725,
                       labels: ['About', 'Events'],
                       initialIndex: 0,
                       selectedLabelIndex: (index) {
@@ -103,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: mediaQuery.width * 0.07,
                   ),
                   Expanded(
                     child: finalWidget,
@@ -111,8 +115,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               Positioned(
-                left: 260,
-                bottom: 570,
+                left: mediaQuery.width * 0.65,
+                top: mediaQuery.width * 0.035,
                 child: GestureDetector(
                   onTap: () async {
                     loginProvider.logOutUser(context);
@@ -135,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 25.0),
+        padding: EdgeInsets.only(bottom: mediaQuery.width * 0.06),
         child: FloatingActionButton(
           onPressed: () {
             //TODO: Add animation here, if needed.

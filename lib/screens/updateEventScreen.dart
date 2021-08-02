@@ -234,6 +234,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -242,7 +243,6 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          // automaticallyImplyLeading: false,
           iconTheme: IconThemeData(
             color: themeProvider.isDarkTheme
                 ? Color(0xffcd885f)
@@ -257,9 +257,8 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 23.0,
-                      vertical: 0.0,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: mediaQuery.width * 0.08,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,7 +278,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         TextFormField(
                           controller: _titleController,
@@ -337,7 +336,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         TextFormField(
                           controller: _descController,
@@ -397,7 +396,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         Row(
                           children: [
@@ -433,13 +432,10 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                             ),
                           ],
                         ),
-                        // SizedBox(
-                        //   width: 70,
-                        // ),
                         Row(
                           children: [
                             SizedBox(
-                              width: 5,
+                              width: mediaQuery.width * 0.0125,
                             ),
                             Expanded(
                               child: CheckboxListTile(
@@ -520,7 +516,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         TextFormField(
                           controller: _dateEditingController,
@@ -602,7 +598,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -673,7 +669,8 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                     ),
                                   ),
                                   hintText: "Event start time",
-                                  contentPadding: EdgeInsets.all(15.0),
+                                  contentPadding:
+                                      EdgeInsets.all(mediaQuery.width * 0.035),
                                   suffixIcon: Icon(
                                     Icons.more_time,
                                     color: Color(0xffd59b78),
@@ -690,7 +687,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: 7.0,
+                              width: mediaQuery.width * 0.025,
                             ),
                             Expanded(
                               child: TextFormField(
@@ -733,7 +730,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(15.0),
+                                  contentPadding: EdgeInsets.all(
+                                    mediaQuery.width * 0.035,
+                                  ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0xffd59b78),
@@ -775,20 +774,20 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         Divider(
                           thickness: 2.0,
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         PosterUpload(_imagePicked),
                         Divider(
                           thickness: 2.0,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         TextFormField(
                           controller: _miscController,
@@ -843,7 +842,9 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(
+                    height: mediaQuery.width * 0.055,
+                  ),
                   _isLoading
                       ? Center(
                           child: CircularProgressIndicator(),
@@ -868,7 +869,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           ),
                         ),
                   SizedBox(
-                    height: 50.0,
+                    height: mediaQuery.width * 0.125,
                   ),
                 ],
               ),

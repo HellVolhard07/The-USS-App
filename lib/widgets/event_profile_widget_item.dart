@@ -33,11 +33,14 @@ class EventProfileWidgetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(
+        vertical: mediaQuery.width * 0.02,
+      ),
       child: Container(
-        height: 100.0,
+        height: mediaQuery.width * 0.25,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),

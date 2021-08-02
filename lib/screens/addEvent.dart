@@ -16,6 +16,7 @@ import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
 import '../key.dart';
 
+enum SingingCharacter { online, offline }
 
 enum SingingCharacter { online, offline }
 
@@ -192,7 +193,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(bottom: 20),
+          margin:
+              EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.7),
           content: Text("Event added successfully"),
         ),
       );
@@ -224,6 +226,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -232,7 +235,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          // automaticallyImplyLeading: false,
           iconTheme: IconThemeData(
             color: themeProvider.isDarkTheme
                 ? Color(0xffcd885f)
@@ -247,9 +249,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 23.0,
-                      vertical: 0.0,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: mediaQuery.width * 0.08,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,7 +270,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         TextFormField(
                           controller: _titleController,
@@ -325,7 +326,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         TextFormField(
                           controller: _descController,
@@ -383,7 +384,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         Row(
                           children: [
@@ -419,13 +420,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
                             ),
                           ],
                         ),
-                        // SizedBox(
-                        //   width: 70,
-                        // ),
                         Row(
                           children: [
                             SizedBox(
-                              width: 5,
+                              width: mediaQuery.width * 0.0125,
                             ),
                             Expanded(
                               child: CheckboxListTile(
@@ -504,7 +502,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10,
+                          height: mediaQuery.width * 0.025,
                         ),
                         TextFormField(
                           controller: _dateEditingController,
@@ -582,7 +580,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -652,7 +650,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                     ),
                                   ),
                                   hintText: "Event start time",
-                                  contentPadding: EdgeInsets.all(15.0),
+                                  contentPadding:
+                                      EdgeInsets.all(mediaQuery.width * 0.035),
                                   suffixIcon: Icon(
                                     Icons.more_time,
                                     color: Color(0xffd59b78),
@@ -669,7 +668,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: 7.0,
+                              width: mediaQuery.width * 0.025,
                             ),
                             Expanded(
                               child: TextFormField(
@@ -687,7 +686,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                     context: context,
                                     initialTime: TimeOfDay.now(),
                                   ))!;
-                                  // eventStartTime = selectedStartTime.toString();
                                   var dt = DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
@@ -713,7 +711,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(15.0),
+                                  contentPadding:
+                                      EdgeInsets.all(mediaQuery.width * 0.035),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0xffd59b78),
@@ -729,7 +728,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0xffd59b78),
-                                      // color: themeProvider.isDarkTheme ? Colors.white : Colors.black,
                                     ),
                                   ),
                                   border: OutlineInputBorder(
@@ -754,20 +752,20 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         Divider(
                           thickness: 2.0,
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         PosterUpload(_imagePicked),
                         Divider(
                           thickness: 2.0,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         TextFormField(
                           controller: _miscController,
@@ -800,7 +798,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color(0xffd59b78),
-                                // color: themeProvider.isDarkTheme ? Colors.white : Colors.black,
                               ),
                             ),
                             border: OutlineInputBorder(
@@ -821,7 +818,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 25),
+                  SizedBox(
+                    height: mediaQuery.width * 0.055,
+                  ),
                   _isLoading
                       ? Center(
                           child: CircularProgressIndicator(),
@@ -842,7 +841,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           ),
                         ),
                   SizedBox(
-                    height: 50.0,
+                    height: mediaQuery.width * 0.125,
                   ),
                 ],
               ),

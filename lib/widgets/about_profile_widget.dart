@@ -12,16 +12,19 @@ class AboutWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(mediaQuery.width * 0.07),
         decoration: BoxDecoration(
           color:
               themeProvider.isDarkTheme ? Color(0xff0c0c0c) : Color(0xffffe4c9),
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: mediaQuery.width * 0.0125,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -39,7 +42,7 @@ class AboutWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10.0,
+                height: mediaQuery.width * 0.025,
               ),
               SingleChildScrollView(
                 child: Text(

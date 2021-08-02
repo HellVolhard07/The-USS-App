@@ -73,7 +73,9 @@ class EventItem extends StatelessWidget {
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: EdgeInsets.only(
+              left: mediaQuery.width * 0.05,
+            ),
             child: Column(
               children: [
                 Text(
@@ -98,8 +100,15 @@ class EventItem extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              margin: EdgeInsets.only(
+                top: mediaQuery.width * 0.025,
+                bottom: mediaQuery.width * 0.025,
+                left: mediaQuery.width * 0.05,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: mediaQuery.width * 0.05,
+                vertical: mediaQuery.width * 0.035,
+              ),
               decoration: BoxDecoration(
                 color: themeProvider.isDarkTheme
                     ? Color(0xff232323)
@@ -116,7 +125,6 @@ class EventItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
@@ -142,7 +150,7 @@ class EventItem extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         Expanded(
                           child: ElevatedButton(
@@ -211,7 +219,7 @@ class EventItem extends StatelessWidget {
                         eventPosterUrl,
                         fit: BoxFit.cover,
                         height: double.infinity,
-                        width: 60,
+                        width: mediaQuery.width * 0.15,
                       ),
                     ),
                   ),
