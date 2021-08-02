@@ -42,9 +42,9 @@ class EventScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     controller: scrollController,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0,
-                        vertical: 10,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: mediaQuery.width * 0.035,
+                        vertical: mediaQuery.width * 0.025,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +60,9 @@ class EventScreen extends StatelessWidget {
                                 width: mediaQuery.width * 0.35,
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                padding: EdgeInsets.all(
+                                  mediaQuery.width * 0.025,
+                                ),
                                 child: CircleAvatar(
                                   backgroundImage:
                                       NetworkImage(eventArgs.orgLogo),
@@ -76,7 +78,9 @@ class EventScreen extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(
+                                  mediaQuery.width * 0.020,
+                                ),
                                 child: Row(
                                   children: [
                                     Icon(
@@ -85,7 +89,9 @@ class EventScreen extends StatelessWidget {
                                           ? Colors.white
                                           : Colors.black,
                                     ),
-                                    SizedBox(width: 15),
+                                    SizedBox(
+                                      width: mediaQuery.width * 0.035,
+                                    ),
                                     Text(
                                       "Society: ${eventArgs.orgSocietyName}",
                                       style: TextStyle(
@@ -99,7 +105,9 @@ class EventScreen extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(
+                                  mediaQuery.width * 0.020,
+                                ),
                                 child: Row(
                                   children: [
                                     Icon(
@@ -108,7 +116,7 @@ class EventScreen extends StatelessWidget {
                                           ? Colors.white
                                           : Colors.black,
                                     ),
-                                    SizedBox(width: 15),
+                                    SizedBox(width: mediaQuery.width * 0.035),
                                     Text(
                                       eventArgs.eventVenue,
                                       style: TextStyle(
@@ -122,7 +130,9 @@ class EventScreen extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(
+                                  mediaQuery.width * 0.020,
+                                ),
                                 child: Row(
                                   children: [
                                     Icon(
@@ -131,7 +141,9 @@ class EventScreen extends StatelessWidget {
                                           ? Colors.white
                                           : Colors.black,
                                     ),
-                                    SizedBox(width: 15),
+                                    SizedBox(
+                                      width: mediaQuery.width * 0.035,
+                                    ),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -161,20 +173,25 @@ class EventScreen extends StatelessWidget {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: mediaQuery.width * 0.025,
+                              vertical: mediaQuery.width * 0.0125,
+                            ),
                             child: Text(
                               "About",
                               style: TextStyle(
-                                  color: themeProvider.isDarkTheme
-                                      ? Colors.white
-                                      : Colors.black,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 17),
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 17,
+                              ),
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: mediaQuery.width * 0.025,
+                            ),
                             child: Text(
                               eventArgs.aboutEvent,
                               style: TextStyle(
@@ -185,7 +202,7 @@ class EventScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 150,
+                            height: mediaQuery.width * 0.375,
                           ),
                           Center(
                             child: ElevatedButton(
@@ -206,11 +223,9 @@ class EventScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          // child: Text(isRegisterationRequired
-                          //     ? 'Register'
-                          //     : isOnline
-                          //         ? 'Join'
-                          //         : 'View on Map'))),
+                          SizedBox(
+                            height: mediaQuery.width * 0.1,
+                          ),
                         ],
                       ),
                     ),
