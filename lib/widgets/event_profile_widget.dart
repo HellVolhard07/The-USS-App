@@ -30,12 +30,10 @@ class _EventWidgetState extends State<EventWidget> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
-      padding: EdgeInsets.all(0),
       decoration: BoxDecoration(
-        // color: themeProvider.isDarkTheme
-        //     ? Colors.deepPurpleAccent.withOpacity(0.1)
-        //     : Colors.greenAccent.withOpacity(0.4),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
       ),
       child: StreamBuilder<dynamic>(
           stream: _firestore

@@ -93,13 +93,17 @@ class _EventsScreenState extends State<EventsScreen> {
     }
   }
 
-  Widget eventsWidget(List eventsData) {
+  Widget eventsWidget(List eventsData, BuildContext context) {
+    final mediaQuery = MediaQuery.of(context).size;
     if (eventsData.length == 0) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(mediaQuery.width * 0.02),
           child: Text(
             'No upcoming events to display, Enjoy the day!',
+            style: TextStyle(
+              fontSize: mediaQuery.width * 0.038,
+            ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -134,7 +138,7 @@ class _EventsScreenState extends State<EventsScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection(eventsCollection)
-            .where("date", isGreaterThanOrEqualTo: DateTime.now())
+            .where("date", isGreaterThanOrEqualTo: DateTime.now().toUtc())
             .orderBy("date", descending: false)
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
@@ -154,7 +158,10 @@ class _EventsScreenState extends State<EventsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: mediaQuery.width * 0.05,
+                            vertical: mediaQuery.width * 0.07,
+                          ),
                           child: IconButton(
                             icon: themeProvider.isDarkTheme
                                 ? Icon(
@@ -172,11 +179,14 @@ class _EventsScreenState extends State<EventsScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: mediaQuery.width * 0.05,
+                            vertical: mediaQuery.width * 0.1,
+                          ),
                           child: Text(
                             "${DateFormat("d").format(DateTime.now())} ${DateFormat("MMMM").format(DateTime.now())}, ${DateFormat("EEEE").format(DateTime.now())} ",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: mediaQuery.width * 0.055,
                               color: themeProvider.isDarkTheme
                                   ? Color(0xffD59B78)
                                   : Color(0xffcd885f),
@@ -190,10 +200,10 @@ class _EventsScreenState extends State<EventsScreen> {
                   Center(
                     child: Container(
                       margin: EdgeInsets.only(
-                        top: mediaQuery.height * 0.12,
+                        top: mediaQuery.height * 0.15,
                         bottom: 0,
                       ),
-                      width: mediaQuery.width * 0.85,
+                      width: mediaQuery.width * 0.9,
                       height: double.infinity,
                       decoration: BoxDecoration(
                         color: themeProvider.isDarkTheme
@@ -209,12 +219,16 @@ class _EventsScreenState extends State<EventsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(30.0, 25, 20, 10),
+                              padding: EdgeInsets.fromLTRB(
+                                mediaQuery.width * 0.08,
+                                mediaQuery.width * 0.06,
+                                mediaQuery.width * 0.08,
+                                mediaQuery.width * 0.02,
+                              ),
                               child: Text(
                                 'Upcoming Events',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: mediaQuery.width * 0.08,
                                   fontWeight: FontWeight.w600,
                                   color: themeProvider.isDarkTheme
                                       ? Colors.white
@@ -228,7 +242,7 @@ class _EventsScreenState extends State<EventsScreen> {
                               thickness: 2.0,
                               color: Color(0xffD59B78),
                             ),
-                            eventsWidget(eventsData),
+                            eventsWidget(eventsData, context),
                           ],
                         ),
                       ),

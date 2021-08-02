@@ -11,6 +11,7 @@ SliverAppBar sliverHeader(
   String url,
 ) {
   final themeProvider = Provider.of<ThemeProvider>(context);
+  final mediaQuery = MediaQuery.of(context).size;
 
   return SliverAppBar(
     automaticallyImplyLeading: false,
@@ -21,7 +22,7 @@ SliverAppBar sliverHeader(
         bottomRight: Radius.circular(50),
       ),
     ),
-    expandedHeight: 200.0,
+    expandedHeight: mediaQuery.height * 0.27,
     flexibleSpace: FlexibleSpaceBar(
       stretchModes: <StretchMode>[
         StretchMode.zoomBackground,
@@ -32,7 +33,10 @@ SliverAppBar sliverHeader(
         fit: BoxFit.fitHeight,
       ),
       title: Container(
-        padding: EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: mediaQuery.width * 0.02,
+          vertical: mediaQuery.height * 0.003,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: themeProvider.isDarkTheme

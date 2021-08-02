@@ -33,6 +33,8 @@ class _SocietyScreenState extends State<SocietyScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
+
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
 
@@ -49,15 +51,18 @@ class _SocietyScreenState extends State<SocietyScreen> {
                   return Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 24.0, bottom: 10.0),
+                        margin: EdgeInsets.only(
+                          top: mediaQuery.height * 0.025,
+                          bottom: mediaQuery.height * 0.01,
+                        ),
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 20,
+                              height: mediaQuery.height*0.025,
                             ),
                             Center(
                               child: FlutterToggleTab(
-                                width: 60,
+                                width: mediaQuery.width*0.16,
                                 borderRadius: 15,
                                 labels: ['', '', ''],
                                 icons: [Icons.info, Icons.list, Icons.people],
@@ -87,10 +92,10 @@ class _SocietyScreenState extends State<SocietyScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: mediaQuery.height*0.025,
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: EdgeInsets.all(mediaQuery.width / 20),
                               child: finalWidget,
                             ),
                           ],

@@ -8,6 +8,8 @@ class AboutSocietyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
+
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
     return SingleChildScrollView(
@@ -16,10 +18,12 @@ class AboutSocietyWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color:
               themeProvider.isDarkTheme ? Color(0xff0c0c0c) : Color(0xffffe4c9),
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          padding:  EdgeInsets.symmetric(horizontal: mediaQuery.width*0.015),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -37,7 +41,7 @@ class AboutSocietyWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10.0,
+                height: mediaQuery.height*0.015,
               ),
               SingleChildScrollView(
                 child: Text(
