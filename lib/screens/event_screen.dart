@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:the_uss_project/screens/addEvent.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
+
+import '../utils.dart';
 
 class EventScreen extends StatelessWidget {
   @override
@@ -98,29 +100,33 @@ class EventScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.maps_ugc_outlined,
-                                      color: themeProvider.isDarkTheme
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                                    SizedBox(width: 15),
-                                    Text(
-                                      eventArgs.eventVenue,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: themeProvider.isDarkTheme
-                                            ? Colors.white
-                                            : Colors.black,
+                              !eventArgs.registeration && !eventArgs.online
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on_outlined,
+                                            color: themeProvider.isDarkTheme
+                                                ? Colors.white
+                                                : Colors.black,
+                                          ),
+                                          SizedBox(width: 15),
+                                          Expanded(
+                                            child: Text(
+                                              eventArgs.eventVenue,
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                color: themeProvider.isDarkTheme
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                    )
+                                  : Container(),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -187,30 +193,79 @@ class EventScreen extends StatelessWidget {
                           SizedBox(
                             height: 150,
                           ),
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: Text(
-                                eventArgs.registeration
-                                    ? "Register"
-                                    : eventArgs.online
-                                        ? "Join"
-                                        : "View",
-                                style: TextStyle(
-                                  color: themeProvider.isDarkTheme
-                                      ? Colors.black
-                                      : Color(0xffd1926b),
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          // child: Text(isRegisterationRequired
-                          //     ? 'Register'
-                          //     : isOnline
-                          //         ? 'Join'
-                          //         : 'View on Map'))),
+                          eventArgs.registeration || eventArgs.online
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Utils.openLink(
+                                              link: eventArgs.eventVenue);
+                                        },
+                                        child: Text(
+                                          eventArgs.registeration
+                                              ? "Register"
+                                              : "Join",
+                                          style: TextStyle(
+                                            color: themeProvider.isDarkTheme
+                                                ? Colors.black
+                                                : Color(0xffd1926b),
+                                            fontSize: 11.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        style: ButtonStyle(
+                                          shadowColor:
+                                              MaterialStateProperty.all<Color>(
+                                            themeProvider.isDarkTheme
+                                                ? Color(0xffFFD8B1)
+                                                : Colors.black,
+                                          ),
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                            themeProvider.isDarkTheme
+                                                ? Color(0xffffa265)
+                                                : Color(0xffFFD8B1),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: mediaQuery.width * 0.025),
+                                    IconButton(
+                                      icon: Icon(Icons.copy),
+                                      onPressed: () {
+                                        Clipboard.setData(
+                                          new ClipboardData(
+                                              text: "${eventArgs.eventVenue}"),
+                                        ).then((_) {
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            builder: (BuildContext context) =>
+                                                AlertDialog(
+                                              title: Text("Link Copied"),
+                                              content: Text(
+                                                "Link Copied to clipboard",
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(true);
+                                                  },
+                                                  child: Text("OK"),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                         ],
                       ),
                     ),

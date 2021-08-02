@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../screens/event_screen.dart';
 import '../theme_provider.dart';
 import '../utils.dart';
@@ -146,12 +147,6 @@ class EventItem extends StatelessWidget {
                         Expanded(
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              // maximumSize:
-                              //     MaterialStateProperty.all(Size(, 4)),
-                              //  padding: MaterialStateProperty.all<EdgeInsets>(
-                              //    EdgeInsets.symmetric(
-                              //        horizontal: 3, vertical: 5),
-                              // ),
                               shadowColor: MaterialStateProperty.all<Color>(
                                 themeProvider.isDarkTheme
                                     ? Color(0xffFFD8B1)
@@ -229,24 +224,3 @@ class EventItem extends StatelessWidget {
     );
   }
 }
-
-// Expanded(
-// child: Padding(
-// padding: const EdgeInsets.symmetric(vertical: 5),
-// child: GestureDetector(
-// onTap: () {
-// Utils.openLink(link: eventVenue);
-// },
-// child: Text(
-// eventVenue,
-// style: TextStyle(
-// color: themeProvider.isDarkTheme
-// ? Colors.white
-//     : Color(0xffd1926b),
-// decoration: TextDecoration.underline,
-// fontSize: 10.0),
-// overflow: TextOverflow.ellipsis,
-// ),
-// ),
-// ),
-// ),
