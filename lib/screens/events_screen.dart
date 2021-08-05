@@ -26,6 +26,10 @@ class _EventsScreenState extends State<EventsScreen> {
     super.initState();
     getCurrentUserData();
 
+    var initializationSettingAndroid = AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings = InitializationSettings(android: initializationSettingAndroid);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
     FirebaseMessaging.instance.subscribeToTopic('Events');
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -243,6 +247,7 @@ class _EventsScreenState extends State<EventsScreen> {
                               color: Color(0xffD59B78),
                             ),
                             eventsWidget(eventsData, context),
+                            SizedBox(height: mediaQuery.height*0.05),
                           ],
                         ),
                       ),

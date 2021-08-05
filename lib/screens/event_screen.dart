@@ -107,12 +107,13 @@ class EventScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                !eventArgs.registeration && !eventArgs.online
-                                    ? Padding(
-                                        padding: EdgeInsets.all(
-                                          mediaQuery.width * 0.020,
-                                        ),
-                                        child: Row(
+                              ),
+                              !eventArgs.registeration && !eventArgs.online
+                                  ? Padding(
+                                      padding: EdgeInsets.all(
+                                        mediaQuery.width * 0.020,
+                                      ),
+                                      child: Row(
                                           children: [
                                             Icon(
                                               Icons.location_on_outlined,
@@ -167,21 +168,19 @@ class EventScreen extends StatelessWidget {
                                                   : Colors.black,
                                             ),
                                           ),
+
                                           Text(
                                             "${eventArgs.eventStartTime} - ${eventArgs.eventEndTime}",
                                             style: TextStyle(
                                               color: themeProvider.isDarkTheme
                                                   ? Colors.white60
                                                   : Colors.black54,
+
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: mediaQuery.width * 0.025,
@@ -211,9 +210,11 @@ class EventScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: mediaQuery.width * 0.375,
-                            ),
+                          ),
+                          SizedBox(
+                            height: mediaQuery.width * 0.375,
+                          ),
+               
                             eventArgs.registeration || eventArgs.online
                                 ? Row(
                                     mainAxisAlignment:
@@ -272,28 +273,19 @@ class EventScreen extends StatelessWidget {
                                                 content: Text(
                                                   "Link Copied to clipboard",
                                                 ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop(true);
-                                                    },
-                                                    child: Text("OK"),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                : Container(),
-                            SizedBox(
-                              height: mediaQuery.width * 0.1,
-                            ),
-                          ],
-                        ),
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+                          SizedBox(
+                            height: mediaQuery.width * 0.1,
+                          ),
+                        ],
                       ),
                     ),
                   );

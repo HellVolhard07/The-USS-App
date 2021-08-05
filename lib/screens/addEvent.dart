@@ -14,6 +14,7 @@ import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
+
 import '../key.dart';
 
 enum SingingCharacter { online, offline }
