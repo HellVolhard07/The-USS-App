@@ -186,7 +186,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "Login",
                                 style: TextStyle(
                                   fontSize: 17,
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.black
+                                      : Colors.white,
                                 ),
                               ),
                               style: ButtonStyle(

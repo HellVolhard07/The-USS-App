@@ -10,7 +10,6 @@ import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/home_screen.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
-import 'package:the_uss_project/screens/splash_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 
@@ -77,11 +76,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ),
-    );
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
@@ -89,15 +84,21 @@ class MyApp extends StatelessWidget {
       ],
       builder: (context, _) {
         final themeProvider = Provider.of<ThemeProvider>(context);
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness:
+                themeProvider.isDarkTheme ? Brightness.light : Brightness.dark,
+          ),
+        );
         return MaterialApp(
           title: 'The USS App',
           debugShowCheckedModeBanner: false,
           themeMode: themeProvider.themeMode,
           darkTheme: ThemeBuilder.darkTheme,
           theme: ThemeBuilder.lightTheme,
-          initialRoute: splashScreen,
+          initialRoute: homeScreen,
           routes: {
-            splashScreen: (_) => Splash(),
             homeScreen: (_) => HomeScreen(),
             eventsScreen: (_) => EventsScreen(),
             societyListScreen: (_) => SocietyListScreen(),

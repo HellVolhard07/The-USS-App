@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';
@@ -119,7 +120,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 top: mediaQuery.width * 0.035,
                 child: GestureDetector(
                   onTap: () async {
-                    loginProvider.logOutUser(context);
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext ctx) => AlertDialog(
+                        actionsAlignment: MainAxisAlignment.center,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        title: Text("$loggedInSocietyName"),
+                        content: Text("Are you sure you want to logout!!"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              loginProvider.logOutUser(context);
+                              Navigator.of(ctx).pop(true);
+                            },
+                            child: Text(
+                              "Logout",
+                              style: TextStyle(
+                                color: themeProvider.isDarkTheme
+                                    ? Color(0xffffa265)
+                                    : Color(0xffcd885f),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   child: CircleAvatar(
                     radius: 40,
@@ -127,9 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         themeProvider.isDarkTheme ? Colors.white : Colors.black,
                     child: CircleAvatar(
                       radius: 38,
-                      backgroundImage: NetworkImage(
-                        'https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg',
-                      ),
+                      backgroundImage: NetworkImage("$loggedInSocietyLogo"),
                     ),
                   ),
                 ),

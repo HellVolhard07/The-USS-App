@@ -5,7 +5,6 @@ String eventsScreen = "/eventsScreen";
 String homeScreen = "/homeScreen";
 String profileScreen = "/profileScreen";
 String addEventScreen = "/addEventScreen";
-String splashScreen = "/splashScreen";
 
 String eventsCollection = "Events";
 String societiesCollection = "Societies";
