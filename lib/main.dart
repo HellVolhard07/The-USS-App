@@ -9,6 +9,7 @@ import 'package:the_uss_project/screens/events_screen.dart';
 import 'package:the_uss_project/screens/home_screen.dart';
 import 'package:the_uss_project/screens/profile_screen.dart';
 import 'package:the_uss_project/screens/society_list_screen.dart';
+import 'package:the_uss_project/screens/splash_screen.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 
@@ -86,8 +87,9 @@ class MyApp extends StatelessWidget {
           themeMode: themeProvider.themeMode,
           darkTheme: ThemeBuilder.darkTheme,
           theme: ThemeBuilder.lightTheme,
-          initialRoute: homeScreen,
+          initialRoute: splashScreen,
           routes: {
+            splashScreen: (_) => Splash(),
             homeScreen: (_) => HomeScreen(),
             eventsScreen: (_) => EventsScreen(),
             societyListScreen: (_) => SocietyListScreen(),

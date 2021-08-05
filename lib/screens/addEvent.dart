@@ -18,9 +18,6 @@ import '../key.dart';
 
 enum SingingCharacter { online, offline }
 
-enum SingingCharacter { online, offline }
-
-
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({Key? key}) : super(key: key);
 
@@ -177,13 +174,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
           {
             "to": "/topics/Events",
             "notification": {
-              "title": "Event Posted",
-              "body": "hey checkout new event",
+              "title":
+                  "$loggedInSocietyName added a new event: ${eventTitle.toUpperCase()}",
+              "body": "Check it out",
               "click_action": "FLUTTER_CLICK_ACTION"
             },
             "data": {
-              "title": "Event Posted",
-              "body": "hey checkout new event",
+              "title":
+                  "$loggedInSocietyName added a new event: ${eventTitle.toUpperCase()}",
+              "body": "Checkout new event",
               "click_action": "FLUTTER_CLICK_ACTION"
             }
           },
