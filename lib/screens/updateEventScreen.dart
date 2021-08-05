@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -12,6 +13,8 @@ import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
+
+import '../key.dart';
 
 enum SingingCharacter { online, offline }
 
@@ -197,6 +200,31 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
       setState(() {
         _isLoading = false;
       });
+
+      var msgUrl = Uri.parse("https://fcm.googleapis.com/fcm/send");
+
+      var response = http.post(
+        msgUrl,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "key=$KEY",
+        },
+        body: jsonEncode(
+          {
+            "to": "/topics/Events",
+            "notification": {
+              "title": "$loggedInSocietyName updated an event",
+              "body": "Check it out!!",
+              "click_action": "FLUTTER_CLICK_ACTION"
+            },
+            "data": {
+              "title": "Event Updated",
+              "body": "Checkout updated event",
+              "click_action": "FLUTTER_CLICK_ACTION"
+            }
+          },
+        ),
+      );
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
