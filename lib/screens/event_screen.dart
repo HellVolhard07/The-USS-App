@@ -106,10 +106,11 @@ class EventScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-
                               !eventArgs.registeration && !eventArgs.online
                                   ? Padding(
-                                      padding: EdgeInsets.all( mediaQuery.width * 0.020,),
+                                      padding: EdgeInsets.all(
+                                        mediaQuery.width * 0.020,
+                                      ),
                                       child: Row(
                                         children: [
                                           Icon(
@@ -118,7 +119,8 @@ class EventScreen extends StatelessWidget {
                                                 ? Colors.white
                                                 : Colors.black,
                                           ),
-                                          SizedBox(width: mediaQuery.width * 0.035),
+                                          SizedBox(
+                                              width: mediaQuery.width * 0.035),
                                           Expanded(
                                             child: Text(
                                               eventArgs.eventVenue,
@@ -130,9 +132,9 @@ class EventScreen extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                        ],),)
-
-                              
+                                        ],
+                                      ),
+                                    )
                                   : Container(),
                               Padding(
                                 padding: EdgeInsets.all(
@@ -209,7 +211,6 @@ class EventScreen extends StatelessWidget {
                           SizedBox(
                             height: mediaQuery.width * 0.375,
                           ),
-
                           eventArgs.registeration || eventArgs.online
                               ? Row(
                                   mainAxisAlignment:
@@ -283,11 +284,9 @@ class EventScreen extends StatelessWidget {
                                   ],
                                 )
                               : Container(),
-
                           SizedBox(
                             height: mediaQuery.width * 0.1,
                           ),
-
                         ],
                       ),
                     ),
