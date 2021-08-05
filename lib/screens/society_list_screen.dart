@@ -13,6 +13,7 @@ class SocietyListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore.collection(societiesCollection).snapshots(),
@@ -29,27 +30,43 @@ class SocietyListScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                  // padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                  padding: EdgeInsets.fromLTRB(
+                    mediaQuery.width * 0.05,
+                    mediaQuery.height * 0.02,
+                    mediaQuery.width * 0.05,
+                    mediaQuery.height * 0.02,
+                  ),
                   child: Text(
                     'Societies',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w900,
+                      color: themeProvider.isDarkTheme
+                          ? Color(0xffD59B78)
+                          : Color(0xffcd885f),
                     ),
                   ),
                 ),
                 Divider(
-                  indent: 20,
-                  endIndent: 20,
-                  thickness: 3.0,
-                  color: Colors.deepPurpleAccent,
+                  indent: mediaQuery.width * 0.05,
+                  endIndent: mediaQuery.width * 0.05,
+                  thickness: 2.0,
+                  color: themeProvider.isDarkTheme
+                      ? Color(0xffD59B78)
+                      : Color(0xffcd885f),
                 ),
                 ListView.builder(
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemBuilder: (ctx, index) => SocietyItem(
-                    myColor:
-                        index % 2 == 0 ? Colors.blueAccent : Colors.redAccent,
+                    myColor: index % 2 == 0
+                        ? themeProvider.isDarkTheme
+                            ? Color(0xfff2d6b3)
+                            : Color(0xffffd8b1)
+                        : themeProvider.isDarkTheme
+                            ? Color(0xffD59B78)
+                            : Color(0xffffcc99),
                     societyName: societiesData[index][societyName],
                     societyLogo: societiesData[index][societyLogo],
                     societyAbout: societiesData[index][societyAbout],

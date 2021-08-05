@@ -22,24 +22,26 @@ String societyKeEvents = "myEvents";
 String aboutEvent = "aboutEvent";
 String posterURL = "poster";
 String eventId = "eventId";
+String onlineEvent = "isOnline";
+String registerationRequired = "isRegisterationRequired";
 
 String loremIpsum =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet vehicula tellus. Suspendisse potenti. Proin convallis, mi eu hendrerit fringilla, elit nisl molestie sem, sit amet blandit erat ipsum id massa. Nullam accumsan pellentesque ligula id condimentum. Morbi ligula orci, interdum eu fermentum porttitor, egestas quis ante. Aenean ex sapien, dictum vitae sagittis vel, laoreet in diam. Donec gravida, libero sed maximus suscipit, velit ante sodales ipsum, ut posuere magna libero vel tortor. Mauris luctus nulla non ornare vestibulum. Nulla sed risus eu neque congue consectetur. Ut velit augue, efficitur vitae ligula in, accumsan tempus magna.";
 
 List<Color> kLightThemeSelectedToggleColors = [
-  Colors.deepPurpleAccent,
-  Colors.blueAccent
+  Color(0xffcd885f),
+  Color(0xffffd8b1),
 ];
 
 List<Color> kLightThemeUnselectedToggleColors = [
-  Colors.lightBlueAccent,
-  Colors.greenAccent
+  Color(0xffffd8b1),
+  Color(0xffcd885f),
 ];
 List<Color> kDarkThemeSelectedToggleColors = [
-  Colors.blueAccent,
-  Colors.deepPurpleAccent,
+  Color(0xffD59B78),
+  Color(0xfff2d6b3),
 ];
 List<Color> kDarkThemeUnselectedToggleColors = [
-  Colors.greenAccent,
-  Colors.lightBlueAccent,
+  Color(0xfff2d6b3),
+  Color(0xffD59B78),
 ];

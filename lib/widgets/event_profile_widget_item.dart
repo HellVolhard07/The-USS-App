@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:the_uss_project/screens/updateEventScreen.dart';
+
+import '../theme_provider.dart';
 
 class EventProfileWidgetItem extends StatelessWidget {
   final String orgLogo;
@@ -29,14 +32,20 @@ class EventProfileWidgetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(
+        vertical: mediaQuery.width * 0.02,
+      ),
       child: Container(
-        height: 100.0,
+        height: mediaQuery.width * 0.25,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
-          color: Colors.blueAccent,
+          color:
+              themeProvider.isDarkTheme ? Color(0xff232323) : Color(0xffffd8b1),
         ),
         child: ListTile(
           leading: CircleAvatar(
@@ -49,11 +58,18 @@ class EventProfileWidgetItem extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20.0,
+              color: themeProvider.isDarkTheme
+                  ? Color(0xffd59b78)
+                  : Color(0xffcd885f),
             ),
           ),
           subtitle: Text(
             "${eventDate!.toDate().day}/${eventDate!.toDate().month}/${eventDate!.toDate().year}",
-            style: TextStyle(fontSize: 14.0),
+            style: TextStyle(
+              fontSize: 12.0,
+              color:
+                  themeProvider.isDarkTheme ? Colors.white : Color(0xffd1926b),
+            ),
           ),
           trailing: IconButton(
             onPressed: () {
@@ -73,7 +89,11 @@ class EventProfileWidgetItem extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.edit_outlined),
+            icon: Icon(
+              Icons.edit_outlined,
+              color:
+                  themeProvider.isDarkTheme ? Colors.white : Color(0xffcd885f),
+            ),
           ),
           dense: true,
         ),

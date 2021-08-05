@@ -1,14 +1,23 @@
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
+import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/poster_upload.dart';
 import 'package:the_uss_project/widgets/show_alert_dialogue.dart';
 import 'package:uuid/uuid.dart';
+
+import '../key.dart';
+
+enum SingingCharacter { online, offline }
 
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({Key? key}) : super(key: key);
@@ -18,6 +27,10 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
+  SingingCharacter? _character = SingingCharacter.online;
+  bool? _checkBoxValue = false;
+  bool isOnline = true;
+  bool isRegisterationRequired = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   firebase_storage.FirebaseStorage storage =
@@ -118,6 +131,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
         posterURL: _imagePick == null ? loggedInSocietyLogo : url,
         societyName: loggedInSocietyName,
         societyLogo: loggedInSocietyLogo,
+        onlineEvent: isOnline,
+        registerationRequired: isRegisterationRequired,
       }).then((value) {
         eventID = value.id;
       });
@@ -138,6 +153,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
             posterURL: _imagePick == null ? loggedInSocietyLogo : url,
             societyName: loggedInSocietyName,
             societyLogo: loggedInSocietyLogo,
+            onlineEvent: isOnline,
+            registerationRequired: isRegisterationRequired,
           }
         ]),
       });
@@ -145,8 +162,39 @@ class _AddEventScreenState extends State<AddEventScreen> {
         _imagePick = null;
         _isLoading = false;
       });
+
+      var msgUrl = Uri.parse("https://fcm.googleapis.com/fcm/send");
+
+      var response = http.post(
+        msgUrl,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "key=$KEY",
+        },
+        body: jsonEncode(
+          {
+            "to": "/topics/Events",
+            "notification": {
+              "title":
+                  "$loggedInSocietyName added a new event: ${eventTitle.toUpperCase()}",
+              "body": "Check it out",
+              "click_action": "FLUTTER_CLICK_ACTION"
+            },
+            "data": {
+              "title":
+                  "$loggedInSocietyName added a new event: ${eventTitle.toUpperCase()}",
+              "body": "Checkout new event",
+              "click_action": "FLUTTER_CLICK_ACTION"
+            }
+          },
+        ),
+      );
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin:
+              EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.7),
           content: Text("Event added successfully"),
         ),
       );
@@ -177,6 +225,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -185,7 +235,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(
+            color: themeProvider.isDarkTheme
+                ? Color(0xffcd885f)
+                : Color(0xffD59B78),
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -195,9 +249,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 23.0,
-                      vertical: 25.0,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: mediaQuery.width * 0.08,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,7 +270,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         TextFormField(
                           controller: _titleController,
@@ -234,22 +287,32 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           focusNode: _eventTitleNode,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Event Title",
-                            labelStyle: TextStyle(fontSize: 18.0),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Event Title",
                             hintStyle: TextStyle(
@@ -263,7 +326,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         TextFormField(
                           controller: _descController,
@@ -274,7 +337,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           focusNode: _eventDescriptionNode,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -284,19 +349,26 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Event description",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText: "Event description",
                             hintStyle: TextStyle(
@@ -312,7 +384,62 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('Online'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.online,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      isOnline = true;
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                title: const Text('Offline'),
+                                leading: Radio<SingingCharacter>(
+                                  value: SingingCharacter.offline,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      isOnline = false;
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: mediaQuery.width * 0.0125,
+                            ),
+                            Expanded(
+                              child: CheckboxListTile(
+                                  title: Text('Requires Registeration'),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  value: _checkBoxValue,
+                                  onChanged: (newCheckBoxValue) {
+                                    setState(() {
+                                      isRegisterationRequired =
+                                          !isRegisterationRequired;
+                                      _checkBoxValue = newCheckBoxValue;
+                                    });
+                                  }),
+                            ),
+                          ],
                         ),
                         TextFormField(
                           controller: _venueController,
@@ -323,34 +450,49 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           focusNode: _eventVenue,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Required";
                             }
-                            if (!value.contains("https://")) {
+                            if (isOnline && !value.contains("https://") ||
+                                isRegisterationRequired &&
+                                    !value.contains("https://")) {
                               return "Invalid";
                             }
                             return null;
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Venue",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
-                            hintText: "Venue(Link if online)",
+                            hintText: isRegisterationRequired
+                                ? "Registeration Link"
+                                : isOnline
+                                    ? "Event link"
+                                    : "Venue",
                             hintStyle: TextStyle(
                               color: Colors.grey,
                             ),
@@ -360,7 +502,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         TextFormField(
                           controller: _dateEditingController,
@@ -379,11 +521,21 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           onSaved: (date) {
                             setState(() {
                               eventDate = selectedDate;
+                              eventDate = DateTime(
+                                eventDate.year,
+                                eventDate.month,
+                                eventDate.day,
+                                23,
+                                59,
+                                59,
+                              );
                             });
                           },
                           focusNode: _eventDate,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -393,22 +545,30 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Date",
-                            labelStyle:
-                                TextStyle(fontSize: 18.0, color: Colors.green),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(color: Color(0xffd59b78)),
                             ),
                             hintText: "Event Date",
-                            suffixIcon: Icon(Icons.calendar_today_outlined),
+                            suffixIcon: Icon(
+                              Icons.calendar_today_outlined,
+                              color: Color(0xffd59b78),
+                            ),
                             hintStyle: TextStyle(
                               color: Colors.grey,
                             ),
@@ -420,7 +580,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -456,7 +616,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 },
                                 focusNode: _eventStartTime,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -467,22 +629,33 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   labelText: "Start Time",
                                   labelStyle: TextStyle(
-                                      fontSize: 18.0, color: Colors.green),
+                                    fontSize: 18.0,
+                                    color: themeProvider.isDarkTheme
+                                        ? Color(0xffffa265)
+                                        : Color(0xffcd885f),
+                                  ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   hintText: "Event start time",
-                                  contentPadding: EdgeInsets.all(15.0),
-                                  suffixIcon: Icon(Icons.more_time),
+                                  contentPadding:
+                                      EdgeInsets.all(mediaQuery.width * 0.035),
+                                  suffixIcon: Icon(
+                                    Icons.more_time,
+                                    color: Color(0xffd59b78),
+                                  ),
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -495,7 +668,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               ),
                             ),
                             SizedBox(
-                              width: 7.0,
+                              width: mediaQuery.width * 0.025,
                             ),
                             Expanded(
                               child: TextFormField(
@@ -513,7 +686,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                     context: context,
                                     initialTime: TimeOfDay.now(),
                                   ))!;
-                                  // eventStartTime = selectedStartTime.toString();
                                   var dt = DateTime(
                                     DateTime.now().year,
                                     DateTime.now().month,
@@ -528,7 +700,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                 },
                                 focusNode: _eventEndTime,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -537,24 +711,35 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(15.0),
+                                  contentPadding:
+                                      EdgeInsets.all(mediaQuery.width * 0.035),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   labelText: "End time",
                                   labelStyle: TextStyle(
-                                      fontSize: 18.0, color: Colors.green),
+                                    fontSize: 18.0,
+                                    color: themeProvider.isDarkTheme
+                                        ? Color(0xffffa265)
+                                        : Color(0xffcd885f),
+                                  ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                      color: Color(0xffd59b78),
+                                    ),
                                   ),
                                   hintText: "Event end time",
-                                  suffixIcon: Icon(Icons.more_time),
+                                  suffixIcon: Icon(
+                                    Icons.more_time,
+                                    color: Color(0xffd59b78),
+                                  ),
                                   hintStyle: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -567,26 +752,28 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           ],
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         Divider(
                           thickness: 2.0,
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         PosterUpload(_imagePicked),
                         Divider(
                           thickness: 2.0,
                         ),
                         SizedBox(
-                          height: 20.0,
+                          height: mediaQuery.width * 0.05,
                         ),
                         TextFormField(
                           controller: _miscController,
                           focusNode: _misc,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Colors.black,
                           ),
                           onSaved: (misc) {
                             setState(() {
@@ -597,18 +784,26 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           maxLines: null,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             labelText: "Miscellaneous",
-                            labelStyle: TextStyle(fontSize: 18.0),
+                            labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffffa265)
+                                  : Color(0xffcd885f),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.deepPurpleAccent),
+                              borderSide: BorderSide(
+                                color: Color(0xffd59b78),
+                              ),
                             ),
                             hintText:
                                 "Any additional information/guidelines/links",
@@ -623,18 +818,31 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: mediaQuery.width * 0.055,
+                  ),
                   _isLoading
                       ? Center(
                           child: CircularProgressIndicator(),
                         )
                       : Center(
                           child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                themeProvider.isDarkTheme
+                                    ? Color(0xffffa265)
+                                    : Color(0xffcd885f),
+                              ),
+                            ),
                             onPressed: () {
                               verifyAndSchedule();
                             },
                             child: Text("Schedule"),
                           ),
                         ),
+                  SizedBox(
+                    height: mediaQuery.width * 0.125,
+                  ),
                 ],
               ),
             ),

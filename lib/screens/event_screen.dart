@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
+
+import '../utils.dart';
 
 class EventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
     final eventArgs = ModalRoute.of(context)!.settings.arguments as EventItem;
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -22,12 +28,14 @@ class EventScreen extends StatelessWidget {
             child: DraggableScrollableSheet(
               minChildSize: 0.6,
               maxChildSize: 0.9,
-              initialChildSize: 0.6,
+              initialChildSize: 0.7,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFFFFEEDB),
+                    color: themeProvider.isDarkTheme
+                        ? Color(0xff232323)
+                        : Color(0xffffe4c9),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(35),
                       topRight: Radius.circular(35),
@@ -36,9 +44,9 @@ class EventScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     controller: scrollController,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0,
-                        vertical: 10,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: mediaQuery.width * 0.035,
+                        vertical: mediaQuery.width * 0.025,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,14 +55,16 @@ class EventScreen extends StatelessWidget {
                             children: [
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.black,
+                                  color: Color(0xffd59b78),
                                   borderRadius: BorderRadius.circular(30),
                                 ),
-                                height: 4,
-                                width: mediaQuery.width * 0.3,
+                                height: 3,
+                                width: mediaQuery.width * 0.35,
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                padding: EdgeInsets.all(
+                                  mediaQuery.width * 0.025,
+                                ),
                                 child: CircleAvatar(
                                   backgroundImage:
                                       NetworkImage(eventArgs.orgLogo),
@@ -64,58 +74,83 @@ class EventScreen extends StatelessWidget {
                               Text(
                                 eventArgs.eventTitle,
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Color(0xffd59b78),
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  fontSize: 24,
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(
+                                  mediaQuery.width * 0.020,
+                                ),
                                 child: Row(
                                   children: [
                                     Icon(
                                       Icons.person_add_alt_1_outlined,
-                                      color: Colors.black,
+                                      color: themeProvider.isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
-                                    SizedBox(width: 15),
+                                    SizedBox(
+                                      width: mediaQuery.width * 0.035,
+                                    ),
                                     Text(
                                       "Society: ${eventArgs.orgSocietyName}",
                                       style: TextStyle(
                                         fontSize: 13,
-                                        color: Colors.black,
+                                        color: themeProvider.isDarkTheme
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.maps_ugc_outlined,
-                                      color: Colors.black,
-                                    ),
-                                    SizedBox(width: 15),
-                                    Text(
-                                      eventArgs.eventVenue,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.black,
+                              !eventArgs.registeration && !eventArgs.online
+                                  ? Padding(
+                                      padding: EdgeInsets.all(
+                                        mediaQuery.width * 0.020,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on_outlined,
+                                            color: themeProvider.isDarkTheme
+                                                ? Colors.white
+                                                : Colors.black,
+                                          ),
+                                          SizedBox(
+                                              width: mediaQuery.width * 0.035),
+                                          Expanded(
+                                            child: Text(
+                                              eventArgs.eventVenue,
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                color: themeProvider.isDarkTheme
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(
+                                  mediaQuery.width * 0.020,
+                                ),
                                 child: Row(
                                   children: [
                                     Icon(
                                       Icons.date_range_outlined,
-                                      color: Colors.black,
+                                      color: themeProvider.isDarkTheme
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
-                                    SizedBox(width: 15),
+                                    SizedBox(
+                                      width: mediaQuery.width * 0.035,
+                                    ),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -124,13 +159,17 @@ class EventScreen extends StatelessWidget {
                                           "${eventArgs.eventDate.toDate().day}/${eventArgs.eventDate.toDate().month}/${eventArgs.eventDate.toDate().year}",
                                           style: TextStyle(
                                             fontSize: 13,
-                                            color: Colors.black,
+                                            color: themeProvider.isDarkTheme
+                                                ? Colors.white
+                                                : Colors.black,
                                           ),
                                         ),
                                         Text(
                                           "${eventArgs.eventStartTime} - ${eventArgs.eventEndTime}",
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: themeProvider.isDarkTheme
+                                                ? Colors.white60
+                                                : Colors.black54,
                                           ),
                                         ),
                                       ],
@@ -141,24 +180,112 @@ class EventScreen extends StatelessWidget {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: mediaQuery.width * 0.025,
+                              vertical: mediaQuery.width * 0.0125,
+                            ),
                             child: Text(
                               "About",
                               style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 17),
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 17,
+                              ),
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: mediaQuery.width * 0.025,
+                            ),
                             child: Text(
                               eventArgs.aboutEvent,
                               style: TextStyle(
-                                color: Colors.black,
+                                color: themeProvider.isDarkTheme
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: mediaQuery.width * 0.375,
+                          ),
+                          eventArgs.registeration || eventArgs.online
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Utils.openLink(
+                                              link: eventArgs.eventVenue);
+                                        },
+                                        child: Text(
+                                          eventArgs.registeration
+                                              ? "Register"
+                                              : "Join",
+                                          style: TextStyle(
+                                            color: themeProvider.isDarkTheme
+                                                ? Colors.black
+                                                : Color(0xffd1926b),
+                                            fontSize: 11.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        style: ButtonStyle(
+                                          shadowColor:
+                                              MaterialStateProperty.all<Color>(
+                                            themeProvider.isDarkTheme
+                                                ? Color(0xffFFD8B1)
+                                                : Colors.black,
+                                          ),
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                            themeProvider.isDarkTheme
+                                                ? Color(0xffffa265)
+                                                : Color(0xffFFD8B1),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: mediaQuery.width * 0.025),
+                                    IconButton(
+                                      icon: Icon(Icons.copy),
+                                      onPressed: () {
+                                        Clipboard.setData(
+                                          new ClipboardData(
+                                              text: "${eventArgs.eventVenue}"),
+                                        ).then((_) {
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            builder: (BuildContext context) =>
+                                                AlertDialog(
+                                              title: Text("Link Copied"),
+                                              content: Text(
+                                                "Link Copied to clipboard",
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(true);
+                                                  },
+                                                  child: Text("OK"),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )
+                              : Container(),
+                          SizedBox(
+                            height: mediaQuery.width * 0.1,
                           ),
                         ],
                       ),
@@ -166,6 +293,23 @@ class EventScreen extends StatelessWidget {
                   ),
                 );
               },
+            ),
+          ),
+          Positioned(
+            top: mediaQuery.width * 0.12,
+            left: mediaQuery.width * 0.04,
+            child: CircleAvatar(
+              radius: 20.0,
+              backgroundColor: themeProvider.isDarkTheme
+                  ? Color(0xff232323)
+                  : Color(0xffffe4c9),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back),
+                color: themeProvider.isDarkTheme ? Colors.white : Colors.black,
+              ),
             ),
           ),
         ],

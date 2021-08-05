@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';
-import 'package:the_uss_project/screens/profile_screen.dart';
-import 'package:the_uss_project/widgets/about_profile_widget.dart';
 import 'package:the_uss_project/widgets/about_society_widget.dart';
-import 'package:the_uss_project/widgets/event_profile_widget.dart';
 import 'package:the_uss_project/widgets/event_society_widget.dart';
 import 'package:the_uss_project/widgets/sliver_header.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
 import 'package:the_uss_project/widgets/team_members_widget.dart';
+
 import '../constants.dart';
 import '../theme_provider.dart';
-import 'society_list_screen.dart';
 
 List societyWidgets = [
   AboutSocietyWidget(),
@@ -36,6 +33,8 @@ class _SocietyScreenState extends State<SocietyScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
+
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
 
@@ -44,22 +43,26 @@ class _SocietyScreenState extends State<SocietyScreen> {
         child: CustomScrollView(
           physics: BouncingScrollPhysics(),
           slivers: [
-            sliverHeader(societyArgs.societyName, societyArgs.societyLogo),
+            sliverHeader(
+                context, societyArgs.societyName, societyArgs.societyLogo),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return Column(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 24.0, bottom: 10.0),
+                        margin: EdgeInsets.only(
+                          top: mediaQuery.height * 0.025,
+                          bottom: mediaQuery.height * 0.01,
+                        ),
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 20,
+                              height: mediaQuery.height*0.025,
                             ),
                             Center(
                               child: FlutterToggleTab(
-                                width: 60,
+                                width: mediaQuery.width*0.16,
                                 borderRadius: 15,
                                 labels: ['', '', ''],
                                 icons: [Icons.info, Icons.list, Icons.people],
@@ -71,11 +74,11 @@ class _SocietyScreenState extends State<SocietyScreen> {
                                   });
                                 },
                                 selectedTextStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                 ),
                                 unSelectedTextStyle: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                 ),
                                 selectedBackgroundColors:
@@ -89,10 +92,10 @@ class _SocietyScreenState extends State<SocietyScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: mediaQuery.height*0.025,
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: EdgeInsets.all(mediaQuery.width / 20),
                               child: finalWidget,
                             ),
                           ],

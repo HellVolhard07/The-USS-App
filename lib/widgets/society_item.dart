@@ -1,8 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:the_uss_project/constants.dart';
-import 'package:the_uss_project/screens/society_list_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:the_uss_project/screens/society_screen.dart';
+
+import '../theme_provider.dart';
 
 class SocietyItem extends StatelessWidget {
   final String societyName;
@@ -11,11 +12,6 @@ class SocietyItem extends StatelessWidget {
   final String societyAbout;
   final societyTeam;
   final societyKeEvents;
-  // final String societyEventName;
-  // final String societyEventDate;
-  // final String societyEventStartTime;
-  // final String societyEventEndTime;
-  // final String societyEventVenue;
 
   SocietyItem({
     required this.societyName,
@@ -24,15 +20,13 @@ class SocietyItem extends StatelessWidget {
     required this.societyAbout,
     required this.societyTeam,
     required this.societyKeEvents,
-    // required this.societyEventDate,
-    // required this.societyEventName,
-    // required this.societyEventStartTime,
-    // required this.societyEventEndTime,
-    // required this.societyEventVenue,
   });
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
+
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
     return GestureDetector(
@@ -48,11 +42,6 @@ class SocietyItem extends StatelessWidget {
                 societyAbout: societyAbout,
                 societyTeam: societyTeam,
                 societyKeEvents: societyKeEvents,
-                // societyEventDate: societyEventDate,
-                // societyEventName: societyEventName,
-                // societyEventStartTime: societyEventStartTime,
-                // societyEventEndTime: societyEventEndTime,
-                // societyEventVenue: societyEventVenue,
               ),
             ),
             transitionDuration: Duration(milliseconds: 800),
@@ -72,17 +61,20 @@ class SocietyItem extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        margin: EdgeInsets.symmetric(
+          horizontal: mediaQuery.width * 0.05,
+          vertical: mediaQuery.height * 0.02,
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Container(
             padding: EdgeInsets.all(30),
             width: double.infinity,
-            height: 120.0,
+            height: mediaQuery.width * 0.32,
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
-                  width: 7.0,
+                  width: mediaQuery.width * 0.02,
                   color: myColor,
                 ),
               ),
@@ -93,10 +85,10 @@ class SocietyItem extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(societyLogo),
-                  maxRadius: 40.0,
+                  maxRadius: mediaQuery.width * 0.08,
                 ),
                 SizedBox(
-                  width: 30.0,
+                  width:mediaQuery.width * 0.07,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,19 +99,25 @@ class SocietyItem extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.w600,
+                          color: themeProvider.isDarkTheme
+                              ? Colors.white
+                              : Color(0xffcd885f),
                         ),
                       ),
                     ),
                     Expanded(
                       child: SizedBox(
-                        width: 120.0,
+                        width: mediaQuery.width*0.35,
                         child: Text(
-                          loremIpsum,
-                          maxLines: 1,
+                          societyAbout.substring(0,100),
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          softWrap: false,
+                          softWrap: true,
                           style: TextStyle(
                             fontSize: 12.0,
+                            color: themeProvider.isDarkTheme
+                                ? Colors.white
+                                : Color(0xffd1926b),
                           ),
                         ),
                       ),

@@ -41,10 +41,28 @@ dependencies:
   image_picker: ^0.7.4
   flutter_toggle_tab: ^1.1.4
   url_launcher: ^6.0.9
+  firebase_messaging: ^10.0.4
+  flutter_local_notifications: ^8.0.0
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^1.2.1
+  flutter_launcher_icons: ^0.9.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: assets/images/logo.png
+
+
+flutter_native_splash:
+  color: "#fff0e1"
+  image: assets/images/logo.png
+  color_dark: "#181818"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

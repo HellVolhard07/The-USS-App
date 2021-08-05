@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
 import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 import 'package:the_uss_project/widgets/event_item.dart';
+
+import '../main.dart';
 
 class EventsScreen extends StatefulWidget {
   @override
@@ -19,8 +23,61 @@ class _EventsScreenState extends State<EventsScreen> {
 
   @override
   void initState() {
-    getCurrentUserData();
     super.initState();
+    getCurrentUserData();
+
+    var initializationSettingAndroid = AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings = InitializationSettings(android: initializationSettingAndroid);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    FirebaseMessaging.instance.subscribeToTopic('Events');
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channel.description,
+              playSound: true,
+              priority: Priority.max,
+              icon: "@mipmap/ic_launcher",
+              // other properties...
+            ),
+          ),
+        );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("OnMesgOpen");
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text("${notification.title}"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("OK"),
+                  ),
+                ],
+              );
+            });
+      }
+    });
   }
 
   Future getCurrentUserData() async {
@@ -40,18 +97,52 @@ class _EventsScreenState extends State<EventsScreen> {
     }
   }
 
+  Widget eventsWidget(List eventsData, BuildContext context) {
+    final mediaQuery = MediaQuery.of(context).size;
+    if (eventsData.length == 0) {
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.all(mediaQuery.width * 0.02),
+          child: Text(
+            'No upcoming events to display, Enjoy the day!',
+            style: TextStyle(
+              fontSize: mediaQuery.width * 0.038,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (ctx, index) => EventItem(
+        online: eventsData[index][onlineEvent],
+        registeration: eventsData[index][registerationRequired],
+        orgLogo: eventsData[index][societyLogo],
+        orgSocietyName: eventsData[index][societyName],
+        eventPosterUrl: eventsData[index][posterURL],
+        eventId: eventsData[index].id,
+        aboutEvent: eventsData[index][aboutEvent],
+        eventDate: eventsData[index][date],
+        eventStartTime: eventsData[index][startTime],
+        eventTitle: eventsData[index][title],
+        eventVenue: eventsData[index][venue],
+        eventEndTime: eventsData[index][endTime],
+      ),
+      itemCount: eventsData.length,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: themeProvider.isDarkTheme
-          ? Theme.of(context).scaffoldBackgroundColor
-          : Color(0xFF4044c9),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection(eventsCollection)
-            .where("date", isGreaterThanOrEqualTo: DateTime.now())
+            .where("date", isGreaterThanOrEqualTo: DateTime.now().toUtc())
             .orderBy("date", descending: false)
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
@@ -71,16 +162,19 @@ class _EventsScreenState extends State<EventsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: mediaQuery.width * 0.05,
+                            vertical: mediaQuery.width * 0.07,
+                          ),
                           child: IconButton(
                             icon: themeProvider.isDarkTheme
                                 ? Icon(
                                     Icons.wb_sunny_outlined,
-                                    color: Colors.yellow,
+                                    color: Color(0xffD59B78),
                                   )
                                 : Icon(
                                     Icons.nights_stay_rounded,
-                                    color: Colors.white,
+                                    color: Color(0xffcd885f),
                                   ),
                             onPressed: () {
                               themeProvider
@@ -89,12 +183,17 @@ class _EventsScreenState extends State<EventsScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: mediaQuery.width * 0.05,
+                            vertical: mediaQuery.width * 0.1,
+                          ),
                           child: Text(
                             "${DateFormat("d").format(DateTime.now())} ${DateFormat("MMMM").format(DateTime.now())}, ${DateFormat("EEEE").format(DateTime.now())} ",
                             style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
+                              fontSize: mediaQuery.width * 0.055,
+                              color: themeProvider.isDarkTheme
+                                  ? Color(0xffD59B78)
+                                  : Color(0xffcd885f),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -102,59 +201,55 @@ class _EventsScreenState extends State<EventsScreen> {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: mediaQuery.height * 0.12,
-                      bottom: 0,
-                    ),
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: mediaQuery.height * 0.15,
+                        bottom: 0,
                       ),
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
-                            child: Text(
-                              'Upcoming Events',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
+                      width: mediaQuery.width * 0.9,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        color: themeProvider.isDarkTheme
+                            ? Color(0xff0c0c0c)
+                            : Color(0xffffe4c9),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(39),
+                          topRight: Radius.circular(39),
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                mediaQuery.width * 0.08,
+                                mediaQuery.width * 0.06,
+                                mediaQuery.width * 0.08,
+                                mediaQuery.width * 0.02,
+                              ),
+                              child: Text(
+                                'Upcoming Events',
+                                style: TextStyle(
+                                  fontSize: mediaQuery.width * 0.08,
+                                  fontWeight: FontWeight.w600,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.white
+                                      : Color(0xffd1926b),
+                                ),
                               ),
                             ),
-                          ),
-                          Divider(
-                            indent: 20,
-                            endIndent: 20,
-                            thickness: 3.0,
-                            color: Colors.deepPurpleAccent,
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (ctx, index) => EventItem(
-                              orgLogo: eventsData[index][societyLogo],
-                              orgSocietyName: eventsData[index][societyName],
-                              eventPosterUrl: eventsData[index][posterURL],
-                              eventId: eventsData[index].id,
-                              aboutEvent: eventsData[index][aboutEvent],
-                              eventDate: eventsData[index][date],
-                              eventStartTime: eventsData[index][startTime],
-                              eventTitle: eventsData[index][title],
-                              eventVenue: eventsData[index][venue],
-                              eventEndTime: eventsData[index][endTime],
+                            Divider(
+                              indent: 30,
+                              endIndent: 30,
+                              thickness: 2.0,
+                              color: Color(0xffD59B78),
                             ),
-                            itemCount: eventsData.length,
-                          ),
-                        ],
+                            eventsWidget(eventsData, context),
+                            SizedBox(height: mediaQuery.height*0.05),
+                          ],
+                        ),
                       ),
                     ),
                   ),

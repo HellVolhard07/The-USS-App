@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     void loginFunction() async {
       final form = _loginFormKey.currentState;
 
@@ -69,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,
-                  vertical: 15,
+                  vertical: 30,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,13 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.deepPurpleAccent,
-                            blurRadius: 3,
-                            offset: Offset(5, 3),
-                          ),
-                        ],
                       ),
                       child: Form(
                         key: _loginFormKey,
@@ -191,7 +186,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "Login",
                                 style: TextStyle(
                                   fontSize: 17,
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.black
+                                      : Colors.white,
                                 ),
                               ),
                               style: ButtonStyle(
@@ -203,7 +200,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                  Colors.deepPurpleAccent,
+                                  themeProvider.isDarkTheme
+                                      ? Color(0xffffa265)
+                                      : Color(0xffcd885f),
                                 ),
                                 alignment: Alignment.center,
                                 padding: MaterialStateProperty.all<
@@ -216,18 +215,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         : Center(
                             child: CircularProgressIndicator(),
                           ),
-                    Center(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Forgot Password",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
