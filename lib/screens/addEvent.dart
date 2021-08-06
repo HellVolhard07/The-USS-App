@@ -177,13 +177,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
             "notification": {
               "title":
                   "$loggedInSocietyName added a new event: ${eventTitle.toUpperCase()}",
-              "body": "Check it out",
+              "body": "CHECK IT OUT!!",
               "click_action": "FLUTTER_CLICK_ACTION"
             },
             "data": {
               "title":
                   "$loggedInSocietyName added a new event: ${eventTitle.toUpperCase()}",
-              "body": "Checkout new event",
+              "body": "CHECKOUT NEW EVENT",
               "click_action": "FLUTTER_CLICK_ACTION"
             }
           },

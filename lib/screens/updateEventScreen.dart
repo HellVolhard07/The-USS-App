@@ -213,13 +213,13 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
           {
             "to": "/topics/Events",
             "notification": {
-              "title": "$loggedInSocietyName updated an event",
-              "body": "Check it out!!",
+              "title": "$loggedInSocietyName Updated An Event: ${eventTitle.toUpperCase()}",
+              "body": "CHECK IT OUT!!",
               "click_action": "FLUTTER_CLICK_ACTION"
             },
             "data": {
-              "title": "Event Updated",
-              "body": "Checkout updated event",
+              "title": "$loggedInSocietyName Updated An Event: ${eventTitle.toUpperCase()}",
+              "body": "CHECKOUT UPDATED EVENT",
               "click_action": "FLUTTER_CLICK_ACTION"
             }
           },
