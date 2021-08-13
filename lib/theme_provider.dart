@@ -17,8 +17,8 @@ class ThemeBuilder {
     scaffoldBackgroundColor: Color(0xff181818),
     fontFamily: "Poppins",
     colorScheme: ColorScheme.dark(
-      primary: Color(0xFF0c0c0c),
-      secondary: Color(0xff232323),
+      primary: Color(0xffffd8b1),
+      secondary: Color(0xffD59B78),
     ),
     iconTheme: IconThemeData(
       color: Colors.white,

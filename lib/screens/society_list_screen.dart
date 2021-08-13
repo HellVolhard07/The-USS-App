@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
@@ -24,58 +25,64 @@ class SocietyListScreen extends StatelessWidget {
             );
           }
           societiesData = snapshot.data.docs;
-
+          // print(societiesData.length);
           return SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  // padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
-                  padding: EdgeInsets.fromLTRB(
-                    mediaQuery.width * 0.05,
-                    mediaQuery.height * 0.02,
-                    mediaQuery.width * 0.05,
-                    mediaQuery.height * 0.02,
-                  ),
-                  child: Text(
-                    'Societies',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w900,
-                      color: themeProvider.isDarkTheme
-                          ? Color(0xffD59B78)
-                          : Color(0xffcd885f),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    // padding: const EdgeInsets.fromLTRB(20.0, 20, 20, 10),
+                    padding: EdgeInsets.fromLTRB(
+                      mediaQuery.width * 0.05,
+                      mediaQuery.height * 0.02,
+                      mediaQuery.width * 0.05,
+                      mediaQuery.height * 0.02,
+                    ),
+                    child: Text(
+                      'Societies',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w900,
+                        color: themeProvider.isDarkTheme
+                            ? Color(0xffD59B78)
+                            : Color(0xffcd885f),
+                      ),
                     ),
                   ),
-                ),
-                Divider(
-                  indent: mediaQuery.width * 0.05,
-                  endIndent: mediaQuery.width * 0.05,
-                  thickness: 2.0,
-                  color: themeProvider.isDarkTheme
-                      ? Color(0xffD59B78)
-                      : Color(0xffcd885f),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemBuilder: (ctx, index) => SocietyItem(
-                    myColor: index % 2 == 0
-                        ? themeProvider.isDarkTheme
-                            ? Color(0xfff2d6b3)
-                            : Color(0xffffd8b1)
-                        : themeProvider.isDarkTheme
-                            ? Color(0xffD59B78)
-                            : Color(0xffffcc99),
-                    societyName: societiesData[index][societyName],
-                    societyLogo: societiesData[index][societyLogo],
-                    societyAbout: societiesData[index][societyAbout],
-                    societyTeam: societiesData[index][societyTeam],
-                    societyKeEvents: societiesData[index][societyKeEvents],
+                  Divider(
+                    indent: mediaQuery.width * 0.05,
+                    endIndent: mediaQuery.width * 0.05,
+                    thickness: 2.0,
+                    color: themeProvider.isDarkTheme
+                        ? Color(0xffD59B78)
+                        : Color(0xffcd885f),
                   ),
-                  itemCount: societiesData.length,
-                ),
-              ],
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemBuilder: (ctx, index) =>
+                        societiesData[index]["isVerified"]
+                            ? SocietyItem(
+                                myColor: index % 2 == 0
+                                    ? themeProvider.isDarkTheme
+                                        ? Color(0xfff2d6b3)
+                                        : Color(0xffffd8b1)
+                                    : themeProvider.isDarkTheme
+                                        ? Color(0xffD59B78)
+                                        : Color(0xffffcc99),
+                                societyName: societiesData[index][societyName],
+                                societyLogo: societiesData[index][societyLogo],
+                                societyAbout: societiesData[index][societyAbout],
+                                societyTeam: societiesData[index][societyTeam],
+                                societyKeEvents: societiesData[index]
+                                    [societyKeEvents],
+                              )
+                            : Container(),
+                    itemCount: societiesData.length,
+                  ),
+                ],
+              ),
             ),
           );
         },

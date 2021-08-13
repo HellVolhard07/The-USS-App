@@ -26,8 +26,10 @@ class _EventsScreenState extends State<EventsScreen> {
     super.initState();
     getCurrentUserData();
 
-    var initializationSettingAndroid = AndroidInitializationSettings("@mipmap/ic_launcher");
-    var initializationSettings = InitializationSettings(android: initializationSettingAndroid);
+    var initializationSettingAndroid =
+        AndroidInitializationSettings("@mipmap/ic_launcher");
+    var initializationSettings =
+        InitializationSettings(android: initializationSettingAndroid);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
     FirebaseMessaging.instance.subscribeToTopic('Events');
@@ -86,12 +88,16 @@ class _EventsScreenState extends State<EventsScreen> {
           .collection(societiesCollection)
           .doc(_auth.currentUser!.uid)
           .get();
+      print(_auth.currentUser!.uid);
+      print(loggedInUserDetail);
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
       teamMembers = await loggedInUserDetail.get('teamMembers');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
+      isVerified = await loggedInUserDetail.get("isVerified");
+      print(loggedInSocietyName);
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -247,7 +253,7 @@ class _EventsScreenState extends State<EventsScreen> {
                               color: Color(0xffD59B78),
                             ),
                             eventsWidget(eventsData, context),
-                            SizedBox(height: mediaQuery.height*0.05),
+                            SizedBox(height: mediaQuery.height * 0.05),
                           ],
                         ),
                       ),

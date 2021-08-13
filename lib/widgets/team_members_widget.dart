@@ -15,6 +15,14 @@ class TeamMembers extends StatelessWidget {
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
 
+    List sortByName(List team) {
+      team.sort((e1, e2) => e1["name"].compareTo(e2["name"]));
+
+      return team;
+    }
+
+    sortByName(societyArgs.societyTeam);
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,11 +112,12 @@ class MemberCircle extends StatelessWidget {
         ),
         SizedBox(height: mediaQuery.height * 0.01),
         Text(
-          societyArgs.societyTeam[index]['name'],
+          "${societyArgs.societyTeam[index]['name']} (${societyArgs.societyTeam[index]['role']})",
           style: TextStyle(
             color: themeProvider.isDarkTheme ? Colors.white : Color(0xffcd885f),
           ),
-        )
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }
