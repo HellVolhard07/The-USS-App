@@ -109,7 +109,7 @@ class SocietyItem extends StatelessWidget {
                       child: SizedBox(
                         width: mediaQuery.width*0.35,
                         child: Text(
-                          societyAbout.substring(0,100),
+                          societyAbout,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,

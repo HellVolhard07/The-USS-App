@@ -44,7 +44,10 @@ class _SocietyScreenState extends State<SocietyScreen> {
           physics: BouncingScrollPhysics(),
           slivers: [
             sliverHeader(
-                context, societyArgs.societyName, societyArgs.societyLogo),
+              context,
+              societyArgs.societyName,
+              societyArgs.societyLogo,
+            ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
@@ -58,11 +61,11 @@ class _SocietyScreenState extends State<SocietyScreen> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: mediaQuery.height*0.025,
+                              height: mediaQuery.height * 0.025,
                             ),
                             Center(
                               child: FlutterToggleTab(
-                                width: mediaQuery.width*0.16,
+                                width: mediaQuery.width * 0.16,
                                 borderRadius: 15,
                                 labels: ['', '', ''],
                                 icons: [Icons.info, Icons.list, Icons.people],
@@ -92,7 +95,7 @@ class _SocietyScreenState extends State<SocietyScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: mediaQuery.height*0.025,
+                              height: mediaQuery.height * 0.025,
                             ),
                             Padding(
                               padding: EdgeInsets.all(mediaQuery.width / 20),
