@@ -29,6 +29,7 @@ class _EventWidgetState extends State<EventWidget> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
@@ -51,7 +52,21 @@ class _EventWidgetState extends State<EventWidget> {
                   var loggedInDatas = snapshot.data.get('myEvents');
                   loggedInDatas = convertToDate(loggedInDatas);
                   return loggedInDatas.length == 0 || loggedInDatas == null
-                      ? Container()
+                      ? Padding(
+                          padding: EdgeInsets.all(mediaQuery.width * 0.05),
+                          child: Center(
+                            child: Text(
+                              "No events posted yet!!",
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: themeProvider.isDarkTheme
+                                    ? Color(0xffD59B78)
+                                    : Color(0xffcd885f),
+                              ),
+                            ),
+                          ),
+                        )
                       : SingleChildScrollView(
                           child: Column(
                             children: [
@@ -80,7 +95,7 @@ class _EventWidgetState extends State<EventWidget> {
                                 },
                               ),
                               SizedBox(
-                                height: 40.0,
+                                height: mediaQuery.height*0.05,
                               ),
                             ],
                           ),

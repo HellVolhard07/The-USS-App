@@ -84,6 +84,7 @@ class SocietyItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleAvatar(
+                  backgroundColor: Colors.white,
                   backgroundImage: NetworkImage(societyLogo),
                   maxRadius: mediaQuery.width * 0.08,
                 ),
