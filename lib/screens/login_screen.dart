@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/auth.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,6 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     void loginFunction() async {
       final form = _loginFormKey.currentState;
 
@@ -51,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               Container(
-                height: 325,
+                height: mediaQuery.height * 0.4,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -67,39 +70,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 15,
+                padding: EdgeInsets.symmetric(
+                  horizontal: mediaQuery.width * 0.07,
+                  vertical: mediaQuery.height * 0.04,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Login",
+                      "Society Login",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 35),
+                    SizedBox(height: mediaQuery.height * 0.04),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.deepPurpleAccent,
-                            blurRadius: 3,
-                            offset: Offset(5, 3),
-                          ),
-                        ],
                       ),
                       child: Form(
                         key: _loginFormKey,
                         child: Column(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: EdgeInsets.all(mediaQuery.width * 0.025),
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
@@ -142,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: EdgeInsets.all(mediaQuery.width * 0.025),
                               child: TextFormField(
                                 onSaved: (fieldPassword) {
                                   setState(() {
@@ -179,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 35),
+                    SizedBox(height: mediaQuery.height * 0.045),
                     !isLogin
                         ? Center(
                             child: ElevatedButton(
@@ -191,7 +187,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "Login",
                                 style: TextStyle(
                                   fontSize: 17,
-                                  color: Colors.white,
+                                  color: themeProvider.isDarkTheme
+                                      ? Colors.black
+                                      : Colors.white,
                                 ),
                               ),
                               style: ButtonStyle(
@@ -203,12 +201,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                  Colors.deepPurpleAccent,
+                                  themeProvider.isDarkTheme
+                                      ? Color(0xffffa265)
+                                      : Color(0xffcd885f),
                                 ),
                                 alignment: Alignment.center,
                                 padding: MaterialStateProperty.all<
                                     EdgeInsetsGeometry>(
-                                  EdgeInsets.symmetric(horizontal: 40),
+                                  EdgeInsets.symmetric(
+                                      horizontal: mediaQuery.width * 0.12),
                                 ),
                               ),
                             ),
@@ -216,18 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         : Center(
                             child: CircularProgressIndicator(),
                           ),
-                    Center(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Forgot Password",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ),
+                    SizedBox(height: mediaQuery.height * 0.025),
                   ],
                 ),
               ),

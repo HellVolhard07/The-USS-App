@@ -11,8 +11,18 @@ class TeamMembers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
+
+    List sortByName(List team) {
+      team.sort((e1, e2) => e1["name"].compareTo(e2["name"]));
+
+      return team;
+    }
+
+    sortByName(societyArgs.societyTeam);
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +30,7 @@ class TeamMembers extends StatelessWidget {
           Row(
             children: [
               SizedBox(
-                width: 30,
+                width: mediaQuery.width * 0.065,
               ),
               Text(
                 'Team Members',
@@ -35,15 +45,15 @@ class TeamMembers extends StatelessWidget {
             ],
           ),
           Divider(
-            endIndent: 30,
-            indent: 30,
+            endIndent: mediaQuery.width * 0.065,
+            indent: mediaQuery.width * 0.065,
             thickness: 2,
             color: themeProvider.isDarkTheme
                 ? Color(0xffd59b78)
                 : Color(0xffcd885f),
           ),
           SizedBox(
-            height: 20,
+            height: mediaQuery.height * 0.025,
           ),
           GridView.builder(
             physics: ScrollPhysics(),
@@ -70,21 +80,21 @@ class MemberCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
+
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
     return Column(
       children: [
         GestureDetector(
           onTap: () {
-            // print(societyArgs.societyTeam.length);
-            // print(societyArgs.societyTeam);
             Utils.openEmail(
                 toEmail: societyArgs.societyTeam[index]['contact'],
                 subject: 'Query regarding ${societyArgs.societyName}',
                 body: 'Sent using the USS app');
           },
           child: CircleAvatar(
-            radius: 32,
+            radius: mediaQuery.width * 0.08,
             backgroundColor: themeProvider.isDarkTheme
                 ? Color(0xffd59b78)
                 : Color(0xffffe4c9),
@@ -100,13 +110,14 @@ class MemberCircle extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 5),
+        SizedBox(height: mediaQuery.height * 0.01),
         Text(
-          societyArgs.societyTeam[index]['name'],
+          "${societyArgs.societyTeam[index]['name']} (${societyArgs.societyTeam[index]['role']})",
           style: TextStyle(
             color: themeProvider.isDarkTheme ? Colors.white : Color(0xffcd885f),
           ),
-        )
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

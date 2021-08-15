@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
@@ -27,16 +28,15 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
   flutterLocalNotificationsPlugin.show(
-    message.notification.hashCode,
-    message.notification!.title,
-    message.notification!.body,
+    message.data.hashCode,
+    message.data["title"],
+    message.data["body"],
     NotificationDetails(
       android: AndroidNotificationDetails(
         channel.id,
         channel.name,
         channel.description,
         playSound: true,
-
         priority: Priority.max,
         icon: "@mipmap/ic_launcher",
         // other properties...
@@ -73,6 +73,10 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
@@ -80,6 +84,13 @@ class MyApp extends StatelessWidget {
       ],
       builder: (context, _) {
         final themeProvider = Provider.of<ThemeProvider>(context);
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness:
+                themeProvider.isDarkTheme ? Brightness.light : Brightness.dark,
+          ),
+        );
         return MaterialApp(
           title: 'The USS App',
           debugShowCheckedModeBanner: false,

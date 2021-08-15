@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
-import 'package:the_uss_project/theme_provider.dart';
 import 'package:the_uss_project/widgets/society_item.dart';
 
 import 'event_item.dart';
@@ -28,21 +26,26 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // print('registeration : $registeration');
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
-    // print("online: ${societyArgs.societyKeEvents}");
+
     sortByDate(societyArgs.societyKeEvents);
     return Container(
       padding: EdgeInsets.all(0),
       decoration: BoxDecoration(
-        // color: themeProvider.isDarkTheme
-        //     ? Colors.deepPurpleAccent.withOpacity(0.1)
-        //     : Colors.greenAccent.withOpacity(0.4),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      child: ListView.builder(
+      child: societyArgs.societyKeEvents.length == 0 ?Center(
+                      child: Text(
+                        'No events to display', 
+                        style: TextStyle(
+              fontSize: mediaQuery.width * 0.038,
+            ),
+            textAlign: TextAlign.center,
+                      ),
+                      ) :
+       ListView.builder(
         physics: ScrollPhysics(),
         shrinkWrap: true,
         itemCount: societyArgs.societyKeEvents.length,

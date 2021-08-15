@@ -25,6 +25,7 @@ class SocietyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
 
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
@@ -60,17 +61,20 @@ class SocietyItem extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        margin: EdgeInsets.symmetric(
+          horizontal: mediaQuery.width * 0.05,
+          vertical: mediaQuery.height * 0.02,
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Container(
             padding: EdgeInsets.all(30),
             width: double.infinity,
-            height: 120.0,
+            height: mediaQuery.width * 0.32,
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
-                  width: 7.0,
+                  width: mediaQuery.width * 0.02,
                   color: myColor,
                 ),
               ),
@@ -81,10 +85,10 @@ class SocietyItem extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(societyLogo),
-                  maxRadius: 40.0,
+                  maxRadius: mediaQuery.width * 0.08,
                 ),
                 SizedBox(
-                  width: 30.0,
+                  width:mediaQuery.width * 0.07,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,12 +107,12 @@ class SocietyItem extends StatelessWidget {
                     ),
                     Expanded(
                       child: SizedBox(
-                        width: 120.0,
+                        width: mediaQuery.width*0.35,
                         child: Text(
                           societyAbout,
-                          maxLines: 1,
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          softWrap: false,
+                          softWrap: true,
                           style: TextStyle(
                             fontSize: 12.0,
                             color: themeProvider.isDarkTheme

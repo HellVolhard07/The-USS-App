@@ -15,7 +15,8 @@ class EventWidget extends StatefulWidget {
 class _EventWidgetState extends State<EventWidget> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  var finalWidget;
+  
   List convertToDate(List event) {
     event.forEach((element) {
       element[date].toDate();
@@ -28,14 +29,13 @@ class _EventWidgetState extends State<EventWidget> {
 
   @override
   Widget build(BuildContext context) {
+     final mediaQuery = MediaQuery.of(context).size;
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
-      padding: EdgeInsets.all(0),
       decoration: BoxDecoration(
-        // color: themeProvider.isDarkTheme
-        //     ? Colors.deepPurpleAccent.withOpacity(0.1)
-        //     : Colors.greenAccent.withOpacity(0.4),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
       ),
       child: StreamBuilder<dynamic>(
           stream: _firestore
@@ -50,24 +50,49 @@ class _EventWidgetState extends State<EventWidget> {
             } else {
               var loggedInDatas = snapshot.data.get('myEvents');
               loggedInDatas = convertToDate(loggedInDatas);
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                itemCount: loggedInDatas.length,
-                itemBuilder: (context, index) {
-                  return EventProfileWidgetItem(
-                      orgLogo: loggedInDatas[index][societyLogo],
-                      orgSocietyName: loggedInDatas[index][societyName],
-                      eventPosterUrl: loggedInDatas[index]['poster'],
-                      eventId: loggedInDatas[index]['eventId'],
-                      aboutEvent: loggedInDatas[index]['aboutEvent'],
-                      eventDate: loggedInDatas[index]['date'],
-                      eventStartTime: loggedInDatas[index]['startTime'],
-                      eventEndTime: loggedInDatas[index]['endTime'],
-                      eventTitle: loggedInDatas[index]['title'],
-                      eventVenue: loggedInDatas[index]['venue']);
-                },
-              );
+              return loggedInDatas.length == 0 || loggedInDatas == null
+                  ? Container(
+                    child: Center(
+                      child: Text(
+                        'No events to display', 
+                        style: TextStyle(
+              fontSize: mediaQuery.width * 0.038,
+            ),
+            textAlign: TextAlign.center,
+                      ),
+                      ),
+                  )
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            itemCount: loggedInDatas.length,
+                            itemBuilder: (context, index) {
+                              return EventProfileWidgetItem(
+                                  orgLogo: loggedInDatas[index][societyLogo],
+                                  orgSocietyName: loggedInDatas[index]
+                                      [societyName],
+                                  eventPosterUrl: loggedInDatas[index]
+                                      ['poster'],
+                                  eventId: loggedInDatas[index]['eventId'],
+                                  aboutEvent: loggedInDatas[index]
+                                      ['aboutEvent'],
+                                  eventDate: loggedInDatas[index]['date'],
+                                  eventStartTime: loggedInDatas[index]
+                                      ['startTime'],
+                                  eventEndTime: loggedInDatas[index]['endTime'],
+                                  eventTitle: loggedInDatas[index]['title'],
+                                  eventVenue: loggedInDatas[index]['venue']);
+                            },
+                          ),
+                          SizedBox(
+                            height: 40.0,
+                          ),
+                        ],
+                      ),
+                    );
             }
           }),
     );

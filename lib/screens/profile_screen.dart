@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:provider/provider.dart';
@@ -33,11 +34,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final loginProvider = Provider.of<LoginProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: EdgeInsets.symmetric(
+            horizontal: mediaQuery.width * 0.05,
+            vertical: mediaQuery.width * 0.05,
+          ),
           child: Stack(
             children: [
               Column(
@@ -45,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 15,
+                    height: mediaQuery.width * 0.035,
                   ),
                   Text(
                     'Hello',
@@ -73,12 +78,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Color(0xffD59B78),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: mediaQuery.width * 0.05,
                   ),
                   Center(
                     child: FlutterToggleTab(
                       borderRadius: 15,
-                      width: 70,
+                      width: mediaQuery.width * 0.1725,
                       labels: ['About', 'Events'],
                       initialIndex: 0,
                       selectedLabelIndex: (index) {
@@ -103,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: mediaQuery.width * 0.07,
                   ),
                   Expanded(
                     child: finalWidget,
@@ -111,11 +116,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               Positioned(
-                left: 260,
-                bottom: 570,
+                left: mediaQuery.width * 0.65,
+                top: mediaQuery.width * 0.035,
                 child: GestureDetector(
                   onTap: () async {
-                    loginProvider.logOutUser(context);
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (BuildContext ctx) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        title: Text("$loggedInSocietyName"),
+                        content: Text("Are you sure you want to logout!!"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              loginProvider.logOutUser(context);
+                              Navigator.of(ctx).pop(true);
+                            },
+                            child: Text(
+                              "Logout",
+                              style: TextStyle(
+                                color: themeProvider.isDarkTheme
+                                    ? Color(0xffffa265)
+                                    : Color(0xffcd885f),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   child: CircleAvatar(
                     radius: 40,
@@ -123,9 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         themeProvider.isDarkTheme ? Colors.white : Colors.black,
                     child: CircleAvatar(
                       radius: 38,
-                      backgroundImage: NetworkImage(
-                        'https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg',
-                      ),
+                      backgroundImage: NetworkImage("$loggedInSocietyLogo"),
                     ),
                   ),
                 ),
@@ -135,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 25.0),
+        padding: EdgeInsets.only(bottom: mediaQuery.width * 0.06),
         child: FloatingActionButton(
           onPressed: () {
             //TODO: Add animation here, if needed.

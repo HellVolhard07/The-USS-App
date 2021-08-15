@@ -16,10 +16,9 @@ class ThemeBuilder {
   static final darkTheme = ThemeData(
     scaffoldBackgroundColor: Color(0xff181818),
     fontFamily: "Poppins",
-    primaryColor: Colors.orangeAccent,
     colorScheme: ColorScheme.dark(
-      primary: Color(0xFFF54748),
-      secondary: Color(0xFFFB9300),
+      primary: Color(0xffffd8b1),
+      secondary: Color(0xffD59B78),
     ),
     iconTheme: IconThemeData(
       color: Colors.white,
@@ -29,8 +28,8 @@ class ThemeBuilder {
     scaffoldBackgroundColor: Color(0xfffff0e1),
     fontFamily: "Poppins",
     colorScheme: ColorScheme.light(
-      primary: Colors.orangeAccent,
-      secondary: Colors.pinkAccent,
+      primary: Color(0xffffd8b1),
+      secondary: Color(0xffD59B78),
     ),
     iconTheme: IconThemeData(
       color: Color(0xFF222831),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../screens/event_screen.dart';
 import '../theme_provider.dart';
 import '../utils.dart';
@@ -72,7 +73,9 @@ class EventItem extends StatelessWidget {
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: EdgeInsets.only(
+              left: mediaQuery.width * 0.05,
+            ),
             child: Column(
               children: [
                 Text(
@@ -97,8 +100,15 @@ class EventItem extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 10, left: 20),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              margin: EdgeInsets.only(
+                top: mediaQuery.width * 0.025,
+                bottom: mediaQuery.width * 0.025,
+                left: mediaQuery.width * 0.05,
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: mediaQuery.width * 0.05,
+                vertical: mediaQuery.width * 0.035,
+              ),
               decoration: BoxDecoration(
                 color: themeProvider.isDarkTheme
                     ? Color(0xff232323)
@@ -115,7 +125,6 @@ class EventItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
@@ -141,17 +150,11 @@ class EventItem extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: 10.0,
+                          height: mediaQuery.width * 0.025,
                         ),
                         Expanded(
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              // maximumSize:
-                              //     MaterialStateProperty.all(Size(, 4)),
-                              //  padding: MaterialStateProperty.all<EdgeInsets>(
-                              //    EdgeInsets.symmetric(
-                              //        horizontal: 3, vertical: 5),
-                              // ),
                               shadowColor: MaterialStateProperty.all<Color>(
                                 themeProvider.isDarkTheme
                                     ? Color(0xffFFD8B1)
@@ -216,7 +219,7 @@ class EventItem extends StatelessWidget {
                         eventPosterUrl,
                         fit: BoxFit.cover,
                         height: double.infinity,
-                        width: 60,
+                        width: mediaQuery.width * 0.15,
                       ),
                     ),
                   ),
@@ -229,24 +232,3 @@ class EventItem extends StatelessWidget {
     );
   }
 }
-
-// Expanded(
-// child: Padding(
-// padding: const EdgeInsets.symmetric(vertical: 5),
-// child: GestureDetector(
-// onTap: () {
-// Utils.openLink(link: eventVenue);
-// },
-// child: Text(
-// eventVenue,
-// style: TextStyle(
-// color: themeProvider.isDarkTheme
-// ? Colors.white
-//     : Color(0xffd1926b),
-// decoration: TextDecoration.underline,
-// fontSize: 10.0),
-// overflow: TextOverflow.ellipsis,
-// ),
-// ),
-// ),
-// ),
