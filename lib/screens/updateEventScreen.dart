@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:the_uss_project/constants.dart';
@@ -100,6 +101,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
+      isVerified = await loggedInUserDetail.get("isVerified");
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -156,7 +158,7 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
         final ref = storage
             .ref()
             .child("event_posters")
-            .child("${_auth.currentUser!.uid}-${Uuid().v4()}");
+            .child("$loggedInSocietyName-$eventTitle-${Uuid().v4()}");
 
         await ref.putFile(_imagePick!);
         url = await ref.getDownloadURL();
@@ -213,13 +215,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
           {
             "to": "/topics/Events",
             "notification": {
-              "title": "$loggedInSocietyName updated an event",
-              "body": "Check it out!!",
+              "title":
+                  "$loggedInSocietyName Updated An Event: ${eventTitle.toUpperCase()}",
+              "body": "CHECK IT OUT!!",
               "click_action": "FLUTTER_CLICK_ACTION"
             },
             "data": {
-              "title": "Event Updated",
-              "body": "Checkout updated event",
+              "title":
+                  "$loggedInSocietyName Updated An Event: ${eventTitle.toUpperCase()}",
+              "body": "CHECKOUT UPDATED EVENT",
               "click_action": "FLUTTER_CLICK_ACTION"
             }
           },
@@ -881,10 +885,15 @@ class _UpdateEventScreenState extends State<UpdateEventScreen> {
                           child: ElevatedButton(
                             onPressed: () {
                               // print(eventDate);
-                              verifyAndUpdate(
-                                widget.eventID,
-                                widget.eventPoster,
-                              );
+                              isVerified
+                                  ? verifyAndUpdate(
+                                      widget.eventID,
+                                      widget.eventPoster,
+                                    )
+                                  : showMyDialog(
+                                      context,
+                                      "Please verify your society",
+                                    );
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(

@@ -55,6 +55,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
       loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
+      isVerified = await loggedInUserDetail.get("isVerified");
     } on FirebaseAuthException catch (e) {
       print(e);
     }
@@ -115,7 +116,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         final ref = storage
             .ref()
             .child("event_posters")
-            .child("${_auth.currentUser!.uid}-${Uuid().v4()}");
+            .child("$loggedInSocietyName-$eventTitle-${Uuid().v4()}");
 
         await ref.putFile(_imagePick!);
         url = await ref.getDownloadURL();
@@ -177,13 +178,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
             "notification": {
               "title":
                   "$loggedInSocietyName added a new event: ${eventTitle.toUpperCase()}",
-              "body": "Check it out",
+              "body": "CHECK IT OUT!!",
               "click_action": "FLUTTER_CLICK_ACTION"
             },
             "data": {
               "title":
                   "$loggedInSocietyName added a new event: ${eventTitle.toUpperCase()}",
-              "body": "Checkout new event",
+              "body": "CHECKOUT NEW EVENT",
               "click_action": "FLUTTER_CLICK_ACTION"
             }
           },
@@ -513,6 +514,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
                               lastDate: DateTime(2100),
+                              // builder: (BuildContext context,child){
+                              //   return Theme(
+                              //     data: ThemeData(
+                              //
+                              //     ),
+                              //   );
+                              // }
                             ))!;
                             eventDate = selectedDate;
                             _dateEditingController.text =
@@ -835,7 +843,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
                               ),
                             ),
                             onPressed: () {
-                              verifyAndSchedule();
+                              isVerified
+                                  ? verifyAndSchedule()
+                                  : showMyDialog(
+                                      context,
+                                      "Please verify your society",
+                                    );
                             },
                             child: Text("Schedule"),
                           ),

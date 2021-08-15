@@ -263,6 +263,10 @@ class EventScreen extends StatelessWidget {
                                             barrierDismissible: true,
                                             builder: (BuildContext context) =>
                                                 AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
                                               title: Text("Link Copied"),
                                               content: Text(
                                                 "Link Copied to clipboard",

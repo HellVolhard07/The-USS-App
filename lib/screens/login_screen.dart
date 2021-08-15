@@ -25,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final mediaQuery = MediaQuery.of(context).size;
     void loginFunction() async {
       final form = _loginFormKey.currentState;
 
@@ -53,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               Container(
-                height: 325,
+                height: mediaQuery.height * 0.4,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -69,9 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 30,
+                padding: EdgeInsets.symmetric(
+                  horizontal: mediaQuery.width * 0.07,
+                  vertical: mediaQuery.height * 0.04,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 35),
+                    SizedBox(height: mediaQuery.height * 0.04),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: EdgeInsets.all(mediaQuery.width * 0.025),
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
@@ -137,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: EdgeInsets.all(mediaQuery.width * 0.025),
                               child: TextFormField(
                                 onSaved: (fieldPassword) {
                                   setState(() {
@@ -174,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 35),
+                    SizedBox(height: mediaQuery.height * 0.045),
                     !isLogin
                         ? Center(
                             child: ElevatedButton(
@@ -207,7 +208,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 alignment: Alignment.center,
                                 padding: MaterialStateProperty.all<
                                     EdgeInsetsGeometry>(
-                                  EdgeInsets.symmetric(horizontal: 40),
+                                  EdgeInsets.symmetric(
+                                      horizontal: mediaQuery.width * 0.12),
                                 ),
                               ),
                             ),
@@ -215,6 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         : Center(
                             child: CircularProgressIndicator(),
                           ),
+                    SizedBox(height: mediaQuery.height * 0.025),
                   ],
                 ),
               ),

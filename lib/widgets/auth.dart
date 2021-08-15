@@ -14,6 +14,7 @@ String loggedInSoceityAbout = '';
 List loggedInSocietyEvents = [];
 List teamMembers = [];
 
+late bool isVerified;
 
 String loggedInSocietyLogo = '';
 
@@ -39,7 +40,9 @@ class LoginProvider with ChangeNotifier {
 
         print('Logged in as $email');
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => ProfileScreen()),
+            MaterialPageRoute(
+              builder: (context) => ProfileScreen(),
+            ),
             (Route<dynamic> route) => false);
       }
     } on FirebaseAuthException catch (e) {
@@ -73,8 +76,9 @@ class LoginProvider with ChangeNotifier {
 
       loggedInSocietyName = await loggedInUserDetail.get('societyName');
       loggedInSoceityAbout = await loggedInUserDetail.get('societyAbout');
-      loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
+      // loggedInSocietyEvents = await loggedInUserDetail.get('myEvents');
       loggedInSocietyLogo = await loggedInUserDetail.get('societyLogo');
+      isVerified = await loggedInUserDetail.get("isVerified");
       teamMembers = await loggedInUserDetail.get('teamMembers');
       print(loggedInSocietyName);
       print('team : $teamMembers');
