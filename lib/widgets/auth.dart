@@ -16,7 +16,6 @@ List teamMembers = [];
 
 late bool isVerified;
 
-
 String loggedInSocietyLogo = '';
 
 class LoginProvider with ChangeNotifier {
@@ -41,7 +40,9 @@ class LoginProvider with ChangeNotifier {
 
         print('Logged in as $email');
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => ProfileScreen()),
+            MaterialPageRoute(
+              builder: (context) => ProfileScreen(),
+            ),
             (Route<dynamic> route) => false);
       }
     } on FirebaseAuthException catch (e) {
