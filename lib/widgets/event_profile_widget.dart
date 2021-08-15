@@ -35,54 +35,59 @@ class _EventWidgetState extends State<EventWidget> {
           Radius.circular(20),
         ),
       ),
-      child: StreamBuilder<dynamic>(
-          stream: _firestore
-              .collection(societiesCollection)
-              .doc(_auth.currentUser?.uid)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              var loggedInDatas = snapshot.data.get('myEvents');
-              loggedInDatas = convertToDate(loggedInDatas);
-              return loggedInDatas.length == 0 || loggedInDatas == null
-                  ? Container()
-                  : SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemCount: loggedInDatas.length,
-                            itemBuilder: (context, index) {
-                              return EventProfileWidgetItem(
-                                  orgLogo: loggedInDatas[index][societyLogo],
-                                  orgSocietyName: loggedInDatas[index]
-                                      [societyName],
-                                  eventPosterUrl: loggedInDatas[index]
-                                      ['poster'],
-                                  eventId: loggedInDatas[index]['eventId'],
-                                  aboutEvent: loggedInDatas[index]
-                                      ['aboutEvent'],
-                                  eventDate: loggedInDatas[index]['date'],
-                                  eventStartTime: loggedInDatas[index]
-                                      ['startTime'],
-                                  eventEndTime: loggedInDatas[index]['endTime'],
-                                  eventTitle: loggedInDatas[index]['title'],
-                                  eventVenue: loggedInDatas[index]['venue']);
-                            },
+      child: _auth.currentUser?.uid == null
+          ? Container()
+          : StreamBuilder<dynamic>(
+              stream: _firestore
+                  .collection(societiesCollection)
+                  .doc(_auth.currentUser?.uid)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  var loggedInDatas = snapshot.data.get('myEvents');
+                  loggedInDatas = convertToDate(loggedInDatas);
+                  return loggedInDatas.length == 0 || loggedInDatas == null
+                      ? Container()
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ListView.builder(
+                                shrinkWrap: true,
+                                physics: ScrollPhysics(),
+                                itemCount: loggedInDatas.length,
+                                itemBuilder: (context, index) {
+                                  return EventProfileWidgetItem(
+                                    orgLogo: loggedInDatas[index][societyLogo],
+                                    orgSocietyName: loggedInDatas[index]
+                                        [societyName],
+                                    eventPosterUrl: loggedInDatas[index]
+                                        ['poster'],
+                                    eventId: loggedInDatas[index]['eventId'],
+                                    aboutEvent: loggedInDatas[index]
+                                        ['aboutEvent'],
+                                    eventDate: loggedInDatas[index]['date'],
+                                    eventStartTime: loggedInDatas[index]
+                                        ['startTime'],
+                                    eventEndTime: loggedInDatas[index]
+                                        ['endTime'],
+                                    eventTitle: loggedInDatas[index]['title'],
+                                    eventVenue: loggedInDatas[index]['venue'],
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                height: 40.0,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 40.0,
-                          ),
-                        ],
-                      ),
-                    );
-            }
-          }),
+                        );
+                }
+              },
+            ),
     );
   }
 }
