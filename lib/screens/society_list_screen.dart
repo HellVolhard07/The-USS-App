@@ -11,6 +11,17 @@ var societiesData;
 class SocietyListScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  List verifiedSocietiesList = [];
+
+  void verifiedSocieties(List societies) {
+    verifiedSocietiesList = [];
+    societies.forEach((element) {
+      if (element["isVerified"]) {
+        verifiedSocietiesList.add(element);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -25,6 +36,7 @@ class SocietyListScreen extends StatelessWidget {
             );
           }
           societiesData = snapshot.data.docs;
+          verifiedSocieties(societiesData);
           // print(societiesData.length);
           return SafeArea(
             child: SingleChildScrollView(
@@ -61,25 +73,21 @@ class SocietyListScreen extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
-                    itemBuilder: (ctx, index) =>
-                        societiesData[index]["isVerified"]
-                            ? SocietyItem(
-                                myColor: index % 2 == 0
-                                    ? themeProvider.isDarkTheme
-                                        ? Color(0xfff2d6b3)
-                                        : Color(0xffffd8b1)
-                                    : themeProvider.isDarkTheme
-                                        ? Color(0xffD59B78)
-                                        : Color(0xffffcc99),
-                                societyName: societiesData[index][societyName],
-                                societyLogo: societiesData[index][societyLogo],
-                                societyAbout: societiesData[index][societyAbout],
-                                societyTeam: societiesData[index][societyTeam],
-                                societyKeEvents: societiesData[index]
-                                    [societyKeEvents],
-                              )
-                            : Container(),
-                    itemCount: societiesData.length,
+                    itemBuilder: (ctx, index) => SocietyItem(
+                      myColor: index % 2 == 0
+                          ? themeProvider.isDarkTheme
+                              ? Color(0xfff2d6b3)
+                              : Color(0xffffd8b1)
+                          : themeProvider.isDarkTheme
+                              ? Color(0xffD59B78)
+                              : Color(0xffffcc99),
+                      societyName: verifiedSocietiesList[index][societyName],
+                      societyLogo: verifiedSocietiesList[index][societyLogo],
+                      societyAbout: verifiedSocietiesList[index][societyAbout],
+                      societyTeam: verifiedSocietiesList[index][societyTeam],
+                      societyKeEvents: verifiedSocietiesList[index][societyKeEvents],
+                    ),
+                    itemCount: verifiedSocietiesList.length,
                   ),
                 ],
               ),

@@ -14,7 +14,19 @@ SliverAppBar sliverHeader(
   final mediaQuery = MediaQuery.of(context).size;
 
   return SliverAppBar(
-    automaticallyImplyLeading: false,
+    // automaticallyImplyLeading: false,
+    leading: CircleAvatar(
+      radius: 20.0,
+      backgroundColor:
+          themeProvider.isDarkTheme ? Color(0xff232323) : Color(0xffffe4c9),
+      child: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: Icon(Icons.arrow_back),
+        color: themeProvider.isDarkTheme ? Colors.white : Colors.black,
+      ),
+    ),
     backgroundColor: Colors.transparent,
     shape: ContinuousRectangleBorder(
       borderRadius: BorderRadius.only(
