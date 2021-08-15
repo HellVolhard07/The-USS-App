@@ -124,7 +124,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       barrierDismissible: true,
                       builder: (BuildContext ctx) => AlertDialog(
-                        actionsAlignment: MainAxisAlignment.center,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

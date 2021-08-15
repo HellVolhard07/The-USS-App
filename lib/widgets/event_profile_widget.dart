@@ -15,7 +15,8 @@ class EventWidget extends StatefulWidget {
 class _EventWidgetState extends State<EventWidget> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  var finalWidget;
+  
   List convertToDate(List event) {
     event.forEach((element) {
       element[date].toDate();
@@ -28,6 +29,7 @@ class _EventWidgetState extends State<EventWidget> {
 
   @override
   Widget build(BuildContext context) {
+     final mediaQuery = MediaQuery.of(context).size;
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
       decoration: BoxDecoration(
@@ -49,7 +51,17 @@ class _EventWidgetState extends State<EventWidget> {
               var loggedInDatas = snapshot.data.get('myEvents');
               loggedInDatas = convertToDate(loggedInDatas);
               return loggedInDatas.length == 0 || loggedInDatas == null
-                  ? Container()
+                  ? Container(
+                    child: Center(
+                      child: Text(
+                        'No events to display', 
+                        style: TextStyle(
+              fontSize: mediaQuery.width * 0.038,
+            ),
+            textAlign: TextAlign.center,
+                      ),
+                      ),
+                  )
                   : SingleChildScrollView(
                       child: Column(
                         children: [

@@ -26,6 +26,7 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context).size;
     final societyArgs =
         ModalRoute.of(context)!.settings.arguments as SocietyItem;
 
@@ -35,7 +36,16 @@ class _EventSocietyWidgetState extends State<EventSocietyWidget> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
-      child: ListView.builder(
+      child: societyArgs.societyKeEvents.length == 0 ?Center(
+                      child: Text(
+                        'No events to display', 
+                        style: TextStyle(
+              fontSize: mediaQuery.width * 0.038,
+            ),
+            textAlign: TextAlign.center,
+                      ),
+                      ) :
+       ListView.builder(
         physics: ScrollPhysics(),
         shrinkWrap: true,
         itemCount: societyArgs.societyKeEvents.length,
