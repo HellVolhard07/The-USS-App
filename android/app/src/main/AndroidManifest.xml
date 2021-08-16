@@ -21,7 +21,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="USS App"
+        android:label="USS Expo"
         android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"

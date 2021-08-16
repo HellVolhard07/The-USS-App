@@ -49,6 +49,8 @@ lib/key.dart
 /android/app/profile
 /android/app/release
 
+
 android/app/google-services.json
+android/key.properties
 
 ios/Runner/GoogleService-Info.plist

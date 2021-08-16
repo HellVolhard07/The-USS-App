@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
           ),
         );
         return MaterialApp(
-          title: 'The USS App',
+          title: 'The USS Expo',
           debugShowCheckedModeBanner: false,
           themeMode: themeProvider.themeMode,
           darkTheme: ThemeBuilder.darkTheme,

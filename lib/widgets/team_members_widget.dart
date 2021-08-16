@@ -91,7 +91,7 @@ class MemberCircle extends StatelessWidget {
             Utils.openEmail(
                 toEmail: societyArgs.societyTeam[index]['contact'],
                 subject: 'Query regarding ${societyArgs.societyName}',
-                body: 'Sent using the USS app');
+                body: 'Sent using the USS Expo');
           },
           child: CircleAvatar(
             radius: mediaQuery.width * 0.08,
