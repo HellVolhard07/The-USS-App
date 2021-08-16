@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Login",
+                      "Society Login",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
