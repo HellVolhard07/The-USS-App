@@ -116,8 +116,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               Positioned(
-                left: mediaQuery.width * 0.65,
-                top: mediaQuery.width * 0.035,
+                right: mediaQuery.width * 0.002,
+                top: mediaQuery.width * 0.01,
                 child: GestureDetector(
                   onTap: () async {
                     showDialog(
@@ -152,11 +152,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     );
                   },
                   child: CircleAvatar(
-                    radius: 40,
+                    radius: mediaQuery.width * 0.07,
                     backgroundColor:
                         themeProvider.isDarkTheme ? Colors.white : Colors.black,
                     child: CircleAvatar(
-                      radius: 38,
+                      radius: mediaQuery.width * 0.069,
                       backgroundImage: NetworkImage("$loggedInSocietyLogo"),
                     ),
                   ),

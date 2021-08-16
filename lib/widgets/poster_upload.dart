@@ -19,9 +19,8 @@ class _PosterUploadState extends State<PosterUpload> {
     final picker = ImagePicker();
     final pickedImageFile = await picker.getImage(
       source: ImageSource.gallery,
-      imageQuality: 50,
-      maxWidth: 200,
-      maxHeight: 200,
+      maxWidth: 1080,
+      maxHeight: 2280,
     );
     if (pickedImageFile != null) {
       setState(() {

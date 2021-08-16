@@ -111,12 +111,26 @@ class MemberCircle extends StatelessWidget {
           ),
         ),
         SizedBox(height: mediaQuery.height * 0.01),
-        Text(
-          "${societyArgs.societyTeam[index]['name']} (${societyArgs.societyTeam[index]['role']})",
-          style: TextStyle(
-            color: themeProvider.isDarkTheme ? Colors.white : Color(0xffcd885f),
+        Expanded(
+          child: Text(
+            "${societyArgs.societyTeam[index]['name']}",
+            style: TextStyle(
+              fontSize: 15,
+              color: themeProvider.isDarkTheme ? Colors.white : Color(0xffcd885f),
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
+        ),
+        Expanded(
+          child: Text(
+            "(${societyArgs.societyTeam[index]['role']})",
+            style: TextStyle(
+              fontSize: 10,
+              color: themeProvider.isDarkTheme ? Colors.white : Color(0xffcd885f),
+            ),
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
         ),
       ],
     );

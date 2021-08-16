@@ -51,6 +51,7 @@ class EventProfileWidgetItem extends StatelessWidget {
           leading: CircleAvatar(
             radius: 30.0,
             backgroundImage: NetworkImage(eventPosterUrl),
+            backgroundColor: Colors.white,
           ),
           title: Text(
             eventTitle,

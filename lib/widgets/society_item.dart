@@ -84,45 +84,50 @@ class SocietyItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleAvatar(
+                  backgroundColor: Colors.white,
                   backgroundImage: NetworkImage(societyLogo),
                   maxRadius: mediaQuery.width * 0.08,
                 ),
                 SizedBox(
                   width:mediaQuery.width * 0.07,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        societyName,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w600,
-                          color: themeProvider.isDarkTheme
-                              ? Colors.white
-                              : Color(0xffcd885f),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        width: mediaQuery.width*0.35,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
                         child: Text(
-                          societyAbout,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
+                          societyName,
                           style: TextStyle(
-                            fontSize: 12.0,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
                             color: themeProvider.isDarkTheme
                                 ? Colors.white
-                                : Color(0xffd1926b),
+                                : Color(0xffcd885f),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          width: mediaQuery.width*0.35,
+                          child: Text(
+                            societyAbout,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              color: themeProvider.isDarkTheme
+                                  ? Colors.white
+                                  : Color(0xffd1926b),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

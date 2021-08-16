@@ -66,6 +66,7 @@ class EventScreen extends StatelessWidget {
                                   mediaQuery.width * 0.025,
                                 ),
                                 child: CircleAvatar(
+                                  backgroundColor: Colors.white,
                                   backgroundImage:
                                       NetworkImage(eventArgs.orgLogo),
                                   radius: mediaQuery.height * 0.1,
