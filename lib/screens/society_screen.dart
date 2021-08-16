@@ -65,7 +65,7 @@ class _SocietyScreenState extends State<SocietyScreen> {
                             ),
                             Center(
                               child: FlutterToggleTab(
-                                width: mediaQuery.width * 0.16,
+                                width: mediaQuery.width * 0.14,
                                 borderRadius: 15,
                                 labels: ['', '', ''],
                                 icons: [Icons.info, Icons.list, Icons.people],
