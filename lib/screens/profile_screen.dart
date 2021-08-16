@@ -156,6 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     backgroundColor:
                         themeProvider.isDarkTheme ? Colors.white : Colors.black,
                     child: CircleAvatar(
+                      backgroundColor: Color(0xfffff0e1),
                       radius: mediaQuery.width * 0.069,
                       backgroundImage: NetworkImage("$loggedInSocietyLogo"),
                     ),
